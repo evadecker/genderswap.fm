@@ -1,0 +1,41 @@
+---
+
+---
+
+<footer transition:animate="fade">
+  <div class="credits">
+    A project by <a href="https://evadecker.com">Eva Decker</a>
+  </div>
+  <div class="divider">&middot;</div>
+  <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
+</footer>
+
+<style lang="scss">
+  footer {
+    font-size: var(--step--1);
+    width: 100%;
+    padding-block: 1rem;
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      font-weight: var(--font-weight-bold);
+      text-decoration: underline;
+      text-decoration-color: var(--sand-7);
+      text-underline-offset: 0.15em;
+
+      &:hover {
+        text-decoration-color: inherit;
+      }
+    }
+  }
+
+  .divider {
+    margin-inline: 0.5em;
+    font-weight: var(--font-weight-bold);
+    color: var(--sand-10);
+  }
+</style>

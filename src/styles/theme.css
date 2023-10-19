@@ -1,0 +1,58 @@
+@import "@radix-ui/colors/sand.css";
+@import "@radix-ui/colors/sand-alpha.css";
+@import "@radix-ui/colors/sand-dark.css";
+@import "@radix-ui/colors/sand-dark-alpha.css";
+
+@import "@radix-ui/colors/orange.css";
+@import "@radix-ui/colors/orange-alpha.css";
+@import "@radix-ui/colors/orange-dark.css";
+@import "@radix-ui/colors/orange-dark-alpha.css";
+
+@import "@radix-ui/colors/violet.css";
+@import "@radix-ui/colors/violet-dark.css";
+
+@import "@radix-ui/colors/white-alpha.css";
+@import "@radix-ui/colors/black-alpha.css";
+
+:root {
+  /* Font families */
+  --font-display: swear-display, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue",
+    sans-serif, serif;
+  --font-mono: ui-monospace, menlo, monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+  /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,20,1.5,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+  --step--2: clamp(0.5556rem, 0.7426rem + -0.2413vw, 0.6944rem);
+  --step--1: clamp(0.8331rem, 0.8331rem + 0vw, 0.8331rem);
+  --step-0: clamp(1rem, 0.913rem + 0.4348vw, 1.25rem);
+  --step-1: clamp(1.2rem, 0.9652rem + 1.1739vw, 1.875rem);
+  --step-2: clamp(1.44rem, 0.9626rem + 2.387vw, 2.8125rem);
+  --step-3: clamp(1.7281rem, 0.8618rem + 4.3315vw, 4.2188rem);
+  --step-4: clamp(2.0738rem, 0.594rem + 7.3989vw, 6.3281rem);
+  --step-5: clamp(2.4881rem, 0.0518rem + 12.1815vw, 9.4925rem);
+
+  /* Line heights */
+  --line-height-h1: 1;
+  --line-height-h2: 1.1;
+  --line-height-h3: 1.2;
+  --line-height-body: 1.5;
+  --line-height-small: 1.4;
+
+  /* Letter spacing */
+  --letter-spacing-condensed: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-loose: 0.01em;
+
+  /* Radii */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+}

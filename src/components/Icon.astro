@@ -1,0 +1,55 @@
+---
+import { iconData, type IconType } from "./IconTypes";
+
+export interface Props {
+  /**
+   * The icon to display
+   */
+  icon: IconType;
+
+  /**
+   * Whether to use the filled or line version of the icon
+   * @default "line"
+   */
+  variant?: "line" | "filled";
+
+  /**
+   * Use small (16px) or default (24px) icon
+   * @default "default"
+   */
+  size?: "small" | "default";
+
+  className?: string;
+}
+
+const { icon, variant, size, className } = Astro.props;
+
+const pathData =
+  variant === "filled" ? iconData[icon].filled : iconData[icon].line;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  width="1em"
+  height="1em"
+  class:list={["icon", `icon-${icon}`, { small: size === "small" }]}
+  aria-hidden="true"
+>
+  <path d={pathData}></path>
+</svg>
+
+<style>
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon.small {
+    width: 16px;
+    height: 16px;
+  }
+</style>

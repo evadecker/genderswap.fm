@@ -1,15 +1,13 @@
 import { defineConfig } from "astro/config";
-
 import vercel from "@astrojs/vercel/static";
 
-// https://astro.build/config
+import sitemap from "@astrojs/sitemap";
+
 export default defineConfig({
-  output: "static",
+  site: "https://genderswap.fm",
+  integrations: [sitemap()],
   adapter: vercel({
     webAnalytics: {
-      enabled: true,
-    },
-    speedInsights: {
       enabled: true,
     },
   }),

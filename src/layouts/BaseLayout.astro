@@ -1,0 +1,58 @@
+---
+import "../styles/reset.css";
+import "../styles/theme.css";
+import "../styles/base.css";
+
+import { ViewTransitions } from "astro:transitions";
+
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageTitle =
+  Astro.url.pathname === "/" ? title : `${title} · Genderswap.fm`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#FEFCFB" />
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="description" content={description} />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="stylesheet" href="https://use.typekit.net/hjc0gsm.css" />
+    <title>{pageTitle}</title>
+    <ViewTransitions />
+  </head>
+  <body transition:animate="none">
+    <script is:inline src="/scripts/preloadTheme.js"></script>
+    <Header />
+    <main class="main" transition:animate="fade">
+      <slot />
+    </main>
+    <Footer />
+    <style>
+      .main {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </body>
+</html>
