@@ -1,0 +1,132 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<script>
+  import { sand, sandDark } from "@radix-ui/colors";
+
+  type Theme = "light" | "dark";
+
+  const lightToggle = document.querySelector("[data-theme-toggle-light]");
+  const darkToggle = document.querySelector("[data-theme-toggle-dark]");
+
+  const setActiveTheme = (theme: Theme) => {
+    // Update class on body
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(theme);
+
+    // Update class on toggle
+    if (theme === "light") {
+      lightToggle?.classList.add("active");
+      darkToggle?.classList.remove("active");
+    } else {
+      lightToggle?.classList.remove("active");
+      darkToggle?.classList.add("active");
+    }
+
+    // Update localStorage
+    window.localStorage.setItem("theme", theme);
+
+    // Update meta theme
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme !== null)
+      metaTheme.setAttribute(
+        "content",
+        theme === "dark" ? sandDark.sand1 : sand.sand1
+      );
+  };
+
+  lightToggle?.addEventListener("click", () => setActiveTheme("light"));
+  darkToggle?.addEventListener("click", () => setActiveTheme("dark"));
+</script>
+
+<header transition:persist>
+  <nav>
+    <a class="wordmark" href="/">Genderswap.fm</a>
+    <div class="toggle">
+      <button
+        type="button"
+        data-theme-toggle-light
+        aria-label="Enable light theme"
+      >
+        <Icon icon="sun" />
+      </button>
+      <button
+        type="button"
+        data-theme-toggle-dark
+        aria-label="Enable dark theme"
+      >
+        <Icon icon="moon" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<style lang="scss">
+  header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--sand-1);
+      opacity: 0.96;
+      box-shadow: 0 1px 0 var(--sand-a6);
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+
+  .wordmark {
+    font-size: var(--step-0);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-bold);
+    text-decoration: "none";
+    position: "relative";
+    bottom: "-0.1em";
+  }
+
+  .toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    margin-inline-start: 0.5em;
+    border-radius: var(--radius-full);
+    line-height: 0;
+
+    button {
+      border: none;
+      background: none;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      color: var(--sand-11);
+      cursor: pointer;
+
+      &[data-theme-toggle-light].active,
+      &[data-theme-toggle-light]:hover {
+        background: var(--orange-3);
+        color: var(--orange-11);
+      }
+
+      &[data-theme-toggle-dark].active,
+      &[data-theme-toggle-dark]:hover {
+        background: var(--violet-3);
+        color: var(--violet-11);
+      }
+    }
+  }
+</style>

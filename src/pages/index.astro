@@ -1,16 +1,31 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Genderswap.fm"
+  description="Some covers deliver the age-old simple pleasures of drag…"
+>
+  <div class="main">
+    <h1>Genderswap.fm</h1>
+    <p>Work in progress.</p>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+
+    p {
+      color: var(--sand-11);
+      font-size: var(--step-1);
+      margin-block-start: 0.4em;
+    }
+  }
+</style>
