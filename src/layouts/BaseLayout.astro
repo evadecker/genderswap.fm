@@ -11,11 +11,9 @@ import Header from "../components/Header.astro";
 interface Props {
   title: string;
   description: string;
-  ogImage?: string;
-  ogAlt?: string;
 }
 
-const { title, description, ogImage, ogAlt } = Astro.props;
+const { title, description } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageTitle =
@@ -29,27 +27,12 @@ const pageTitle =
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#FDFCFD" />
+    <meta name="theme-color" content="#FEFCFB" />
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
     <link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Eva Decker" />
-    <meta
-      property="og:image"
-      content={ogImage ?? `${Astro.url.origin}/og/default.png`}
-    />
-    <meta
-      property="og:image:alt"
-      content={ogAlt ?? "Eva designs and builds things for the web."}
-    />
-    <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="stylesheet" href="https://use.typekit.net/hjc0gsm.css" />
