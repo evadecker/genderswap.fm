@@ -1,2 +1,9 @@
 # genderswap.fm
-"Some covers deliver the age-old simple pleasures of drag…"
+
+Genderswap.fm is a repository of song covers with performing artists of different genders.
+
+## Getting Started
+
+```
+pnpm dev
+```
