@@ -1,0 +1,15 @@
+---
+import Container from "../../components/Container.astro";
+import { SpotifySearch } from "../../components/SpotifySearch";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Add a cover"
+  description="Have a good genderswapped cover? Add it here."
+>
+  <Container>
+    <h1>Add a cover</h1>
+    <SpotifySearch client:load />
+  </Container>
+</BaseLayout>

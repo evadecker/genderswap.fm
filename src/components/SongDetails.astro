@@ -7,9 +7,10 @@ import Tag from "./Tag.astro";
 type Props = {
   type: "original" | "cover";
   song: Tables<"songs">;
+  coveredAs?: string;
 };
 
-const { type, song } = Astro.props;
+const { type, song, coveredAs } = Astro.props;
 ---
 
 <div
@@ -43,6 +44,13 @@ const { type, song } = Astro.props;
         >{song.album_year}</time
       >
     </div>
+    {
+      coveredAs && (
+        <div class="coveredAs" itemprop="name">
+          Covered as “{coveredAs}”
+        </div>
+      )
+    }
   </div>
 </div>
 

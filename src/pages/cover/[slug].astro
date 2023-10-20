@@ -4,6 +4,7 @@ import SongDetails from "../../components/SongDetails.astro";
 import { supabase } from "../../lib/supabase";
 import Tag from "../../components/Tag.astro";
 import Stack from "../../components/Stack.astro";
+import dayjs from "dayjs";
 
 const { slug } = Astro.params;
 
@@ -26,6 +27,13 @@ const { data: cover } = await supabase
   .single();
 
 const { tags, created_at } = data;
+
+let coveredAs;
+if (original?.name !== cover?.name) {
+  coveredAs = cover?.name;
+}
+
+const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 ---
 
 <BaseLayout title="Placeholder" description="Placeholder">
@@ -33,20 +41,24 @@ const { tags, created_at } = data;
     <h1 class="title">{original?.name}</h1>
     {
       tags && (
-        <Stack>
-          {tags.map((tag: string) => (
-            <Tag text={tag} />
-          ))}
-        </Stack>
+        <div class="tags">
+          <Stack>
+            {tags.map((tag: string) => (
+              <div class="tag">
+                <Tag text={tag} />
+              </div>
+            ))}
+          </Stack>
+        </div>
       )
     }
   </header>
   <div class="compare">
     <SongDetails type="original" song={original} />
-    <SongDetails type="cover" song={cover} />
+    <SongDetails type="cover" song={cover} coveredAs={coveredAs} />
   </div>
   <footer class="footer">
-    {created_at}
+    <span>Added <time datetime={created_at}>{formattedDate}</time></span>
   </footer>
 </BaseLayout>
 

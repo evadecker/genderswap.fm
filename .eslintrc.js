@@ -1,9 +1,6 @@
 module.exports = {
   // ...
-  extends: [
-    // ...
-    "plugin:astro/recommended",
-  ],
+  extends: ["prettier", "plugin:astro/recommended"],
   // ...
   overrides: [
     {

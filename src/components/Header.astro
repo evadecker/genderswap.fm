@@ -41,25 +41,28 @@ import Icon from "./Icon.astro";
 </script>
 
 <header transition:persist>
-  <nav>
+  <div class="container">
     <a class="wordmark" href="/">Genderswap.fm</a>
-    <div class="toggle">
-      <button
-        type="button"
-        data-theme-toggle-light
-        aria-label="Enable light theme"
-      >
-        <Icon icon="sun" />
-      </button>
-      <button
-        type="button"
-        data-theme-toggle-dark
-        aria-label="Enable dark theme"
-      >
-        <Icon icon="moon" />
-      </button>
-    </div>
-  </nav>
+    <nav>
+      <a href="/add">Add</a>
+      <div class="toggle">
+        <button
+          type="button"
+          data-theme-toggle-light
+          aria-label="Enable light theme"
+        >
+          <Icon icon="sun" />
+        </button>
+        <button
+          type="button"
+          data-theme-toggle-dark
+          aria-label="Enable dark theme"
+        >
+          <Icon icon="moon" />
+        </button>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <style lang="scss">
@@ -82,11 +85,17 @@ import Icon from "./Icon.astro";
     }
   }
 
-  nav {
+  .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 0;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .wordmark {

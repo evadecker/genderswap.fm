@@ -10,17 +10,24 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^3.0.3",
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/vercel": "^5.0.2",
     "@radix-ui/colors": "^3.0.0",
+    "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.2",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
     "astro": "^3.3.2",
     "dayjs": "^1.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.69.4"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^6.8.0",
     "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.29.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "prettier": "^3.0.3",
