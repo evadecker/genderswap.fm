@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { supabase } from "../supabase";
+
+const { data } = await supabase.from("covers").select();
 ---
 
 <BaseLayout
@@ -9,6 +12,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <div class="main">
     <h1>Genderswap.fm</h1>
     <p>Work in progress.</p>
+    {data?.map((cover) => <a href={cover.slug}>{cover.slug}</a>)}
   </div>
 </BaseLayout>
 

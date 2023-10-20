@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SongDetails from "../components/SongDetails.astro";
+import { supabase } from "../supabase";
+
+const { slug } = Astro.params;
+
+const { data } = await supabase
+  .from("covers")
+  .select()
+  .eq("slug", slug!!)
+  .single();
+
+const { data: original } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", data?.original!!)
+  .single();
+
+const { data: cover } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", data?.cover!!)
+  .single();
+---
+
+<BaseLayout title="Placeholder" description="Placeholder">
+  {
+    original && (
+      <>
+        <h1 class="title">{original?.name}</h1>
+        <div class="compare">
+          <div>
+            <SongDetails type="original" song={original} />
+          </div>
+          <div>
+            <SongDetails type="cover" song={cover} />
+          </div>
+        </div>
+      </>
+    )
+  }
+  {data?.tags?.map((tag) => <span>{tag}</span>)}
+  {data?.created_at}
+</BaseLayout>
+
+<style lang="scss">
+  .title {
+    text-align: center;
+    padding-block: var(--space-2xl);
+  }
+
+  .compare {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+  }
+</style>

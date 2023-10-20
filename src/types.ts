@@ -16,6 +16,7 @@ export interface Database {
           id: number
           original: number
           review: string | null
+          slug: string
           tags: Database["public"]["Enums"]["tag"][] | null
         }
         Insert: {
@@ -24,6 +25,7 @@ export interface Database {
           id?: number
           original: number
           review?: string | null
+          slug?: string
           tags?: Database["public"]["Enums"]["tag"][] | null
         }
         Update: {
@@ -32,6 +34,7 @@ export interface Database {
           id?: number
           original?: number
           review?: string | null
+          slug?: string
           tags?: Database["public"]["Enums"]["tag"][] | null
         }
         Relationships: [

@@ -1,0 +1,133 @@
+---
+import type { Database } from "../types";
+import Icon from "./Icon.astro";
+
+type Props = {
+  type: "original" | "cover";
+  song: Database["public"]["Tables"]["songs"]["Row"];
+};
+
+const { type, song } = Astro.props;
+---
+
+<div
+  class:list={["track", { original: type === "original" }]}
+  itemprop="track"
+  itemscope
+  itemtype="https://schema.org/MusicRecording"
+>
+  <a class="link" href={song.url} itemprop="url" aria-label="Open in Spotify">
+    <img
+      class="albumArt"
+      src={song.album_img}
+      alt={`${song.album_name} album art`}
+      itemprop="image"
+    />
+    <div class="spotify-overlay">
+      <Icon icon="sparkling" variant="filled" />
+    </div>
+  </a>
+  <div class="details">
+    <div class="util">
+      <div class="tag">
+        {type === "original" ? "Original" : "Cover"}
+      </div>
+    </div>
+    <h2 class="artist" itemprop="byArtist">{song.artists.join(", ")}</h2>
+    <div class="album" itemprop="inAlbum">{song.album_name}</div>
+    <time class="year" itemprop="datePublished">{song.album_year}</time>
+  </div>
+</div>
+
+<style lang="scss">
+  .track {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    &.original {
+      text-align: right;
+      align-items: flex-end;
+    }
+  }
+
+  .details {
+    padding-block: var(--space-s);
+  }
+
+  .util {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-2xs);
+
+    .original & {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--sand-3);
+    color: var(--sand-11);
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-full);
+    font-size: var(--step-0);
+    margin-block-end: var(--space-2xs);
+  }
+
+  .artist {
+    font-size: var(--step-3);
+  }
+
+  .album {
+    font-size: var(--step-1);
+  }
+
+  .year {
+    font-size: var(--step-1);
+    display: block;
+  }
+
+  .spotify-overlay {
+    position: absolute;
+    left: var(--space-xs);
+    bottom: var(--space-xs);
+    transition: opacity var(--transition-duration) ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-a11);
+    font-size: var(--step-2);
+    opacity: 0;
+    transition: 0.4s opacity ease;
+
+    .original & {
+      left: auto;
+      right: var(--space-xs);
+    }
+  }
+
+  .link {
+    display: block;
+    position: relative;
+    line-height: 0;
+    font-size: var(--step-1);
+    user-select: none;
+
+    &:hover {
+      .albumArt {
+        transform: scale(1.05);
+      }
+
+      .spotify-overlay {
+        opacity: 1;
+      }
+    }
+  }
+
+  .albumArt {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s ease;
+  }
+</style>
