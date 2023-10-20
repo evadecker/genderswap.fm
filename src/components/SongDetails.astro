@@ -1,11 +1,12 @@
 ---
-import type { Database } from "../types";
+import type { Database } from "../db-generated.types";
+import type { Tables } from "../types";
 import Icon from "./Icon.astro";
 import Tag from "./Tag.astro";
 
 type Props = {
   type: "original" | "cover";
-  song: Database["public"]["Tables"]["songs"]["Row"];
+  song: Tables<"songs">;
 };
 
 const { type, song } = Astro.props;
@@ -37,8 +38,11 @@ const { type, song } = Astro.props;
   </a>
   <div class="details">
     <h2 class="artist" itemprop="byArtist">{song.artists.join(", ")}</h2>
-    <!-- <div class="album" itemprop="inAlbum">{song.album_name}</div> -->
-    <time class="year" itemprop="datePublished">{song.album_year}</time>
+    <div class="album" itemprop="inAlbum">
+      <em>{song.album_name}</em>, <time class="year" itemprop="datePublished"
+        >{song.album_year}</time
+      >
+    </div>
   </div>
 </div>
 
@@ -61,27 +65,12 @@ const { type, song } = Astro.props;
     padding-block: var(--space-s);
   }
 
-  .util {
-    display: flex;
-    flex-direction: row;
-    gap: var(--space-2xs);
-
-    .original & {
-      flex-direction: row-reverse;
-    }
-  }
-
   .artist {
     font-size: var(--step-3);
   }
 
   .album {
     font-size: var(--step-1);
-  }
-
-  .year {
-    font-size: var(--step-1);
-    display: block;
   }
 
   .album-overlay {
