@@ -13,6 +13,7 @@
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/vercel": "^5.0.2",
     "@radix-ui/colors": "^3.0.0",
+    "@supabase/supabase-js": "^2.38.2",
     "astro": "^3.3.2",
     "dayjs": "^1.11.10",
     "sass": "^1.69.4"
