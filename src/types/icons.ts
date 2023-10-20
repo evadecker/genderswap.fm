@@ -1,5 +1,6 @@
 // Icons sourced from https://remixicon.com
 export type IconType =
+  | "add"
   | "arrowRight"
   | "download"
   | "externalLink"
@@ -19,6 +20,10 @@ export type IconType =
 
 // Path data, e.g. contents of <path d={data} /> in SVG
 export const iconData: Record<IconType, { line: string; filled: string }> = {
+  add: {
+    line: "M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z",
+    filled: "M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z",
+  },
   arrowRight: {
     line: "M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z",
     filled: "M12 13H4V11H12V4L20 12L12 20V13Z",

@@ -14,6 +14,8 @@
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/vercel": "^5.0.2",
     "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-select": "^2.0.0",
     "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.2",
     "@types/react": "^18.2.31",

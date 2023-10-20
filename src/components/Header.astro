@@ -44,7 +44,10 @@ import Icon from "./Icon.astro";
   <div class="container">
     <a class="wordmark" href="/">Genderswap.fm</a>
     <nav>
-      <a href="/add">Add</a>
+      <a href="/new" class="button">
+        <Icon icon="add" />
+         Submit a cover</a
+      >
       <div class="toggle">
         <button
           type="button"
@@ -105,6 +108,22 @@ import Icon from "./Icon.astro";
     text-decoration: "none";
     position: "relative";
     bottom: "-0.1em";
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3xs);
+    background: var(--sand-3);
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand-6);
+
+    &:hover {
+      background: var(--sand-4);
+      border-color: var(--sand-7);
+    }
   }
 
   .toggle {
