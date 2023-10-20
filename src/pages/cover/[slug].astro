@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SongDetails from "../../components/SongDetails.astro";
+import { supabase } from "../../lib/supabase";
+import Tag from "../../components/Tag.astro";
+import Stack from "../../components/Stack.astro";
+
+const { slug } = Astro.params;
+
+const { data } = await supabase
+  .from("covers")
+  .select()
+  .eq("slug", slug)
+  .single();
+
+const { data: original } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", data.original)
+  .single();
+
+const { data: cover } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", data.cover)
+  .single();
+
+const { tags, created_at } = data;
+---
+
+<BaseLayout title="Placeholder" description="Placeholder">
+  <header class="header">
+    <h1 class="title">{original?.name}</h1>
+    {
+      tags && (
+        <Stack>
+          {tags.map((tag: string) => (
+            <Tag text={tag} />
+          ))}
+        </Stack>
+      )
+    }
+  </header>
+  <div class="compare">
+    <SongDetails type="original" song={original} />
+    <SongDetails type="cover" song={cover} />
+  </div>
+  <footer class="footer">
+    {created_at}
+  </footer>
+</BaseLayout>
+
+<style lang="scss">
+  .header {
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    margin-block-end: var(--space-s);
+  }
+
+  .compare {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

@@ -12,7 +12,7 @@ const { data } = await supabase.from("covers").select();
   <div class="main">
     <h1>Genderswap.fm</h1>
     <p>Work in progress.</p>
-    {data?.map((cover) => <a href={cover.slug}>{cover.slug}</a>)}
+    {data?.map((cover) => <a href={`cover/${cover.slug}`}>{cover.slug}</a>)}
   </div>
 </BaseLayout>
 
