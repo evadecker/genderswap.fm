@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SongDetails from "../components/SongDetails.astro";
-import { supabase } from "../supabase";
+import { supabase } from "../lib/supabase";
 
 const { slug } = Astro.params;
 
@@ -40,7 +40,7 @@ const { data: cover } = await supabase
       </>
     )
   }
-  {data?.tags?.map((tag) => <span>{tag}</span>)}
+  {data?.tags?.map((tag: string) => <span>{tag}</span>)}
   {data?.created_at}
 </BaseLayout>
 

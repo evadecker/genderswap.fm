@@ -24,7 +24,7 @@ const { type, song } = Astro.props;
       itemprop="image"
     />
     <div class="spotify-overlay">
-      <Icon icon="sparkling" variant="filled" />
+      <Icon icon="spotify" variant="filled" />
     </div>
   </a>
   <div class="details">
@@ -113,21 +113,18 @@ const { type, song } = Astro.props;
     line-height: 0;
     font-size: var(--step-1);
     user-select: none;
+    aspect-ratio: 1 / 1;
+    background: var(--sand-3);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s ease;
 
     &:hover {
-      .albumArt {
-        transform: scale(1.05);
-      }
+      transform: scale(1.05);
 
       .spotify-overlay {
         opacity: 1;
       }
     }
-  }
-
-  .albumArt {
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    transition: transform 0.3s ease;
   }
 </style>

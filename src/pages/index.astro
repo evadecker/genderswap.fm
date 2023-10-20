@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { supabase } from "../supabase";
+import { supabase } from "../lib/supabase";
 
 const { data } = await supabase.from("covers").select();
 ---
@@ -32,3 +32,4 @@ const { data } = await supabase.from("covers").select();
     }
   }
 </style>
+ ../lib/supabase
