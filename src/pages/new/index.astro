@@ -1,6 +1,6 @@
 ---
 import Container from "../../components/Container.astro";
-import { SpotifySearch } from "../../components/SpotifySearch/SpotifySearch";
+import { SubmitForm } from "../../components/SubmitForm/SubmitForm";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
@@ -9,7 +9,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   description="Have a good genderswapped cover? Add it here."
 >
   <Container>
-    <h1>Add a cover</h1>
-    <SpotifySearch client:load />
+    <SubmitForm client:load />
   </Container>
 </BaseLayout>

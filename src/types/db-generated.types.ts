@@ -37,20 +37,7 @@ export interface Database {
           slug?: string
           tags?: Database["public"]["Enums"]["tag"][] | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "covers_cover_fkey"
-            columns: ["cover"]
-            referencedRelation: "songs"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "covers_original_fkey"
-            columns: ["original"]
-            referencedRelation: "songs"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       songs: {
         Row: {
@@ -59,7 +46,7 @@ export interface Database {
           album_year: number | null
           artists: string[]
           created_at: string
-          id: number
+          id: string
           name: string
           url: string
         }
@@ -69,7 +56,7 @@ export interface Database {
           album_year?: number | null
           artists: string[]
           created_at?: string
-          id?: number
+          id: string
           name: string
           url: string
         }
@@ -79,7 +66,7 @@ export interface Database {
           album_year?: number | null
           artists?: string[]
           created_at?: string
-          id?: number
+          id?: string
           name?: string
           url?: string
         }
@@ -99,6 +86,9 @@ export interface Database {
         | "key change"
         | "overshadowed original"
         | "extremely different vibe"
+        | "meter change"
+        | "mtf"
+        | "ftm"
     }
     CompositeTypes: {
       [_ in never]: never
