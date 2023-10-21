@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 ---
 
 <script>
-  import { sand, sandDark } from "@radix-ui/colors";
+  import { mauve, mauveDark } from "@radix-ui/colors";
 
   type Theme = "light" | "dark";
 
@@ -32,7 +32,7 @@ import Icon from "./Icon.astro";
     if (metaTheme !== null)
       metaTheme.setAttribute(
         "content",
-        theme === "dark" ? sandDark.sand1 : sand.sand1
+        theme === "dark" ? mauveDark.mauve1 : mauve.mauve1
       );
   };
 
@@ -44,10 +44,6 @@ import Icon from "./Icon.astro";
   <div class="container">
     <a class="wordmark" href="/">Genderswap.fm</a>
     <nav>
-      <a href="/new" class="button">
-        <Icon icon="add" />
-         Submit a cover</a
-      >
       <div class="toggle">
         <button
           type="button"
@@ -64,6 +60,10 @@ import Icon from "./Icon.astro";
           <Icon icon="moon" />
         </button>
       </div>
+      <a href="/new" class="button">
+        <Icon icon="add" />
+         Submit a cover</a
+      >
     </nav>
   </div>
 </header>
@@ -74,31 +74,22 @@ import Icon from "./Icon.astro";
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding-inline-start: 1.5rem;
-    padding-inline-end: 1.5rem;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--orange-1);
-      opacity: 0.96;
-      box-shadow: 0 1px 0 var(--sand-a6);
-    }
+    padding-inline-start: var(--space-xs);
+    padding-inline-end: var(--space-xs);
   }
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: var(--space-xs) 0;
   }
 
   nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: var(--space-xs);
   }
 
   .wordmark {
@@ -115,14 +106,15 @@ import Icon from "./Icon.astro";
     align-items: center;
     justify-content: center;
     gap: var(--space-3xs);
-    background: var(--sand-3);
-    padding-inline: var(--space-2xs);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--sand-6);
+    background: var(--violet-3);
+    line-height: 1;
+    padding-block: var(--space-3xs);
+    padding-inline: var(--space-2xs) var(--space-xs);
+    border-radius: var(--radius-full);
+    border: none;
 
     &:hover {
-      background: var(--sand-4);
-      border-color: var(--sand-7);
+      background: var(--violet-4);
     }
   }
 
@@ -136,12 +128,15 @@ import Icon from "./Icon.astro";
     line-height: 0;
 
     button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border: none;
       background: none;
       width: 32px;
       height: 32px;
       border-radius: var(--radius-full);
-      color: var(--sand-11);
+      color: var(--violet-11);
       cursor: pointer;
 
       &[data-theme-toggle-light].active,

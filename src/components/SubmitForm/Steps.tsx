@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import styles from "./form.module.scss";
+import styles from "./steps.module.scss";
 
 type Props = {
   title: string;

@@ -1,6 +1,6 @@
 ---
-import type { Database } from "../db-generated.types";
-import type { Tables } from "../types";
+import type { Database } from "../types/db-generated.types";
+import type { Tables } from "../types/types";
 import Icon from "./Icon.astro";
 import Tag from "./Tag.astro";
 
@@ -110,7 +110,7 @@ const { type, song, coveredAs } = Astro.props;
     user-select: none;
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: var(--sand-3);
+    background: var(--mauve-3);
     overflow: hidden;
     border-radius: var(--radius-lg);
     transition: transform 0.3s ease;
@@ -124,3 +124,4 @@ const { type, song, coveredAs } = Astro.props;
     }
   }
 </style>
+ ../types/db-generated.types

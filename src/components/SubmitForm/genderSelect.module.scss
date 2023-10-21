@@ -1,0 +1,52 @@
+.genderSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-start: var(--space-s);
+}
+
+.label {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--space-3xs);
+}
+
+.instructions {
+  font-size: var(--step--1);
+  font-style: italic;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.toggle {
+  all: unset;
+  background-color: var(--violet-3);
+  color: var(--violet-11);
+  border-radius: var(--radius-full);
+  display: flex;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding-block: var(--space-2xs);
+  padding-inline: var(--space-xs);
+  padding-inline-end: var(--space-s);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--violet-4);
+  }
+
+  &[data-state="on"] {
+    background-color: var(--violet-9);
+    color: white;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+}

@@ -9,8 +9,8 @@ body.dark {
 }
 
 body {
-  color: var(--orange-12);
-  background-color: var(--orange-1);
+  color: var(--violet-12);
+  background-color: var(--violet-1);
   display: flex;
   min-height: 100%;
   position: relative;
@@ -24,7 +24,7 @@ body {
 }
 
 ::selection {
-  background: var(--orange-5);
+  background: var(--violet-5);
 }
 
 h1,

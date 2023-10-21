@@ -11,64 +11,116 @@ export interface Database {
     Tables: {
       covers: {
         Row: {
-          cover: number
+          cover_id: string | null
           created_at: string
-          id: number
-          original: number
-          review: string | null
+          description: string | null
+          id: string
+          original_id: string | null
           slug: string
-          tags: Database["public"]["Enums"]["tag"][] | null
         }
         Insert: {
-          cover: number
+          cover_id?: string | null
           created_at?: string
-          id?: number
-          original: number
-          review?: string | null
-          slug?: string
-          tags?: Database["public"]["Enums"]["tag"][] | null
+          description?: string | null
+          id: string
+          original_id?: string | null
+          slug: string
         }
         Update: {
-          cover?: number
+          cover_id?: string | null
           created_at?: string
-          id?: number
-          original?: number
-          review?: string | null
+          description?: string | null
+          id?: string
+          original_id?: string | null
           slug?: string
-          tags?: Database["public"]["Enums"]["tag"][] | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "covers_cover_id_fkey"
+            columns: ["cover_id"]
+            referencedRelation: "songs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "covers_original_id_fkey"
+            columns: ["original_id"]
+            referencedRelation: "songs"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       songs: {
         Row: {
-          album_img: string | null
+          acousticness: number | null
+          album_img: string[] | null
           album_name: string | null
           album_year: number | null
           artists: string[]
           created_at: string
+          danceability: number | null
+          duration_ms: number | null
+          energy: number | null
+          gender: Database["public"]["Enums"]["gender"][]
           id: string
+          instrumentalness: number | null
+          key: number | null
+          liveness: number | null
+          loudness: number | null
+          mode: number | null
           name: string
+          speechiness: number | null
+          tempo: number | null
+          time_signature: number | null
           url: string
+          valence: number | null
         }
         Insert: {
-          album_img?: string | null
+          acousticness?: number | null
+          album_img?: string[] | null
           album_name?: string | null
           album_year?: number | null
           artists: string[]
           created_at?: string
+          danceability?: number | null
+          duration_ms?: number | null
+          energy?: number | null
+          gender: Database["public"]["Enums"]["gender"][]
           id: string
+          instrumentalness?: number | null
+          key?: number | null
+          liveness?: number | null
+          loudness?: number | null
+          mode?: number | null
           name: string
+          speechiness?: number | null
+          tempo?: number | null
+          time_signature?: number | null
           url: string
+          valence?: number | null
         }
         Update: {
-          album_img?: string | null
+          acousticness?: number | null
+          album_img?: string[] | null
           album_name?: string | null
           album_year?: number | null
           artists?: string[]
           created_at?: string
+          danceability?: number | null
+          duration_ms?: number | null
+          energy?: number | null
+          gender?: Database["public"]["Enums"]["gender"][]
           id?: string
+          instrumentalness?: number | null
+          key?: number | null
+          liveness?: number | null
+          loudness?: number | null
+          mode?: number | null
           name?: string
+          speechiness?: number | null
+          tempo?: number | null
+          time_signature?: number | null
           url?: string
+          valence?: number | null
         }
         Relationships: []
       }
@@ -80,15 +132,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      tag:
-        | "pronoun change"
-        | "tempo change"
-        | "key change"
-        | "overshadowed original"
-        | "extremely different vibe"
-        | "meter change"
-        | "mtf"
-        | "ftm"
+      gender: "male" | "female" | "other"
     }
     CompositeTypes: {
       [_ in never]: never

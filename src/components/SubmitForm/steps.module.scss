@@ -1,0 +1,50 @@
+.steps {
+  list-style: none;
+  counter-reset: steps;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  display: grid;
+  grid-template:
+    "number title"
+    "line content";
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: var(--space-2xs);
+  counter-increment: step;
+
+  &::before {
+    content: counter(step);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    background: var(--violet-4);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    grid-area: number;
+  }
+
+  &:not(:last-child)::after {
+    content: "";
+    grid-area: line;
+    width: 2px;
+    background: var(--violet-3);
+    justify-self: center;
+  }
+}
+
+.stepTitle {
+  font-size: var(--step-1);
+  grid-area: title;
+  align-self: center;
+}
+
+.stepContent {
+  grid-area: content;
+  padding-block-start: var(--space-s);
+  padding-block-end: var(--space-l);
+}

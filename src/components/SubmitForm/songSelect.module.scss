@@ -1,6 +1,6 @@
 // Selected Song
 .selectedSong {
-  background: var(--sand-3);
+  background: var(--violet-3);
   border-radius: var(--radius-lg);
   padding: var(--space-xs);
   display: flex;
@@ -39,10 +39,10 @@
   border-radius: var(--radius-full);
   cursor: pointer;
   line-height: 0;
-  color: var(--sand-11);
+  color: var(--violet-11);
 
   &:hover {
-    background: var(--sand-4);
+    background: var(--violet-4);
   }
 }
 
@@ -66,19 +66,19 @@
 }
 
 .searchInput {
+  border: none;
   width: 100%;
-  background: var(--sand-3);
-  border: 1px solid var(--sand-6);
+  background: var(--violet-3);
   border-radius: var(--radius-full);
   height: 56px;
   padding-left: 56px;
 
   &::placeholder {
-    color: var(--sand-9);
+    color: var(--violet-a7);
   }
 
   &:focus {
-    outline: 3px solid var(--orange-a9);
+    outline: 3px solid var(--violet-a9);
   }
 }
 
@@ -89,7 +89,7 @@
   right: 0;
   margin-top: var(--space-2xs);
   overflow-y: scroll;
-  background-color: var(--sand-1);
+  background-color: var(--violet-3);
   border-radius: var(--radius-md);
   box-shadow:
     0px 10px 38px -10px rgba(22, 23, 24, 0.35),
@@ -106,7 +106,7 @@
 
 .result {
   line-height: 1;
-  color: var(--sand-11);
+  color: var(--violet-12);
   border-radius: var(--radius-sm);
   padding: var(--space-3xs);
   position: relative;
@@ -118,7 +118,7 @@
 
   &.highlighted {
     outline: none;
-    background-color: var(--sand-5);
+    background-color: var(--violet-5);
   }
 }
 
@@ -131,7 +131,7 @@
 .resultAlbum {
   width: 60px;
   height: 60px;
-  background: var(--sand-3);
+  background: var(--violet-3);
   border-radius: var(--radius-sm);
 }
 

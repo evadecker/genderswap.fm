@@ -4,45 +4,20 @@
   padding-block: var(--space-m) var(--space-xl);
 }
 
-.steps {
-  list-style: none;
-  counter-reset: steps;
-  margin: 0;
-  padding: 0;
-}
+.submitButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  background: var(--violet-9);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  height: 56px;
+  padding-inline: var(--space-xs) var(--space-s);
+  margin-inline: auto;
 
-.step {
-  display: grid;
-  grid-template:
-    "number title"
-    ". content";
-  grid-template-columns: 40px 1fr;
-  grid-template-rows: 40px 1fr;
-  row-gap: var(--space-s);
-  column-gap: var(--space-2xs);
-  padding-block-end: var(--space-l);
-  counter-increment: step;
-
-  &::before {
-    content: counter(step);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--font-weight-bold);
-    background: var(--sand-3);
-    // color: var(--sand-1);
-    border-radius: var(--radius-full);
-    align-self: stretch;
-    grid-area: number;
+  &:hover {
+    background: var(--violet-10);
   }
-}
-
-.stepTitle {
-  font-size: var(--step-1);
-  grid-area: title;
-  align-self: center;
-}
-
-.stepContent {
-  grid-area: content;
 }
