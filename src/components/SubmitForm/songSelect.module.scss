@@ -62,7 +62,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 16px;
+  left: var(--space-m);
 }
 
 .searchInput {
@@ -70,8 +70,9 @@
   width: 100%;
   background: var(--violet-3);
   border-radius: var(--radius-full);
-  height: 56px;
-  padding-left: 56px;
+  padding-block: var(--space-s);
+  padding-inline: var(--space-m);
+  padding-left: calc(24px + var(--space-m) + var(--space-s));
 
   &::placeholder {
     color: var(--violet-a7);
