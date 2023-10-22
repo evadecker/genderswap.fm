@@ -71,14 +71,19 @@ const { data: coverSong } = await supabase
     margin: calc(var(--space-m) * -1);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-s);
-    align-self: flex-start;
-    text-align: left;
+    align-items: center;
+    gap: var(--space-xl);
+    text-align: center;
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--violet-3);
+      .album {
+        transform: rotate(0) translateX(0);
+      }
+
+      .title {
+        color: var(--violet-9);
+      }
     }
   }
 
@@ -87,24 +92,35 @@ const { data: coverSong } = await supabase
     align-items: center;
     justify-content: center;
     gap: var(--space-m);
+  }
 
-    .album {
-      background-color: var(--violet-3);
-      border-radius: var(--radius-s);
-      overflow: hidden;
-      aspect-ratio: 1;
+  .album {
+    background-color: var(--violet-3);
+    border-radius: var(--radius-s);
+    overflow: hidden;
+    aspect-ratio: 1;
+    transition: transform 0.2s ease-in-out;
+    // https://shadows.brumm.af/
+    box-shadow:
+      0px 1.7px 2.2px rgba(0, 0, 0, 0.02),
+      0px 4px 5.3px rgba(0, 0, 0, 0.028),
+      0px 7.5px 10px rgba(0, 0, 0, 0.035),
+      0px 13.4px 17.9px rgba(0, 0, 0, 0.042),
+      0px 25.1px 33.4px rgba(0, 0, 0, 0.05),
+      0px 60px 80px rgba(0, 0, 0, 0.07);
 
-      img {
-        width: 100%;
-      }
+    img {
+      width: 100%;
+    }
 
-      &:first-child {
-        width: 40%;
-      }
+    &:first-child {
+      width: 40%;
+      transform: rotate(-10deg) translateX(20%);
+    }
 
-      &:last-child {
-        width: 60%;
-      }
+    &:last-child {
+      width: 60%;
+      transform: rotate(8deg) translateX(-20%);
     }
   }
 
@@ -114,12 +130,18 @@ const { data: coverSong } = await supabase
     gap: var(--space-xs);
   }
 
+  .title,
+  .artist {
+    text-wrap: balance;
+  }
+
   .title {
     font-size: var(--step-2);
+    transition: color 0.2s ease;
   }
 
   .artist {
-    color: var(--mauve-a10);
+    opacity: 0.7;
   }
 
   .link {
