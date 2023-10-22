@@ -6,14 +6,15 @@
 }
 
 .step {
-  display: grid;
-  grid-template:
-    "number title"
-    "line content";
-  grid-template-columns: 40px 1fr;
-  grid-template-rows: auto 1fr;
-  column-gap: var(--space-2xs);
   counter-increment: step;
+}
+
+.stepTitle {
+  font-size: var(--step-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2xs);
 
   &::before {
     content: counter(step);
@@ -25,26 +26,13 @@
     border-radius: var(--radius-full);
     width: 40px;
     height: 40px;
-    grid-area: number;
   }
-
-  &:not(:last-child)::after {
-    content: "";
-    grid-area: line;
-    width: 2px;
-    background: var(--violet-3);
-    justify-self: center;
-  }
-}
-
-.stepTitle {
-  font-size: var(--step-1);
-  grid-area: title;
-  align-self: center;
 }
 
 .stepContent {
-  grid-area: content;
   padding-block-start: var(--space-s);
-  padding-block-end: var(--space-l);
+  padding-block-end: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
 }

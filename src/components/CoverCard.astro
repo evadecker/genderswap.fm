@@ -1,0 +1,129 @@
+---
+import { getReadableTitle } from "../helpers/helpers";
+import { supabase } from "../lib/supabase";
+import type { Tables } from "../types/types";
+import Icon from "./Icon.astro";
+import Tag from "./Tag.astro";
+
+type Props = {
+  cover: Tables<"covers">;
+};
+
+const { cover } = Astro.props;
+
+const { data: originalSong } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", cover.original_id)
+  .single();
+
+const { data: coverSong } = await supabase
+  .from("songs")
+  .select()
+  .eq("id", cover.cover_id)
+  .single();
+---
+
+<div class="cover-card">
+  <div class="albums">
+    <div class="album">
+      {
+        originalSong?.album_img && (
+          <img
+            src={originalSong.album_img[0]}
+            alt={`${originalSong.album_name} album art`}
+          />
+        )
+      }
+    </div>
+    <div class="album">
+      {
+        coverSong?.album_img && (
+          <img
+            src={coverSong.album_img[0]}
+            alt={`${coverSong.album_name} album art`}
+          />
+        )
+      }
+    </div>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      {originalSong?.name}
+    </h2>
+    <div class="artist">
+      <strong>{coverSong?.artists[0]}</strong> covering <strong
+        >{originalSong?.artists[0]}</strong
+      >
+    </div>
+    <a
+      class="link"
+      href={`/cover/${cover.slug}`}
+      aria-label={`More about ${originalSong?.name}`}></a>
+  </div>
+</div>
+
+<style lang="scss">
+  .cover-card {
+    position: relative;
+    border-radius: var(--radius-md);
+    padding: var(--space-xs);
+    margin: calc(var(--space-xs) * -1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    align-self: flex-start;
+    text-align: left;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--violet-3);
+    }
+  }
+
+  .albums {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs);
+
+    .album {
+      background-color: var(--violet-3);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      aspect-ratio: 1;
+
+      img {
+        width: 100%;
+      }
+
+      &:first-child {
+        width: 40%;
+      }
+
+      &:last-child {
+        width: 60%;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .title {
+    font-size: var(--step-1);
+  }
+
+  .artist {
+    color: var(--mauve-a10);
+  }
+
+  .link {
+    position: absolute;
+    inset: 0;
+  }
+</style>

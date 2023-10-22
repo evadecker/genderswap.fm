@@ -21,6 +21,7 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-toggle": "^1.0.3",
+    "@radix-ui/react-toggle-group": "^1.0.4",
     "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.2",
     "@types/react": "^18.2.31",
@@ -31,6 +32,8 @@
     "downshift": "^8.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
+    "react-textarea-autosize": "^8.5.3",
     "sass": "^1.69.4"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.29.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "supabase": "^1.106.1"

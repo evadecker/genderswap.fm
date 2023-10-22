@@ -11,27 +11,30 @@ export interface Database {
     Tables: {
       covers: {
         Row: {
-          cover_id: string | null
+          contributor: string | null
+          cover_id: string
           created_at: string
           description: string | null
-          id: string
-          original_id: string | null
+          id: number
+          original_id: string
           slug: string
         }
         Insert: {
-          cover_id?: string | null
+          contributor?: string | null
+          cover_id: string
           created_at?: string
           description?: string | null
-          id: string
-          original_id?: string | null
+          id?: number
+          original_id: string
           slug: string
         }
         Update: {
-          cover_id?: string | null
+          contributor?: string | null
+          cover_id?: string
           created_at?: string
           description?: string | null
-          id?: string
-          original_id?: string | null
+          id?: number
+          original_id?: string
           slug?: string
         }
         Relationships: [
@@ -52,9 +55,9 @@ export interface Database {
       songs: {
         Row: {
           acousticness: number | null
-          album_img: string[] | null
-          album_name: string | null
-          album_year: number | null
+          album_img: string[]
+          album_name: string
+          album_year: number
           artists: string[]
           created_at: string
           danceability: number | null
@@ -76,9 +79,9 @@ export interface Database {
         }
         Insert: {
           acousticness?: number | null
-          album_img?: string[] | null
-          album_name?: string | null
-          album_year?: number | null
+          album_img: string[]
+          album_name: string
+          album_year: number
           artists: string[]
           created_at?: string
           danceability?: number | null
@@ -100,9 +103,9 @@ export interface Database {
         }
         Update: {
           acousticness?: number | null
-          album_img?: string[] | null
-          album_name?: string | null
-          album_year?: number | null
+          album_img?: string[]
+          album_name?: string
+          album_year?: number
           artists?: string[]
           created_at?: string
           danceability?: number | null

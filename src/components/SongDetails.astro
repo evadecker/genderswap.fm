@@ -1,12 +1,11 @@
 ---
-import type { Database } from "../types/db-generated.types";
 import type { Tables } from "../types/types";
 import Icon from "./Icon.astro";
 import Tag from "./Tag.astro";
 
 type Props = {
   type: "original" | "cover";
-  song: Tables<"songs">;
+  song: Tables<"songs"> | null;
   coveredAs?: string;
 };
 
@@ -19,36 +18,43 @@ const { type, song, coveredAs } = Astro.props;
   itemscope
   itemtype="https://schema.org/MusicRecording"
 >
-  <a class="link" href={song.url} itemprop="url" aria-label="Open in Spotify">
+  <a class="link" href={song?.url} itemprop="url" aria-label="Open in Spotify">
     {
-      song.album_img && (
+      song?.album_img && (
         <img
           class="albumArt"
-          src={song.album_img}
+          src={song.album_img[0]}
           alt={`${song.album_name} album art`}
           itemprop="image"
         />
       )
     }
     <div class="album-overlay">
-      <Tag
-        text={type === "original" ? "Listen to original" : "Listen to cover"}
-      />
+      <div class="listen-tag">
+        {type === "original" ? "Listen to original" : "Listen to cover"}
+      </div>
       <Icon icon="spotify" variant="filled" />
     </div>
   </a>
   <div class="details">
-    <h2 class="artist" itemprop="byArtist">{song.artists.join(", ")}</h2>
-    <div class="album" itemprop="inAlbum">
-      <em>{song.album_name}</em>, <time class="year" itemprop="datePublished"
-        >{song.album_year}</time
-      >
-    </div>
+    <h2 class="artist" itemprop="byArtist">
+      {song?.artists.join(", ") ?? "Loading..."}
+    </h2>
     {
-      coveredAs && (
-        <div class="coveredAs" itemprop="name">
-          Covered as “{coveredAs}”
-        </div>
+      song && (
+        <>
+          <div class="album" itemprop="inAlbum">
+            <em>{song.album_name}</em>,{" "}
+            <time class="year" itemprop="datePublished">
+              {song.album_year}
+            </time>
+          </div>
+          {coveredAs && (
+            <div class="coveredAs" itemprop="name">
+              Covered as “{coveredAs}”
+            </div>
+          )}
+        </>
       )
     }
   </div>
@@ -103,6 +109,15 @@ const { type, song, coveredAs } = Astro.props;
     }
   }
 
+  .listen-tag {
+    display: inline-block;
+    background: var(--white-a11);
+    color: var(--black-a12);
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-full);
+    font-size: var(--step-0);
+  }
+
   .link {
     display: block;
     position: relative;
@@ -124,4 +139,3 @@ const { type, song, coveredAs } = Astro.props;
     }
   }
 </style>
- ../types/db-generated.types

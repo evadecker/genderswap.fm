@@ -2,29 +2,36 @@ import { type Track } from "@spotify/web-api-ts-sdk";
 import styles from "./songSelect.module.scss";
 import classNames from "classnames";
 
-import { URLify } from "../../helpers/helpers";
 import { useState } from "react";
 import { useCombobox } from "downshift";
-import { GenderSelect } from "./GenderSelect";
+import {
+  useController,
+  useWatch,
+  type UseControllerProps,
+} from "react-hook-form";
+import type { FormInput } from "./SubmitForm";
+import { ErrorMessage } from "./ErrorMessage";
 
-export type Props = {
-  type: "original" | "cover";
-  song: Track | null | undefined;
-  onChange: (song: Track | null | undefined) => void;
-};
+export const SongSelect = (props: UseControllerProps<FormInput>) => {
+  const { control, name } = props;
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
+  const song = useWatch({ control, name }) as Track;
 
-export const SongSelect = ({ type, song, onChange }: Props) => {
   const [searchResults, setSearchResults] = useState<Track[] | undefined>();
 
-  const search = async (query?: string) => {
+  const search = async (query: string | undefined) => {
     if (!query || query === "") {
       setSearchResults(undefined);
       return;
     }
 
     try {
-      const urlifiedQuery = URLify(query);
-      const response = await fetch(`/api/getSpotifyResults/${urlifiedQuery}`, {
+      // Encode characters and replace all forward slashes with dashes
+      const encoded = encodeURIComponent(query.replace(/\//g, "-"));
+      const response = await fetch(`/api/getSpotifyResults/${encoded}`, {
         method: "GET",
       });
       const data = await response.json();
@@ -53,45 +60,45 @@ export const SongSelect = ({ type, song, onChange }: Props) => {
     items: searchResults || [],
     itemToString: (item) => (item ? item.name : ""),
     onSelectedItemChange: ({ selectedItem }) => {
-      onChange(selectedItem);
+      field.onChange(selectedItem);
     },
   });
 
+  const SongPreview = ({ song }: { song: Track }) => (
+    <div className={styles.selectedSong}>
+      <img
+        className={styles.selectedAlbum}
+        src={song.album.images[0].url}
+        alt={song.name}
+      />
+      <div className={styles.selectedLabel}>
+        <div className={styles.selectedName}>{song.name}</div>
+        <div>{song.artists.map((artist) => artist.name).join(", ")}</div>
+        <div className={styles.selectedAlbumNameAndYear}>
+          <em>{song.album.name}</em> &middot;{" "}
+          {song.album.release_date.slice(0, 4)}
+        </div>
+      </div>
+      <button
+        className={styles.clearSelection}
+        onClick={() => field.onChange(undefined)}
+        aria-label="Remove selection"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+        >
+          <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z"></path>
+        </svg>
+      </button>
+    </div>
+  );
+
   return (
-    <>
-      {song && (
-        <>
-          <div className={styles.selectedSong}>
-            <img
-              className={styles.selectedAlbum}
-              src={song.album.images[0].url}
-              alt={song.name}
-            />
-            <div className={styles.selectedLabel}>
-              <div className={styles.selectedName}>{song.name}</div>
-              <div>{song.artists.map((artist) => artist.name).join(", ")}</div>
-              <div className={styles.selectedAlbumNameAndYear}>
-                <em>{song.album.name}</em> &middot;{" "}
-                {song.album.release_date.slice(0, 4)}
-              </div>
-            </div>
-            <button
-              className={styles.clearSelection}
-              onClick={() => onChange(undefined)}
-              aria-label="Remove selection"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-              >
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z"></path>
-              </svg>
-            </button>
-          </div>
-        </>
-      )}
+    <div>
+      {song && <SongPreview song={song} />}
       <div
         className={classNames(styles.searchWrapper, {
           [styles.hidden]: song,
@@ -113,7 +120,7 @@ export const SongSelect = ({ type, song, onChange }: Props) => {
           <input
             className={styles.searchInput}
             placeholder={
-              type === "original" ? "abba angeleyes" : "the czars angel eyes"
+              name === "original" ? "abba angeleyes" : "the czars angel eyes"
             }
             {...getInputProps()}
           />
@@ -148,7 +155,7 @@ export const SongSelect = ({ type, song, onChange }: Props) => {
           ))}
         </ul>
       </div>
-      <GenderSelect />
-    </>
+      {error && <ErrorMessage error="Select a song" />}
+    </div>
   );
 };

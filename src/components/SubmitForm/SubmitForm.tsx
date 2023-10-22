@@ -1,114 +1,158 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SongSelect } from "./SongSelect";
 import { Steps, Step } from "./Steps";
 import styles from "./form.module.scss";
-import { type AudioFeatures, type Track } from "@spotify/web-api-ts-sdk";
-import { getSongRowFromTrack } from "./getSongRowFromTrack";
+import { type Track } from "@spotify/web-api-ts-sdk";
 import { supabase } from "../../lib/supabase";
 import * as Toast from "@radix-ui/react-toast";
 import toastStyles from "./toast.module.scss";
+import { useForm, type SubmitHandler, get } from "react-hook-form";
 
-import { type Props as SongSelectProps } from "./SongSelect";
+import type { Enums } from "../../types/types";
+import { DescriptionInput } from "./DescriptionInput";
+import { GenderSelect } from "./GenderSelect";
+import { ContributorInput } from "./ContributorInput";
+import { formatSongRow } from "./formatSongRow";
+import { formatCoverRow } from "./formatCoverRow";
 
 type ToastMessage = {
   title: string;
   description: string;
 };
 
+export type FormInput = {
+  original: Track | null;
+  originalGenders: Enums<"gender">[];
+  cover: Track | null;
+  coverGenders: Enums<"gender">[];
+  description: string;
+  contributor: string;
+};
+
 export const SubmitForm = () => {
-  const [original, setOriginal] = useState<Track | null | undefined>();
-  const [originalAudioFeatures, setOriginalAudioFeatures] = useState<
-    AudioFeatures | null | undefined
-  >();
-
-  const [cover, setCover] = useState<Track | null | undefined>();
-  const [coverAudioFeatures, setCoverAudioFeatures] = useState<
-    AudioFeatures | null | undefined
-  >();
-
   const [toastMessage, setToastMessage] = useState<ToastMessage>();
 
-  const getAudioFeatures = async (id?: string) => {
-    if (!id) {
-      console.log("missing id");
-      return;
-    }
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<FormInput>({
+    defaultValues: {
+      original: null,
+      originalGenders: [],
+      cover: null,
+      coverGenders: [],
+      description: "",
+      contributor: "",
+    },
+  });
 
-    try {
-      const response = await fetch(`/api/getAudioFeatures/${id}`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      }
-    }
-  };
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    const {
+      original,
+      originalGenders,
+      cover,
+      coverGenders,
+      description,
+      contributor,
+    } = data;
 
-  const handleChangeOriginal: SongSelectProps["onChange"] = async (song) => {
-    setOriginal(song);
-    const audioFeatures = await getAudioFeatures(song?.id);
-    setOriginalAudioFeatures(audioFeatures);
-  };
-
-  const handleChangeCover: SongSelectProps["onChange"] = async (song) => {
-    setCover(song);
-    const audioFeatures = await getAudioFeatures(song?.id);
-    setCoverAudioFeatures(audioFeatures);
-  };
-
-  useEffect(() => {
-    console.log("originalAudioFeatures", originalAudioFeatures);
-    console.log("coverAudioFeatures", coverAudioFeatures);
-  }, [originalAudioFeatures, coverAudioFeatures]);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!original || !cover) {
-      console.log("missing original or cover");
-      return;
-    }
-
-    const dbObject = getSongRowFromTrack(original);
-    console.log("dbObject", dbObject);
-
-    if (dbObject) {
-      const { data, error } = await supabase.from("songs").insert(dbObject);
-      console.log("data", data);
-      console.log("error", error);
-      error &&
+    // Shape track data for submission to the 'songs' table
+    const originalSongRow =
+      original &&
+      (await formatSongRow({ song: original, gender: originalGenders }));
+    if (originalSongRow) {
+      const res = await supabase.from("songs").insert(originalSongRow);
+      console.log("original song status", res.status);
+      res.error &&
         setToastMessage({
-          title: "Couldn't upload choices",
-          description: error.message,
+          title: res.error.code,
+          description: res.error.message,
         });
     }
+
+    // Shape cover data for submission to the 'songs' table
+    const coverSongRow =
+      cover && (await formatSongRow({ song: cover, gender: coverGenders }));
+    if (coverSongRow) {
+      const res = await supabase.from("songs").insert(coverSongRow);
+      console.log("cover song status", res.status);
+      res.error &&
+        setToastMessage({
+          title: res.error.code,
+          description: res.error.message,
+        });
+    }
+
+    // Shape data for submission to the 'covers' table
+    // Capturing the link between IDs and user contributions
+    const coverRow =
+      original &&
+      cover &&
+      (await formatCoverRow({
+        original: original,
+        cover: cover,
+        description,
+        contributor,
+      }));
+    if (coverRow) {
+      const res = await supabase.from("covers").insert(coverRow);
+      console.log("cover row status", res.status);
+      res.error &&
+        setToastMessage({
+          title: res.error.code,
+          description: res.error.message,
+        });
+      return;
+    }
+
+    setToastMessage({
+      title: "Cover submitted!",
+      description: "Thanks for contributing. :)",
+    });
+
+    return;
   };
 
   return (
     <Toast.Provider>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className={styles.header}>Submit a cover</h1>
         <Steps>
           <Step title="Select the original">
             <SongSelect
-              type="original"
-              song={original}
-              onChange={handleChangeOriginal}
+              name="original"
+              rules={{ required: true }}
+              control={control}
+            />
+            <GenderSelect
+              name="originalGenders"
+              control={control}
+              rules={{ required: true }}
             />
           </Step>
           <Step title="Select the cover">
             <SongSelect
-              type="cover"
-              song={cover}
-              onChange={handleChangeCover}
+              name="cover"
+              rules={{ required: true }}
+              control={control}
+            />
+            <GenderSelect
+              name="coverGenders"
+              control={control}
+              rules={{ required: true }}
             />
           </Step>
-          <Step title="Add thoughts"></Step>
+          <Step title="Add thoughts">
+            <DescriptionInput control={control} />
+            <ContributorInput control={control} />
+          </Step>
         </Steps>
-        <button className={styles.submitButton} type="submit">
+        <button
+          disabled={isSubmitting}
+          className={styles.submitButton}
+          type="submit"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

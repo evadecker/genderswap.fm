@@ -1,10 +1,18 @@
 import type { Enums } from "../../types/types";
-import * as Toggle from "@radix-ui/react-toggle";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import * as Label from "@radix-ui/react-label";
 
 import styles from "./genderSelect.module.scss";
+import { useController, type UseControllerProps } from "react-hook-form";
+import type { FormInput } from "./SubmitForm";
+import { ErrorMessage } from "./ErrorMessage";
 
-export const GenderSelect = () => {
+export const GenderSelect = (props: UseControllerProps<FormInput>) => {
+  const {
+    field,
+    fieldState: { error },
+  } = useController(props);
+
   const genders: Record<
     Enums<"gender">,
     { label: string; icon: React.ReactNode }
@@ -56,15 +64,25 @@ export const GenderSelect = () => {
         Vocals include
         <span className={styles.instructions}>select all that apply</span>
       </Label.Root>
-      <div id="genders" className={styles.toggleGroup}>
-        {Object.values(genders).map((gender) => (
-          <Toggle.Root
-            className={styles.toggle}
-            aria-label={`Includes ${gender.label} vocals`}
-          >
-            {gender.icon} {gender.label}
-          </Toggle.Root>
-        ))}
+      <div className={styles.toggleWrapper}>
+        <ToggleGroup.Root
+          type="multiple"
+          id="genders"
+          className={styles.toggleGroup}
+          onValueChange={field.onChange}
+        >
+          {Object.entries(genders).map((gender) => (
+            <ToggleGroup.Item
+              key={gender[1].label}
+              value={gender[0]} // ENUM value
+              className={styles.toggle}
+              aria-label={`Select ${gender[1].label}`}
+            >
+              {gender[1].icon} {gender[1].label}
+            </ToggleGroup.Item>
+          ))}
+        </ToggleGroup.Root>
+        {error && <ErrorMessage error="Select at least one gender" />}
       </div>
     </div>
   );

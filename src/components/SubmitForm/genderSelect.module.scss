@@ -1,8 +1,8 @@
 .genderSelect {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-block-start: var(--space-s);
+  gap: var(--space-2xs);
 }
 
 .label {
@@ -15,6 +15,12 @@
 .instructions {
   font-size: var(--step--1);
   font-style: italic;
+}
+
+.toggleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xs);
 }
 
 .toggleGroup {
@@ -47,6 +53,7 @@
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px black;
+    outline: 3px solid var(--violet-a9);
+    outline-offset: 3px;
   }
 }

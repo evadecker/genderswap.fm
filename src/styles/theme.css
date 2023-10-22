@@ -64,10 +64,10 @@
   --letter-spacing-loose: 0.01em;
 
   /* Radii */
-  --radius-xs: 0.25rem;
-  --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
+  --radius-xs: var(--space-3xs);
+  --radius-sm: var(--space-2xs);
+  --radius-md: var(--space-xs);
+  --radius-lg: var(--space-s);
   --radius-full: 9999px;
 
   /* Font weights */
