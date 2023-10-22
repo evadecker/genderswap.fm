@@ -1,6 +1,6 @@
 .label {
   display: block;
-  padding-block-end: var(--space-3xs);
+  padding-block-end: var(--space-xs);
 }
 
 .optional {
@@ -12,9 +12,9 @@
   border: none;
   display: block;
   background: var(--violet-3);
-  border-radius: var(--radius-md);
-  padding-block: var(--space-2xs);
-  padding-inline: var(--space-xs);
+  border-radius: var(--radius-m);
+  padding-block: var(--space-s);
+  padding-inline: var(--space-m);
   width: 100%;
   resize: none;
 
@@ -29,7 +29,7 @@
 }
 
 .helpText {
-  padding-block-start: var(--space-3xs);
+  padding-block-start: var(--space-xs);
   font-size: var(--step--1);
   font-variant-numeric: tabular-nums;
 

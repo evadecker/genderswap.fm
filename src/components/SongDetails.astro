@@ -18,7 +18,13 @@ const { type, song, coveredAs } = Astro.props;
   itemscope
   itemtype="https://schema.org/MusicRecording"
 >
-  <a class="link" href={song?.url} itemprop="url" aria-label="Open in Spotify">
+  <a
+    class="link"
+    href={song?.url}
+    itemprop="url"
+    aria-label="Open in Spotify"
+    transition:name={`album-${song?.id}`}
+  >
     {
       song?.album_img && (
         <img
@@ -65,7 +71,7 @@ const { type, song, coveredAs } = Astro.props;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    padding-inline: var(--space-s);
+    padding-inline: var(--space-l);
     width: clamp(100px, 50vw, 600px);
 
     &.original {
@@ -76,7 +82,7 @@ const { type, song, coveredAs } = Astro.props;
   }
 
   .details {
-    padding-block: var(--space-s);
+    padding-block: var(--space-l);
   }
 
   .artist {
@@ -89,18 +95,19 @@ const { type, song, coveredAs } = Astro.props;
 
   .album-overlay {
     position: absolute;
-    left: var(--space-xs);
-    bottom: var(--space-xs);
+    left: var(--space-s);
+    bottom: var(--space-s);
     transition: opacity var(--transition-duration) ease-in-out;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2xs);
+    gap: var(--space-xs);
     color: var(--white-a11);
     font-size: var(--step-2);
     opacity: 0;
     transition: 0.4s opacity ease;
+    filter: drop-shadow(0 0 var(--space-s) var(--black-a6));
 
     .original & {
       flex-direction: row;
@@ -112,8 +119,8 @@ const { type, song, coveredAs } = Astro.props;
   .listen-tag {
     display: inline-block;
     background: var(--white-a11);
-    color: var(--black-a12);
-    padding-inline: var(--space-2xs);
+    color: var(--black-a11);
+    padding-inline: var(--space-s);
     border-radius: var(--radius-full);
     font-size: var(--step-0);
   }
@@ -127,7 +134,7 @@ const { type, song, coveredAs } = Astro.props;
     aspect-ratio: 1 / 1;
     background: var(--mauve-3);
     overflow: hidden;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-l);
     transition: transform 0.3s ease;
 
     &:hover {

@@ -63,7 +63,6 @@ export const SubmitForm = () => {
       (await formatSongRow({ song: original, gender: originalGenders }));
     if (originalSongRow) {
       const res = await supabase.from("songs").insert(originalSongRow);
-      console.log("original song status", res.status);
       res.error &&
         setToastMessage({
           title: res.error.code,
@@ -76,7 +75,6 @@ export const SubmitForm = () => {
       cover && (await formatSongRow({ song: cover, gender: coverGenders }));
     if (coverSongRow) {
       const res = await supabase.from("songs").insert(coverSongRow);
-      console.log("cover song status", res.status);
       res.error &&
         setToastMessage({
           title: res.error.code,
@@ -96,20 +94,22 @@ export const SubmitForm = () => {
         contributor,
       }));
     if (coverRow) {
-      const res = await supabase.from("covers").insert(coverRow);
-      console.log("cover row status", res.status);
-      res.error &&
+      const { data, error } = await supabase
+        .from("covers")
+        .insert(coverRow)
+        .select("slug")
+        .single();
+      error &&
         setToastMessage({
-          title: res.error.code,
-          description: res.error.message,
+          title: error.code,
+          description: error.message,
         });
-      return;
-    }
 
-    setToastMessage({
-      title: "Cover submitted!",
-      description: "Thanks for contributing. :)",
-    });
+      // Success! Redirect :)
+      if (data) {
+        window.location.href = `/cover/${data.slug}`;
+      }
+    }
 
     return;
   };
@@ -153,14 +153,26 @@ export const SubmitForm = () => {
           className={styles.submitButton}
           type="submit"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 16C14.2133 16 16 14.2133 16 12C16 9.78667 14.2133 8 12 8C9.78667 8 8 9.78667 8 12C8 14.2133 9.78667 16 12 16ZM12 11C12.55 11 13 11.45 13 12C13 12.55 12.55 13 12 13C11.45 13 11 12.55 11 12C11 11.45 11.45 11 12 11Z"></path>
-          </svg>
+          {isSubmitting ? (
+            <svg
+              className={styles.spinner}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path d="M12 3C16.9706 3 21 7.02944 21 12H19C19 8.13401 15.866 5 12 5V3Z"></path>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 16C14.2133 16 16 14.2133 16 12C16 9.78667 14.2133 8 12 8C9.78667 8 8 9.78667 8 12C8 14.2133 9.78667 16 12 16ZM12 11C12.55 11 13 11.45 13 12C13 12.55 12.55 13 12 13C11.45 13 11 12.55 11 12C11 11.45 11.45 11 12 11Z"></path>
+            </svg>
+          )}
           Submit
         </button>
       </form>

@@ -7,17 +7,32 @@
 .submitButton {
   display: flex;
   align-items: center;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
   background: var(--violet-9);
   color: white;
   border: none;
   cursor: pointer;
   border-radius: var(--radius-full);
-  height: 56px;
-  padding-inline: var(--space-xs) var(--space-s);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-s) var(--space-m);
   margin-inline: auto;
 
   &:hover {
     background: var(--violet-10);
   }
+
+  &[disabled] {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 0.7s linear infinite;
 }

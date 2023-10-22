@@ -26,7 +26,7 @@ const { data: coverSong } = await supabase
 
 <div class="cover-card">
   <div class="albums">
-    <div class="album">
+    <div class="album" transition:name={`album-${originalSong?.id}`}>
       {
         originalSong?.album_img && (
           <img
@@ -36,7 +36,7 @@ const { data: coverSong } = await supabase
         )
       }
     </div>
-    <div class="album">
+    <div class="album" transition:name={`album-${coverSong?.id}`}>
       {
         coverSong?.album_img && (
           <img
@@ -66,13 +66,13 @@ const { data: coverSong } = await supabase
 <style lang="scss">
   .cover-card {
     position: relative;
-    border-radius: var(--radius-md);
-    padding: var(--space-xs);
-    margin: calc(var(--space-xs) * -1);
+    border-radius: var(--radius-m);
+    padding: var(--space-m);
+    margin: calc(var(--space-m) * -1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-xs);
+    gap: var(--space-s);
     align-self: flex-start;
     text-align: left;
     transition: background-color 0.2s ease;
@@ -86,11 +86,11 @@ const { data: coverSong } = await supabase
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2xs);
+    gap: var(--space-m);
 
     .album {
       background-color: var(--violet-3);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-s);
       overflow: hidden;
       aspect-ratio: 1;
 
@@ -111,11 +111,11 @@ const { data: coverSong } = await supabase
   .content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3xs);
+    gap: var(--space-xs);
   }
 
   .title {
-    font-size: var(--step-1);
+    font-size: var(--step-2);
   }
 
   .artist {

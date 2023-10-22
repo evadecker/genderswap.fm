@@ -1,15 +1,15 @@
 // Selected Song
 .selectedSong {
   background: var(--violet-3);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xs);
+  border-radius: var(--radius-l);
+  padding: var(--space-s);
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-m);
 }
 
 .selectedAlbum {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-m);
   width: 120px;
   height: 120px;
 }
@@ -24,7 +24,7 @@
   font-size: var(--step-1);
   font-weight: var(--font-weight-bold);
   line-height: 1;
-  margin-block-end: var(--space-2xs);
+  margin-block-end: var(--space-xs);
 }
 
 .clearSelection {
@@ -88,16 +88,16 @@
   top: 100%;
   left: 0;
   right: 0;
-  margin-top: var(--space-2xs);
+  margin-top: var(--space-s);
   overflow-y: scroll;
   background-color: var(--violet-3);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-m);
   box-shadow:
     0px 10px 38px -10px rgba(22, 23, 24, 0.35),
     0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   width: var(--radix-select-trigger-width);
-  max-height: 30vw;
-  padding: var(--space-3xs);
+  max-height: 50vw;
+  padding: var(--space-xs);
   z-index: 10;
 
   &.hidden {
@@ -108,12 +108,12 @@
 .result {
   line-height: 1;
   color: var(--violet-12);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3xs);
+  border-radius: var(--radius-s);
+  padding: var(--space-xs);
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-2xs);
+  gap: var(--space-s);
   user-select: none;
   cursor: pointer;
 
@@ -127,24 +127,29 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  gap: var(--space-2xs);
 }
 
 .resultAlbum {
   width: 60px;
   height: 60px;
   background: var(--violet-3);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xs);
 }
 
 .resultName {
   font-weight: var(--font-weight-bold);
-  margin-block-end: calc(var(--space-3xs) * -1);
+  margin-block-end: calc(var(--space-xs) * -1);
 }
 
 .resultName,
 .resultArtist {
-  padding-block: var(--space-3xs);
+  padding-block: var(--space-2xs);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.resultArtist {
+  font-size: var(--step--1);
 }

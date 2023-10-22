@@ -1,15 +1,6 @@
-.genderSelect {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-2xs);
-}
-
 .label {
-  all: unset;
-  display: flex;
-  flex-direction: column;
-  padding-inline: var(--space-3xs);
+  display: block;
+  padding-block-end: var(--space-xs);
 }
 
 .instructions {
@@ -20,12 +11,11 @@
 .toggleWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-xs);
 }
 
 .toggleGroup {
   display: flex;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
 }
 
 .toggle {
@@ -37,10 +27,10 @@
   line-height: 1;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2xs);
-  padding-block: var(--space-2xs);
-  padding-inline: var(--space-xs);
-  padding-inline-end: var(--space-s);
+  gap: var(--space-xs);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-s);
+  padding-inline-end: var(--space-m);
   cursor: pointer;
 
   &:hover {

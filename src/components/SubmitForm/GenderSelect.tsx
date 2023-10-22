@@ -61,7 +61,7 @@ export const GenderSelect = (props: UseControllerProps<FormInput>) => {
   return (
     <div role="group" className={styles.genderSelect}>
       <Label.Root htmlFor="genders" className={styles.label}>
-        Vocals include
+        Vocals include{" "}
         <span className={styles.instructions}>select all that apply</span>
       </Label.Root>
       <div className={styles.toggleWrapper}>

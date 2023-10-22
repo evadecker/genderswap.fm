@@ -6,33 +6,49 @@
 }
 
 .step {
+  display: grid;
+  grid-template:
+    "number title"
+    "line content";
+  grid-template-columns: 40px 1fr;
   counter-increment: step;
-}
-
-.stepTitle {
-  font-size: var(--step-1);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-2xs);
+  column-gap: var(--space-m);
 
   &::before {
     content: counter(step);
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+    grid-area: number;
     font-weight: var(--font-weight-bold);
     background: var(--violet-4);
     border-radius: var(--radius-full);
     width: 40px;
     height: 40px;
   }
+
+  &:not(:last-child)::after {
+    content: "";
+    grid-area: line;
+    display: block;
+    justify-self: center;
+    width: 3px;
+    height: 100%;
+    background: var(--violet-4);
+  }
+}
+
+.stepTitle {
+  font-size: var(--step-1);
+  grid-area: title;
+  align-self: center;
 }
 
 .stepContent {
+  grid-area: content;
   padding-block-start: var(--space-s);
   padding-block-end: var(--space-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
+  gap: var(--space-l);
 }

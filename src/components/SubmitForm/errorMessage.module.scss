@@ -1,10 +1,7 @@
 .error {
   display: flex;
   align-items: center;
-  background: var(--red-3);
-  padding: var(--space-3xs) var(--space-2xs);
-  border-radius: var(--radius-sm);
-  gap: var(--space-3xs);
+  gap: var(--space-xs);
   color: var(--red-9);
-  margin-block-start: var(--space-2xs);
+  margin-block-start: var(--space-xs);
 }

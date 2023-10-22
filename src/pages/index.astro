@@ -3,17 +3,20 @@ import CoverCard from "../components/CoverCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { supabase } from "../lib/supabase";
 
-const { data } = await supabase.from("covers").select();
+const { data } = await supabase
+  .from("covers")
+  .select()
+  .order("created_at", { ascending: false });
 ---
 
 <BaseLayout
   title="Genderswap.fm"
-  description="Some covers deliver the age-old simple pleasures of drag…"
+  description="Some covers deliver the age-old simple pleasures of drag."
 >
   <div class="main">
     <header>
       <h1>Genderswap.fm</h1>
-      <p>Some covers deliver the age-old simple pleasures of drag…</p>
+      <p>Some covers deliver the age-old simple pleasures of drag.</p>
     </header>
     <div class="covers-grid">
       {data?.map((cover) => <CoverCard cover={cover} />)}
@@ -28,10 +31,10 @@ const { data } = await supabase.from("covers").select();
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-l);
+    gap: var(--space-3xl);
     flex: 1;
-    height: 100%;
-    padding: var(--space-l);
+    min-height: 100%;
+    padding: var(--space-xl);
 
     p {
       font-size: var(--step-1);
@@ -42,6 +45,6 @@ const { data } = await supabase.from("covers").select();
   .covers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-m);
+    gap: var(--space-xl);
   }
 </style>

@@ -30,26 +30,25 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-  /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,20,1.5,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
-  --step--2: clamp(0.5556rem, 0.7426rem + -0.2413vw, 0.6944rem);
-  --step--1: clamp(0.8331rem, 0.8331rem + 0vw, 0.8331rem);
-  --step-0: clamp(1rem, 0.913rem + 0.4348vw, 1.25rem);
-  --step-1: clamp(1.2rem, 0.9652rem + 1.1739vw, 1.875rem);
-  --step-2: clamp(1.44rem, 0.9626rem + 2.387vw, 2.8125rem);
-  --step-3: clamp(1.7281rem, 0.8618rem + 4.3315vw, 4.2188rem);
-  --step-4: clamp(2.0738rem, 0.594rem + 7.3989vw, 6.3281rem);
-  --step-5: clamp(2.4881rem, 0.0518rem + 12.1815vw, 9.4925rem);
+  /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,22,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+  --step--1: clamp(0.8331rem, 0.7642rem + 0.3446vw, 1.0313rem);
+  --step-0: clamp(1rem, 0.8696rem + 0.6522vw, 1.375rem);
+  --step-1: clamp(1.2rem, 0.9798rem + 1.1011vw, 1.8331rem);
+  --step-2: clamp(1.44rem, 1.0911rem + 1.7446vw, 2.4431rem);
+  --step-3: clamp(1.7281rem, 1.1964rem + 2.6587vw, 3.2569rem);
+  --step-4: clamp(2.0738rem, 1.2851rem + 3.9435vw, 4.3412rem);
+  --step-5: clamp(2.4881rem, 1.3407rem + 5.737vw, 5.7869rem);
+  --step-6: clamp(2.9863rem, 1.3417rem + 8.2228vw, 7.7144rem);
 
-  /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,24,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
-  --space-3xs: clamp(0.3125rem, 0.2908rem + 0.1087vw, 0.375rem);
-  --space-2xs: clamp(0.5625rem, 0.4973rem + 0.3261vw, 0.75rem);
-  --space-xs: clamp(0.875rem, 0.788rem + 0.4348vw, 1.125rem);
-  --space-s: clamp(1.125rem, 0.9946rem + 0.6522vw, 1.5rem);
-  --space-m: clamp(1.6875rem, 1.4918rem + 0.9783vw, 2.25rem);
-  --space-l: clamp(2.25rem, 1.9891rem + 1.3043vw, 3rem);
-  --space-xl: clamp(3.375rem, 2.9837rem + 1.9565vw, 4.5rem);
-  --space-2xl: clamp(4.5rem, 3.9783rem + 2.6087vw, 6rem);
-  --space-3xl: clamp(6.75rem, 5.9674rem + 3.913vw, 9rem);
+  /* @link https://utopia.fyi/space/calculator?c=320,8,1.2,1240,12,1.333,6,2,&s=0.75|0.5,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+  --space-2xs: clamp(0.25rem, 0.2065rem + 0.2174vw, 0.375rem);
+  --space-xs: clamp(0.375rem, 0.3098rem + 0.3261vw, 0.5625rem);
+  --space-s: clamp(0.5rem, 0.413rem + 0.4348vw, 0.75rem);
+  --space-m: clamp(0.75rem, 0.6196rem + 0.6522vw, 1.125rem);
+  --space-l: clamp(1rem, 0.8261rem + 0.8696vw, 1.5rem);
+  --space-xl: clamp(1.5rem, 1.2391rem + 1.3043vw, 2.25rem);
+  --space-2xl: clamp(2rem, 1.6522rem + 1.7391vw, 3rem);
+  --space-3xl: clamp(3rem, 2.4783rem + 2.6087vw, 4.5rem);
 
   /* Line heights */
   --line-height-h1: 1;
@@ -64,10 +63,10 @@
   --letter-spacing-loose: 0.01em;
 
   /* Radii */
-  --radius-xs: var(--space-3xs);
-  --radius-sm: var(--space-2xs);
-  --radius-md: var(--space-xs);
-  --radius-lg: var(--space-s);
+  --radius-xs: var(--space-xs);
+  --radius-s: var(--space-s);
+  --radius-m: var(--space-m);
+  --radius-l: var(--space-l);
   --radius-full: 9999px;
 
   /* Font weights */

@@ -38,7 +38,7 @@ h6 {
 
 h1 {
   font-family: var(--font-display);
-  font-size: var(--step-5);
+  font-size: var(--step-6);
   line-height: var(--line-height-h1);
   letter-spacing: var(--letter-spacing-condensed);
 }
