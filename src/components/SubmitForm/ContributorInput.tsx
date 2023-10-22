@@ -1,7 +1,5 @@
 import { useWatch, useController, type Control } from "react-hook-form";
 import { type FormInput } from "./SubmitForm";
-import classNames from "classnames";
-import { getMaxCharacterHelpText } from "../../helpers/helpers";
 import styles from "./input.module.scss";
 import * as Label from "@radix-ui/react-label";
 
@@ -42,13 +40,6 @@ export const ContributorInput = ({ control }: Props) => {
         placeholder="Agnetha"
         {...field}
       />
-      <div
-        className={classNames(styles.helpText, {
-          [styles.warning]: contributor.length > MAX_CONTRIBUTOR_CHARS,
-        })}
-      >
-        {getMaxCharacterHelpText(contributor, MAX_CONTRIBUTOR_CHARS)}
-      </div>
     </div>
   );
 };
