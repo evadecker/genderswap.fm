@@ -40,7 +40,7 @@ const { data: cover } = await supabase
 const { created_at, description, contributor } = data;
 
 let coveredAs;
-if (original?.name !== cover?.name) {
+if (original?.name.toLowerCase() !== cover?.name.toLowerCase()) {
   coveredAs = cover?.name;
 }
 
