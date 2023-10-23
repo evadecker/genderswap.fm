@@ -43,7 +43,7 @@ export const SubmitForm = () => {
       cover: null,
       coverGenders: [],
       description: "",
-      contributor: "",
+      contributor: window.localStorage.getItem("contributor") ?? "",
     },
   });
 
@@ -56,6 +56,9 @@ export const SubmitForm = () => {
       description,
       contributor,
     } = data;
+
+    // Save name to local storage for reuse
+    window.localStorage.setItem("contributor", contributor);
 
     // Shape track data for submission to the 'songs' table
     const originalSongRow =
