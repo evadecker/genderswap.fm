@@ -23,6 +23,7 @@
     "@supabase/supabase-js": "^2.38.2",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
+    "@uidotdev/usehooks": "^2.4.0",
     "astro": "^3.3.2",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",

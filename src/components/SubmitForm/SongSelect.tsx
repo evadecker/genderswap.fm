@@ -1,8 +1,9 @@
 import { type Track } from "@spotify/web-api-ts-sdk";
 import styles from "./songSelect.module.scss";
 import classNames from "classnames";
+import { useDebounce } from "@uidotdev/usehooks";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCombobox } from "downshift";
 import {
   useController,
@@ -20,9 +21,13 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
   } = useController(props);
   const song = useWatch({ control, name }) as Track;
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Track[] | undefined>();
 
+  const debouncedSearchQuery = useDebounce(searchQuery, 250);
+
   const search = async (query: string | undefined) => {
+    console.log("called search!");
     if (!query || query === "") {
       setSearchResults(undefined);
       return;
@@ -46,6 +51,10 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     }
   };
 
+  useEffect(() => {
+    search(debouncedSearchQuery);
+  }, [debouncedSearchQuery]);
+
   const {
     getInputProps,
     getItemProps,
@@ -56,9 +65,7 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     highlightedIndex,
     selectedItem,
   } = useCombobox({
-    onInputValueChange({ inputValue }) {
-      search(inputValue);
-    },
+    onInputValueChange: ({ inputValue }) => setSearchQuery(inputValue ?? ""),
     defaultHighlightedIndex: 0,
     items: searchResults || [],
     itemToString: () => "",
