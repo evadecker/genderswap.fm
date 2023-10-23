@@ -22,7 +22,7 @@ export interface Props {
   className?: string;
 }
 
-const { icon, variant, size, className } = Astro.props;
+const { icon, variant, size } = Astro.props;
 
 const pathData =
   variant === "filled" ? iconData[icon].filled : iconData[icon].line;

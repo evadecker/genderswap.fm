@@ -11,6 +11,7 @@
     "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts"
   },
   "dependencies": {
+    "@astrojs/check": "^0.2.1",
     "@astrojs/react": "^3.0.3",
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/vercel": "^5.0.2",
@@ -30,7 +31,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
     "react-textarea-autosize": "^8.5.3",
-    "sass": "^1.69.4"
+    "sass": "^1.69.4",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^6.8.0",

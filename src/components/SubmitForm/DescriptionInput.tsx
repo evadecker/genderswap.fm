@@ -13,10 +13,7 @@ type Props = {
 };
 
 export const DescriptionInput = ({ control }: Props) => {
-  const {
-    field,
-    fieldState: { error },
-  } = useController({
+  const { field } = useController({
     name: "description",
     control,
     rules: { maxLength: MAX_DESCRIPTION_CHARS },
