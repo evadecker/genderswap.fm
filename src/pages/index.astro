@@ -3,9 +3,9 @@ import CoverCard from "../components/CoverCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { supabase } from "../lib/supabase";
 
-const { data } = await supabase
+const { data: covers } = await supabase
   .from("covers")
-  .select()
+  .select("original_id, cover_id, slug")
   .order("created_at", { ascending: false });
 ---
 
@@ -19,7 +19,15 @@ const { data } = await supabase
       <p>Some covers deliver the age-old simple pleasures of drag.</p>
     </header>
     <div class="covers-grid">
-      {data?.map((cover) => <CoverCard cover={cover} />)}
+      {
+        covers?.map((cover) => (
+          <CoverCard
+            originalId={cover.original_id}
+            coverId={cover.cover_id}
+            slug={cover.slug}
+          />
+        ))
+      }
     </div>
   </div>
 </BaseLayout>

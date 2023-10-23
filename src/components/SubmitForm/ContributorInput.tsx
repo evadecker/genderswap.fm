@@ -35,6 +35,7 @@ export const ContributorInput = ({ control }: Props) => {
       </Label.Root>
       <input
         id="contributor"
+        type="text"
         className={styles.input}
         onKeyDown={handleKeyDown}
         placeholder="Agnetha"

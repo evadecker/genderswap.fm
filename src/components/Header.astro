@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
 ---
 
 <script>
@@ -42,24 +43,8 @@ import Icon from "./Icon.astro";
 
 <header transition:persist>
   <div class="container">
-    <a class="wordmark" href="/">Genderswap.fm</a>
+    <Logo />
     <nav>
-      <div class="toggle">
-        <button
-          type="button"
-          data-theme-toggle-light
-          aria-label="Enable light theme"
-        >
-          <Icon icon="sun" />
-        </button>
-        <button
-          type="button"
-          data-theme-toggle-dark
-          aria-label="Enable dark theme"
-        >
-          <Icon icon="moon" />
-        </button>
-      </div>
       <a href="/new" class="button">
         <Icon icon="add" />
          Submit a cover</a
@@ -92,21 +77,12 @@ import Icon from "./Icon.astro";
     gap: var(--space-s);
   }
 
-  .wordmark {
-    font-size: var(--step-0);
-    font-family: var(--font-sans);
-    font-weight: var(--font-weight-bold);
-    text-decoration: "none";
-    position: "relative";
-    bottom: "-0.1em";
-  }
-
   .button {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-2xs);
-    background: var(--violet-3);
+    background: var(--mauve-3);
     line-height: 1;
     padding-block: var(--space-xs);
     padding-inline: var(--space-xs) var(--space-m);
@@ -114,42 +90,12 @@ import Icon from "./Icon.astro";
     border: none;
 
     &:hover {
-      background: var(--violet-4);
+      background: var(--mauve-4);
     }
-  }
 
-  .toggle {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.2em;
-    margin-inline-start: 0.5em;
-    border-radius: var(--radius-full);
-    line-height: 0;
-
-    button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      background: none;
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-full);
-      color: var(--violet-11);
-      cursor: pointer;
-
-      &[data-theme-toggle-light].active,
-      &[data-theme-toggle-light]:hover {
-        background: var(--orange-3);
-        color: var(--orange-11);
-      }
-
-      &[data-theme-toggle-dark].active,
-      &[data-theme-toggle-dark]:hover {
-        background: var(--violet-3);
-        color: var(--violet-11);
-      }
+    &:focus {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
     }
   }
 </style>

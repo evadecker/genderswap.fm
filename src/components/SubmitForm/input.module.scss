@@ -11,7 +11,7 @@
 .input {
   border: none;
   display: block;
-  background: var(--violet-3);
+  background: var(--mauve-3);
   border-radius: var(--radius-m);
   padding-block: var(--space-s);
   padding-inline: var(--space-m);
@@ -19,7 +19,7 @@
   resize: none;
 
   &::placeholder {
-    color: var(--violet-a7);
+    color: var(--mauve-8);
   }
 
   &:focus {

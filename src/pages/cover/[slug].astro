@@ -3,7 +3,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SongDetails from "../../components/SongDetails.astro";
 import { supabase } from "../../lib/supabase";
 import Tag from "../../components/Tag.astro";
-import Stack from "../../components/Stack.astro";
 import dayjs from "dayjs";
 import { getReadableTitle } from "../../helpers/helpers";
 
@@ -11,7 +10,7 @@ const { slug } = Astro.params;
 
 const { data } = await supabase
   .from("covers")
-  .select()
+  .select("original_id, cover_id, created_at, description, contributor")
   .eq("slug", slug!!)
   .single();
 
@@ -24,13 +23,17 @@ if (!data) {
 
 const { data: original } = await supabase
   .from("songs")
-  .select()
+  .select(
+    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
+  )
   .eq("id", data.original_id)
   .single();
 
 const { data: cover } = await supabase
   .from("songs")
-  .select()
+  .select(
+    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
+  )
   .eq("id", data.cover_id)
   .single();
 
@@ -41,7 +44,14 @@ if (original?.name !== cover?.name) {
   coveredAs = cover?.name;
 }
 
-const title = getReadableTitle({ original, cover });
+const title =
+  original && cover
+    ? getReadableTitle({
+        originalName: original.name,
+        originalArtists: original?.artists,
+        coverArtists: cover.artists,
+      })
+    : "Loading...";
 
 let tags = [];
 
@@ -135,8 +145,31 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
     }
   </header>
   <div class="compare">
-    <SongDetails type="original" song={original} />
-    <SongDetails type="cover" song={cover} coveredAs={coveredAs} />
+    {
+      original && cover && (
+        <>
+          <SongDetails
+            type="original"
+            id={original.id}
+            url={original.url}
+            artists={original.artists}
+            albumName={original.album_name}
+            albumImg={original.album_img[0]}
+            albumYear={original.album_year}
+          />
+          <SongDetails
+            type="cover"
+            id={cover.id}
+            url={cover.url}
+            artists={cover.artists}
+            albumName={cover.album_name}
+            albumImg={cover.album_img[0]}
+            albumYear={cover.album_year}
+            coveredAs={coveredAs}
+          />
+        </>
+      )
+    }
   </div>
   <footer class="footer">
     <span

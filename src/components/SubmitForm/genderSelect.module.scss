@@ -20,8 +20,8 @@
 
 .toggle {
   all: unset;
-  background-color: var(--violet-3);
-  color: var(--violet-11);
+  background-color: var(--mauve-3);
+  color: var(--mauve-11);
   border-radius: var(--radius-full);
   display: flex;
   line-height: 1;
@@ -34,7 +34,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--violet-4);
+    background-color: var(--mauve-4);
   }
 
   &[data-state="on"] {

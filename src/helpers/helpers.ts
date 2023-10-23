@@ -1,5 +1,3 @@
-import type { Tables } from "../types/types";
-
 export const getMaxCharacterHelpText = (input: string, maxLength: number) => {
   if (input.length === 0) {
     return `${maxLength} characters max`;
@@ -17,12 +15,13 @@ export const getMaxCharacterHelpText = (input: string, maxLength: number) => {
 };
 
 export const getReadableTitle = ({
-  original,
-  cover,
+  originalName,
+  originalArtists,
+  coverArtists,
 }: {
-  original: Tables<"songs"> | null;
-  cover: Tables<"songs"> | null;
+  originalName: string;
+  originalArtists: string[];
+  coverArtists: string[];
 }) => {
-  if (original === null || cover === null) return "";
-  return `${cover?.artists[0]}’s cover of ${original?.name} by ${original?.artists[0]}`;
+  return `${coverArtists[0]}’s cover of ${originalName} by ${originalArtists[0]}`;
 };

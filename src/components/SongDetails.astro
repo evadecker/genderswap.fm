@@ -1,15 +1,19 @@
 ---
-import type { Tables } from "../types/types";
 import Icon from "./Icon.astro";
-import Tag from "./Tag.astro";
 
 type Props = {
   type: "original" | "cover";
-  song: Tables<"songs"> | null;
+  id: string;
+  url: string;
+  artists: string[];
+  albumName: string;
+  albumImg: string;
+  albumYear: number;
   coveredAs?: string;
 };
 
-const { type, song, coveredAs } = Astro.props;
+const { type, id, url, artists, albumName, albumImg, albumYear, coveredAs } =
+  Astro.props;
 ---
 
 <div
@@ -20,17 +24,17 @@ const { type, song, coveredAs } = Astro.props;
 >
   <a
     class="link"
-    href={song?.url}
+    href={url}
     itemprop="url"
     aria-label="Open in Spotify"
-    transition:name={`album-${song?.id}`}
+    transition:name={`album-${id}`}
   >
     {
-      song?.album_img && (
+      albumImg && (
         <img
           class="albumArt"
-          src={song.album_img[0]}
-          alt={`${song.album_name} album art`}
+          src={albumImg}
+          alt={`${albumName} album art`}
           itemprop="image"
         />
       )
@@ -44,22 +48,22 @@ const { type, song, coveredAs } = Astro.props;
   </a>
   <div class="details">
     <h2 class="artist" itemprop="byArtist">
-      {song?.artists.join(", ") ?? "Loading..."}
+      {artists.join(", ") ?? "Loading..."}
     </h2>
     {
-      song && (
+      albumName && (
         <>
           <div class="album" itemprop="inAlbum">
-            <em>{song.album_name}</em>,{" "}
+            <em>{albumName}</em>
             <time class="year" itemprop="datePublished">
-              {song.album_year}
+              {albumYear}
             </time>
+            {coveredAs && (
+              <div class="covered-as" itemprop="name">
+                Covered as “{coveredAs}”
+              </div>
+            )}
           </div>
-          {coveredAs && (
-            <div class="coveredAs" itemprop="name">
-              Covered as “{coveredAs}”
-            </div>
-          )}
         </>
       )
     }
@@ -83,6 +87,9 @@ const { type, song, coveredAs } = Astro.props;
 
   .details {
     padding-block: var(--space-l);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
   }
 
   .artist {
@@ -91,6 +98,8 @@ const { type, song, coveredAs } = Astro.props;
 
   .album {
     font-size: var(--step-1);
+    display: flex;
+    flex-direction: column;
   }
 
   .album-overlay {
@@ -144,5 +153,9 @@ const { type, song, coveredAs } = Astro.props;
         opacity: 1;
       }
     }
+  }
+
+  .covered-as {
+    font-size: var(--step--1);
   }
 </style>

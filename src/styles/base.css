@@ -9,8 +9,8 @@ body.dark {
 }
 
 body {
-  color: var(--violet-12);
-  background-color: var(--violet-1);
+  color: var(--mauve-12);
+  background-color: var(--mauve-1);
   display: flex;
   min-height: 100%;
   position: relative;
@@ -24,7 +24,7 @@ body {
 }
 
 ::selection {
-  background: var(--violet-5);
+  background: var(--mauve-5);
 }
 
 h1,
@@ -37,8 +37,7 @@ h6 {
 }
 
 h1 {
-  font-family: var(--font-display);
-  font-size: var(--step-6);
+  font-size: var(--step-5);
   line-height: var(--line-height-h1);
   letter-spacing: var(--letter-spacing-condensed);
 }

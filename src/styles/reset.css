@@ -28,7 +28,6 @@ svg {
 }
 
 svg * {
-  fill: currentColor;
   transform-box: fill-box;
 }
 

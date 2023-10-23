@@ -1,26 +1,25 @@
 ---
-import { getReadableTitle } from "../helpers/helpers";
 import { supabase } from "../lib/supabase";
 import type { Tables } from "../types/types";
-import Icon from "./Icon.astro";
-import Tag from "./Tag.astro";
 
 type Props = {
-  cover: Tables<"covers">;
+  originalId: string;
+  coverId: string;
+  slug: string;
 };
 
-const { cover } = Astro.props;
+const { originalId, coverId, slug } = Astro.props;
 
 const { data: originalSong } = await supabase
   .from("songs")
-  .select()
-  .eq("id", cover.original_id)
+  .select("id, name, artists, album_img, album_name")
+  .eq("id", originalId)
   .single();
 
 const { data: coverSong } = await supabase
   .from("songs")
-  .select()
-  .eq("id", cover.cover_id)
+  .select("id, name, artists, album_img, album_name")
+  .eq("id", coverId)
   .single();
 ---
 
@@ -58,7 +57,7 @@ const { data: coverSong } = await supabase
     </div>
     <a
       class="link"
-      href={`/cover/${cover.slug}`}
+      href={`/cover/${slug}`}
       aria-label={`More about ${originalSong?.name}`}></a>
   </div>
 </div>
@@ -67,14 +66,12 @@ const { data: coverSong } = await supabase
   .cover-card {
     position: relative;
     border-radius: var(--radius-m);
-    padding: var(--space-m);
-    margin: calc(var(--space-m) * -1);
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: flex-start;
     gap: var(--space-xl);
     text-align: center;
-    transition: background-color 0.2s ease;
 
     &:hover {
       .album {
@@ -82,7 +79,9 @@ const { data: coverSong } = await supabase
       }
 
       .title {
-        color: var(--violet-9);
+        background: linear-gradient(to right, var(--violet-9), var(--red-9));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
   }
@@ -95,7 +94,7 @@ const { data: coverSong } = await supabase
   }
 
   .album {
-    background-color: var(--violet-3);
+    background-color: var(--mauve-3);
     border-radius: var(--radius-s);
     overflow: hidden;
     aspect-ratio: 1;
@@ -115,12 +114,14 @@ const { data: coverSong } = await supabase
 
     &:first-child {
       width: 40%;
-      transform: rotate(-10deg) translateX(20%);
+      transform: rotate(-10deg) translateX(10%);
+      transform-origin: 100% 0;
     }
 
     &:last-child {
       width: 60%;
-      transform: rotate(8deg) translateX(-20%);
+      transform: rotate(6deg) translateX(-10%);
+      transform-origin: 0 0;
     }
   }
 
@@ -133,15 +134,15 @@ const { data: coverSong } = await supabase
   .title,
   .artist {
     text-wrap: balance;
+    transition: color 0.2s ease;
   }
 
   .title {
     font-size: var(--step-2);
-    transition: color 0.2s ease;
   }
 
   .artist {
-    opacity: 0.7;
+    color: var(--mauve-9);
   }
 
   .link {
