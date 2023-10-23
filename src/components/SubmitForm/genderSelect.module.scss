@@ -1,0 +1,50 @@
+.label {
+  display: block;
+  padding-block-end: var(--space-xs);
+}
+
+.instructions {
+  font-size: var(--step--1);
+  font-style: italic;
+}
+
+.toggleWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.toggle {
+  all: unset;
+  background-color: var(--mauve-3);
+  color: var(--mauve-11);
+  border-radius: var(--radius-full);
+  display: flex;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-s);
+  padding-inline-end: var(--space-m);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--mauve-4);
+  }
+
+  &[data-state="on"] {
+    background-color: var(--violet-9);
+    border-color: var(--violet-9);
+    color: white;
+  }
+
+  &:focus {
+    outline: 3px solid var(--violet-a9);
+    outline-offset: 3px;
+  }
+}

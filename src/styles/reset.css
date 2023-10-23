@@ -23,6 +23,10 @@ svg {
   height: auto;
 }
 
+svg {
+  flex-shrink: 0;
+}
+
 svg * {
   transform-box: fill-box;
 }

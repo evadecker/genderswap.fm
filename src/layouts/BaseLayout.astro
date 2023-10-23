@@ -10,14 +10,12 @@ import Header from "../components/Header.astro";
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
 }
 
 const { title, description } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const pageTitle =
-  Astro.url.pathname === "/" ? title : `${title} · Genderswap.fm`;
 ---
 
 <!doctype html>
@@ -29,14 +27,27 @@ const pageTitle =
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#FEFCFB" />
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
-    <link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
-    <meta name="description" content={description} />
+    <meta
+      name="description"
+      content={description ??
+        "Some covers deliver the age-old simple pleasures of drag."}
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Genderswap.fm" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:alt" content="The Genderswap.fm logo" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="stylesheet" href="https://use.typekit.net/hjc0gsm.css" />
-    <title>{pageTitle}</title>
+    <title>{title}</title>
     <ViewTransitions />
   </head>
   <body transition:animate="none">
