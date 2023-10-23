@@ -5,13 +5,32 @@ import { supabase } from "../../lib/supabase";
 import Tag from "../../components/Tag.astro";
 import dayjs from "dayjs";
 import { getReadableTitle } from "../../helpers/helpers";
+import type { Tables } from "../../types/types";
 
 const { slug } = Astro.params;
 
+// We have to redefine this type because Supabase is inferring it incorrectly
+type Cover = {
+  original: Tables<"songs">;
+  cover: Tables<"songs">;
+  created_at: string;
+  description: string;
+  contributor: string;
+};
+
 const { data } = await supabase
   .from("covers")
-  .select("original_id, cover_id, created_at, description, contributor")
+  .select(
+    `
+    original:original_id(id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature),
+    cover:cover_id(id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature),
+    created_at,
+    description,
+    contributor
+  `
+  )
   .eq("slug", slug!!)
+  .returns<Cover>()
   .single();
 
 if (!data) {
@@ -21,41 +40,25 @@ if (!data) {
   });
 }
 
-const { data: original } = await supabase
-  .from("songs")
-  .select(
-    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
-  )
-  .eq("id", data.original_id)
-  .single();
-
-const { data: cover } = await supabase
-  .from("songs")
-  .select(
-    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
-  )
-  .eq("id", data.cover_id)
-  .single();
-
-const { created_at, description, contributor } = data;
+const { original, cover, created_at, description, contributor } = data as Cover;
 
 let coveredAs;
-if (original?.name.toLowerCase() !== cover?.name.toLowerCase()) {
-  coveredAs = cover?.name;
+if (original.name.toLowerCase() !== cover.name?.toLowerCase()) {
+  coveredAs = cover.name;
 }
 
 const title =
   original && cover
     ? getReadableTitle({
         originalName: original.name,
-        originalArtists: original?.artists,
+        originalArtists: original.artists,
         coverArtists: cover.artists,
       })
     : "Loading...";
 
 let tags = [];
 
-const distanceInYears = cover?.album_year!! - original?.album_year!!;
+const distanceInYears = cover.album_year!! - original.album_year!!;
 
 if (distanceInYears >= 50) {
   tags.push("50+ years apart");
@@ -69,12 +72,12 @@ if (distanceInYears >= 50) {
   tags.push("10+ years apart");
 }
 
-const energyDifference = Math.abs(original?.energy!! - cover?.energy!!);
+const energyDifference = Math.abs(original.energy!! - cover.energy!!);
 if (energyDifference >= 0.5) {
   tags.push("big energy difference");
 }
 
-const tempoDifference = cover?.tempo!! - original?.tempo!!;
+const tempoDifference = cover.tempo!! - original.tempo!!;
 if (tempoDifference <= -50) {
   tags.push("50+ BPM slower");
 } else if (tempoDifference <= -40) {
@@ -93,22 +96,22 @@ if (tempoDifference <= -50) {
   tags.push("20+ BPM faster");
 }
 
-if (original?.key !== cover?.key) {
+if (original.key !== cover.key) {
   tags.push("key change");
 }
 
-if (original?.time_signature !== cover?.time_signature) {
+if (original.time_signature !== cover.time_signature) {
   tags.push("time signature change");
 }
 
-const valenceChange = cover?.valence!! - original?.valence!!;
+const valenceChange = cover.valence!! - original.valence!!;
 if (valenceChange >= 0.3) {
   tags.push("happier");
 } else if (valenceChange <= -0.3) {
   tags.push("sadder");
 }
 
-const danceabilityChange = cover?.danceability!! - original?.danceability!!;
+const danceabilityChange = cover.danceability!! - original.danceability!!;
 if (danceabilityChange >= 0.3) {
   tags.push("more danceable");
 } else if (danceabilityChange <= -0.3) {
@@ -116,13 +119,13 @@ if (danceabilityChange >= 0.3) {
 }
 
 if (
-  original?.gender.toString() === "female" &&
-  cover?.gender.toString() === "male"
+  original.gender.toString() === "female" &&
+  cover.gender.toString() === "male"
 ) {
   tags.push("FTM");
 } else if (
-  original?.gender.toString() === "male" &&
-  cover?.gender.toString() === "female"
+  original.gender.toString() === "male" &&
+  cover.gender.toString() === "female"
 ) {
   tags.push("MTF");
 }
@@ -132,7 +135,7 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 
 <BaseLayout title={title} description={description!!}>
   <header class="header">
-    <h1 class="title">{original?.name}</h1>
+    <h1 class="title">{original.name}</h1>
     {description && <p class="description">{description}</p>}
     {
       tags && (
