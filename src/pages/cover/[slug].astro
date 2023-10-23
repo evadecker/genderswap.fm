@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import SongDetails from "../../components/SongDetails.astro";
+import CoverComparison from "../../components/CoverComparison.astro";
 import { supabase } from "../../lib/supabase";
 import Tag from "../../components/Tag.astro";
 import dayjs from "dayjs";
@@ -10,7 +10,7 @@ import type { Tables } from "../../types/types";
 const { slug } = Astro.params;
 
 // We have to redefine this type because Supabase is inferring it incorrectly
-type Cover = {
+export type Cover = {
   original: Tables<"songs">;
   cover: Tables<"songs">;
   created_at: string;
@@ -41,11 +41,6 @@ if (!data) {
 }
 
 const { original, cover, created_at, description, contributor } = data as Cover;
-
-let coveredAs;
-if (original.name.toLowerCase() !== cover.name?.toLowerCase()) {
-  coveredAs = cover.name;
-}
 
 const title =
   original && cover
@@ -147,33 +142,7 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
       )
     }
   </header>
-  <div class="compare">
-    {
-      original && cover && (
-        <>
-          <SongDetails
-            type="original"
-            id={original.id}
-            url={original.url}
-            artists={original.artists}
-            albumName={original.album_name}
-            albumImg={original.album_img[0]}
-            albumYear={original.album_year}
-          />
-          <SongDetails
-            type="cover"
-            id={cover.id}
-            url={cover.url}
-            artists={cover.artists}
-            albumName={cover.album_name}
-            albumImg={cover.album_img[0]}
-            albumYear={cover.album_year}
-            coveredAs={coveredAs}
-          />
-        </>
-      )
-    }
-  </div>
+  <CoverComparison cover={data} />
   <footer class="footer">
     <span
       >Added {contributor && `by ${contributor} on `}
@@ -185,7 +154,7 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 <style lang="scss">
   .header {
     padding-block-start: var(--space-xl);
-    padding-block-end: var(--space-2xl);
+    padding-block-end: var(--space-3xl);
     padding-inline: var(--space-m);
     display: flex;
     flex-direction: column;
@@ -207,13 +176,6 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
     justify-content: center;
     gap: var(--space-s);
     margin-block-start: var(--space-s);
-  }
-
-  .compare {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
   }
 
   .footer {

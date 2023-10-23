@@ -1,0 +1,224 @@
+---
+import type { Cover } from "../pages/cover/[slug].astro";
+import Icon from "./Icon.astro";
+
+type Props = {
+  cover: Cover;
+};
+
+const { cover } = Astro.props;
+const { original: originalSong, cover: coverSong } = cover;
+
+let coveredAs;
+if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
+  coveredAs = coverSong.name;
+}
+---
+
+<div class="compare">
+  <div
+    class:list={["track", "original"]}
+    itemprop="track"
+    itemscope
+    itemtype="https://schema.org/MusicRecording"
+  >
+    <div class="album" transition:name={`album-${originalSong.id}`}>
+      <img
+        class="album-art"
+        src={originalSong.album_img[0]}
+        alt={`${originalSong.album_name} album art`}
+        itemprop="image"
+      />
+    </div>
+    <div class="details">
+      <a
+        href={originalSong.url}
+        itemprop="url"
+        aria-label="Open in Spotify"
+        class="song-link"
+      >
+        <Icon icon="spotify" variant="filled" />
+         Listen to original
+      </a>
+      <h2 class="artist" itemprop="byArtist">
+        {originalSong.artists.join(", ") ?? "Loading..."}
+      </h2>
+      <time class="album-year" itemprop="datePublished">
+        {originalSong.album_year}
+      </time>
+      <em class="album-name">{originalSong.album_name}</em>
+    </div>
+  </div>
+  <div
+    class:list={["track", "cover"]}
+    itemprop="track"
+    itemscope
+    itemtype="https://schema.org/MusicRecording"
+  >
+    <div class="album" transition:name={`album-${coverSong.id}`}>
+      <img
+        class="album-art"
+        src={coverSong.album_img[0]}
+        alt={`${coverSong.album_name} album art`}
+        itemprop="image"
+      />
+    </div>
+    <div class="details">
+      <a
+        href={coverSong.url}
+        itemprop="url"
+        aria-label="Open in Spotify"
+        class="song-link"
+      >
+        <Icon icon="spotify" variant="filled" />
+         Listen to cover
+      </a>
+      <h2 class="artist" itemprop="byArtist">
+        {coverSong.artists.join(", ") ?? "Loading..."}
+      </h2>
+      <time class="album-year" itemprop="datePublished">
+        {coverSong.album_year}
+      </time>
+      <em class="album-name">{coverSong.album_name}</em>
+      {
+        coveredAs && (
+          <div class="covered-as" itemprop="name">
+            Covered as “{coveredAs}”
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @keyframes dim {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.4;
+    }
+  }
+
+  .compare {
+    display: grid;
+    max-width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-xl);
+    scroll-padding-inline: var(--space-xl);
+    gap: var(--space-l);
+    grid-template:
+      "originalAlbum coverAlbum"
+      "originalContent coverContent";
+    grid-template-columns: 1fr 1fr;
+    overflow-x: scroll;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 85vw 85vw;
+      scroll-snap-type: x mandatory;
+    }
+  }
+
+  .track:first-child {
+    scroll-snap-align: start;
+    @supports (animation-timeline: scroll()) {
+      animation: dim linear both;
+      animation-direction: normal;
+      animation-timeline: scroll(x);
+    }
+  }
+
+  .track:last-child {
+    scroll-snap-align: end;
+    @supports (animation-timeline: scroll()) {
+      animation: dim linear both;
+      animation-direction: reverse;
+      animation-timeline: scroll(x);
+    }
+  }
+
+  .album {
+    user-select: none;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
+    background: var(--mauve-3);
+    overflow: hidden;
+    border-radius: var(--radius-m);
+    box-shadow:
+      0px 1.7px 2.2px rgba(0, 0, 0, 0.02),
+      0px 4px 5.3px rgba(0, 0, 0, 0.028),
+      0px 7.5px 10px rgba(0, 0, 0, 0.035),
+      0px 13.4px 17.9px rgba(0, 0, 0, 0.042),
+      0px 25.1px 33.4px rgba(0, 0, 0, 0.05),
+      0px 60px 80px rgba(0, 0, 0, 0.07);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .original {
+    .album {
+      grid-area: originalAlbum;
+      margin-inline-start: auto;
+    }
+    .details {
+      grid-area: originalContent;
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+
+  .cover {
+    .album {
+      grid-area: coverAlbum;
+    }
+    .details {
+      grid-area: coverContent;
+    }
+  }
+
+  .details {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-items: flex-start;
+    padding-block-start: var(--space-l);
+  }
+
+  .artist {
+    font-size: var(--step-3);
+  }
+
+  .album-year,
+  .album-name {
+    font-size: var(--step-1);
+  }
+
+  .song-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-s);
+    padding-inline-end: var(--space-m);
+    background-color: var(--mauve-3);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-bold);
+
+    &:hover {
+      background-color: var(--violet-3);
+      color: var(--violet-12);
+    }
+
+    :global(svg) {
+      width: var(--space-xl);
+    }
+  }
+</style>
