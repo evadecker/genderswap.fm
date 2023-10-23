@@ -113,9 +113,10 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
       "originalAlbum coverAlbum"
       "originalContent coverContent";
     grid-template-columns: 1fr 1fr;
-    overflow-x: scroll;
 
     @media (max-width: 480px) {
+      overflow-x: scroll;
+      overflow-y: hidden;
       grid-template-columns: 85vw 85vw;
       scroll-snap-type: x mandatory;
     }
@@ -147,6 +148,8 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
     background: var(--mauve-3);
     overflow: hidden;
     border-radius: var(--radius-m);
+    position: relative;
+    z-index: 1;
     box-shadow:
       0px 1.7px 2.2px rgba(0, 0, 0, 0.02),
       0px 4px 5.3px rgba(0, 0, 0, 0.028),
