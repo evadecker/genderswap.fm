@@ -27,7 +27,6 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
   const debouncedSearchQuery = useDebounce(searchQuery, 250);
 
   const search = async (query: string | undefined) => {
-    console.log("called search!");
     if (!query || query === "") {
       setSearchResults(undefined);
       return;
