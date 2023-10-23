@@ -131,7 +131,7 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
             className={styles.searchInput}
             type="search"
             placeholder={
-              name === "original" ? "abba angeleyes" : "the czars angel eyes"
+              name === "original" ? "abba angeleyes" : "the czars angeleyes"
             }
             {...getInputProps()}
           />
