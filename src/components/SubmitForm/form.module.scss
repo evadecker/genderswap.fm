@@ -22,9 +22,11 @@
   margin-inline: auto;
   font-weight: var(--font-weight-bold);
 
-  &:hover {
-    background: var(--violet-9);
-    color: white;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: var(--violet-9);
+      color: white;
+    }
   }
 
   &[disabled] {

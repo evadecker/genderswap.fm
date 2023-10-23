@@ -72,15 +72,17 @@ const {
     gap: var(--space-2xl);
     text-align: center;
 
-    &:hover {
-      .album {
-        transform: rotate(0) translateX(0);
-      }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        .album {
+          transform: rotate(0) translateX(0);
+        }
 
-      .title {
-        background: linear-gradient(to right, var(--violet-9), var(--red-9));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        .title {
+          background: linear-gradient(to right, var(--violet-9), var(--red-9));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
     }
   }
