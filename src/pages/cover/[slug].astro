@@ -1,0 +1,222 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SongDetails from "../../components/SongDetails.astro";
+import { supabase } from "../../lib/supabase";
+import Tag from "../../components/Tag.astro";
+import dayjs from "dayjs";
+import { getReadableTitle } from "../../helpers/helpers";
+
+const { slug } = Astro.params;
+
+const { data } = await supabase
+  .from("covers")
+  .select("original_id, cover_id, created_at, description, contributor")
+  .eq("slug", slug!!)
+  .single();
+
+if (!data) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const { data: original } = await supabase
+  .from("songs")
+  .select(
+    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
+  )
+  .eq("id", data.original_id)
+  .single();
+
+const { data: cover } = await supabase
+  .from("songs")
+  .select(
+    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
+  )
+  .eq("id", data.cover_id)
+  .single();
+
+const { created_at, description, contributor } = data;
+
+let coveredAs;
+if (original?.name !== cover?.name) {
+  coveredAs = cover?.name;
+}
+
+const title =
+  original && cover
+    ? getReadableTitle({
+        originalName: original.name,
+        originalArtists: original?.artists,
+        coverArtists: cover.artists,
+      })
+    : "Loading...";
+
+let tags = [];
+
+const distanceInYears = cover?.album_year!! - original?.album_year!!;
+
+if (distanceInYears >= 50) {
+  tags.push("50+ years apart");
+} else if (distanceInYears >= 40) {
+  tags.push("40+ years apart");
+} else if (distanceInYears >= 30) {
+  tags.push("30+ years apart");
+} else if (distanceInYears >= 20) {
+  tags.push("20+ years apart");
+} else if (distanceInYears >= 10) {
+  tags.push("10+ years apart");
+}
+
+const energyDifference = Math.abs(original?.energy!! - cover?.energy!!);
+if (energyDifference >= 0.5) {
+  tags.push("big energy difference");
+}
+
+const tempoDifference = cover?.tempo!! - original?.tempo!!;
+if (tempoDifference <= -50) {
+  tags.push("50+ BPM slower");
+} else if (tempoDifference <= -40) {
+  tags.push("40+ BPM slower");
+} else if (tempoDifference <= -30) {
+  tags.push("30+ BPM slower");
+} else if (tempoDifference <= -20) {
+  tags.push("20+ BPM slower");
+} else if (tempoDifference >= 50) {
+  tags.push("50+ BPM faster");
+} else if (tempoDifference >= 40) {
+  tags.push("40+ BPM faster");
+} else if (tempoDifference >= 30) {
+  tags.push("30+ BPM faster");
+} else if (tempoDifference >= 20) {
+  tags.push("20+ BPM faster");
+}
+
+if (original?.key !== cover?.key) {
+  tags.push("key change");
+}
+
+if (original?.time_signature !== cover?.time_signature) {
+  tags.push("time signature change");
+}
+
+const valenceChange = cover?.valence!! - original?.valence!!;
+if (valenceChange >= 0.3) {
+  tags.push("happier");
+} else if (valenceChange <= -0.3) {
+  tags.push("sadder");
+}
+
+const danceabilityChange = cover?.danceability!! - original?.danceability!!;
+if (danceabilityChange >= 0.3) {
+  tags.push("more danceable");
+} else if (danceabilityChange <= -0.3) {
+  tags.push("less danceable");
+}
+
+if (
+  original?.gender.toString() === "female" &&
+  cover?.gender.toString() === "male"
+) {
+  tags.push("FTM");
+} else if (
+  original?.gender.toString() === "male" &&
+  cover?.gender.toString() === "female"
+) {
+  tags.push("MTF");
+}
+
+const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
+---
+
+<BaseLayout title={title} description={description!!}>
+  <header class="header">
+    <h1 class="title">{original?.name}</h1>
+    {description && <p class="description">{description}</p>}
+    {
+      tags && (
+        <div class="tags">
+          {tags.map((tag: string) => (
+            <Tag text={tag} />
+          ))}
+        </div>
+      )
+    }
+  </header>
+  <div class="compare">
+    {
+      original && cover && (
+        <>
+          <SongDetails
+            type="original"
+            id={original.id}
+            url={original.url}
+            artists={original.artists}
+            albumName={original.album_name}
+            albumImg={original.album_img[0]}
+            albumYear={original.album_year}
+          />
+          <SongDetails
+            type="cover"
+            id={cover.id}
+            url={cover.url}
+            artists={cover.artists}
+            albumName={cover.album_name}
+            albumImg={cover.album_img[0]}
+            albumYear={cover.album_year}
+            coveredAs={coveredAs}
+          />
+        </>
+      )
+    }
+  </div>
+  <footer class="footer">
+    <span
+      >Added {contributor && `by ${contributor} on `}
+      <time datetime={created_at}>{formattedDate}</time></span
+    >
+  </footer>
+</BaseLayout>
+
+<style lang="scss">
+  .header {
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-2xl);
+    padding-inline: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-m);
+    text-wrap: balance;
+  }
+
+  .description {
+    font-size: var(--step-1);
+    text-wrap: balance;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-s);
+    margin-block-start: var(--space-s);
+  }
+
+  .compare {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

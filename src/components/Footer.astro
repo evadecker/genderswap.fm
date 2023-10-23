@@ -1,30 +1,41 @@
 ---
-
+import Icon from "./Icon.astro";
 ---
 
 <footer transition:animate="fade">
   <div class="credits">
-    A project by <a href="https://evadecker.com">Eva Decker</a>
+    <span>
+      A project by <a href="https://evadecker.com">Eva Decker</a>
+    </span>
+    <span class="divider">&middot;</span>
+    <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
   </div>
-  <div class="divider">&middot;</div>
-  <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
+  <div class="toggle">
+    <button
+      type="button"
+      data-theme-toggle-light
+      aria-label="Enable light theme"
+    >
+      <Icon icon="sun" />
+    </button>
+    <button type="button" data-theme-toggle-dark aria-label="Enable dark theme">
+      <Icon icon="moon" />
+    </button>
+  </div>
 </footer>
 
 <style lang="scss">
   footer {
-    font-size: var(--step--1);
     width: 100%;
-    padding-block: 1rem;
-    padding-inline-start: 1.5rem;
-    padding-inline-end: 1.5rem;
+    padding: var(--space-xl);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
     a {
       font-weight: var(--font-weight-bold);
       text-decoration: underline;
-      text-decoration-color: var(--sand-7);
+      text-decoration-color: var(--mauve-7);
       text-underline-offset: 0.15em;
 
       &:hover {
@@ -33,9 +44,48 @@
     }
   }
 
+  .credits {
+    font-size: var(--step--1);
+  }
+
   .divider {
-    margin-inline: 0.5em;
+    margin-inline: var(--space-s);
     font-weight: var(--font-weight-bold);
-    color: var(--sand-10);
+    color: var(--mauve-10);
+  }
+
+  .toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    margin-inline-start: 0.5em;
+    border-radius: var(--radius-full);
+    line-height: 0;
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: none;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      color: var(--mauve-10);
+      cursor: pointer;
+
+      &[data-theme-toggle-light].active,
+      &[data-theme-toggle-light]:hover {
+        background: var(--orange-3);
+        color: var(--orange-11);
+      }
+
+      &[data-theme-toggle-dark].active,
+      &[data-theme-toggle-dark]:hover {
+        background: var(--violet-3);
+        color: var(--violet-11);
+      }
+    }
   }
 </style>

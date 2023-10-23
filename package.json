@@ -7,22 +7,40 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts"
   },
   "dependencies": {
+    "@astrojs/react": "^3.0.3",
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/vercel": "^5.0.2",
     "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@radix-ui/react-toggle-group": "^1.0.4",
+    "@spotify/web-api-ts-sdk": "^1.1.2",
+    "@supabase/supabase-js": "^2.38.2",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
     "astro": "^3.3.2",
+    "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
+    "downshift": "^8.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
+    "react-textarea-autosize": "^8.5.3",
     "sass": "^1.69.4"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^6.8.0",
     "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.29.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-astro": "^0.12.0"
+    "prettier-plugin-astro": "^0.12.0",
+    "supabase": "^1.106.1"
   }
 }

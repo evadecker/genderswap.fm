@@ -1,0 +1,161 @@
+---
+import Icon from "./Icon.astro";
+
+type Props = {
+  type: "original" | "cover";
+  id: string;
+  url: string;
+  artists: string[];
+  albumName: string;
+  albumImg: string;
+  albumYear: number;
+  coveredAs?: string;
+};
+
+const { type, id, url, artists, albumName, albumImg, albumYear, coveredAs } =
+  Astro.props;
+---
+
+<div
+  class:list={["track", { original: type === "original" }]}
+  itemprop="track"
+  itemscope
+  itemtype="https://schema.org/MusicRecording"
+>
+  <a
+    class="link"
+    href={url}
+    itemprop="url"
+    aria-label="Open in Spotify"
+    transition:name={`album-${id}`}
+  >
+    {
+      albumImg && (
+        <img
+          class="albumArt"
+          src={albumImg}
+          alt={`${albumName} album art`}
+          itemprop="image"
+        />
+      )
+    }
+    <div class="album-overlay">
+      <div class="listen-tag">
+        {type === "original" ? "Listen to original" : "Listen to cover"}
+      </div>
+      <Icon icon="spotify" variant="filled" />
+    </div>
+  </a>
+  <div class="details">
+    <h2 class="artist" itemprop="byArtist">
+      {artists.join(", ") ?? "Loading..."}
+    </h2>
+    {
+      albumName && (
+        <>
+          <div class="album" itemprop="inAlbum">
+            <em>{albumName}</em>
+            <time class="year" itemprop="datePublished">
+              {albumYear}
+            </time>
+            {coveredAs && (
+              <div class="covered-as" itemprop="name">
+                Covered as “{coveredAs}”
+              </div>
+            )}
+          </div>
+        </>
+      )
+    }
+  </div>
+</div>
+
+<style lang="scss">
+  .track {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding-inline: var(--space-l);
+    width: clamp(100px, 50vw, 600px);
+
+    &.original {
+      text-align: right;
+      align-items: flex-end;
+      width: clamp(80px, 40vw, 480px);
+    }
+  }
+
+  .details {
+    padding-block: var(--space-l);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .artist {
+    font-size: var(--step-3);
+  }
+
+  .album {
+    font-size: var(--step-1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .album-overlay {
+    position: absolute;
+    left: var(--space-s);
+    bottom: var(--space-s);
+    transition: opacity var(--transition-duration) ease-in-out;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    color: var(--white-a11);
+    font-size: var(--step-2);
+    opacity: 0;
+    transition: 0.4s opacity ease;
+    filter: drop-shadow(0 0 var(--space-s) var(--black-a6));
+
+    .original & {
+      flex-direction: row;
+      left: auto;
+      right: var(--space-xs);
+    }
+  }
+
+  .listen-tag {
+    display: inline-block;
+    background: var(--white-a11);
+    color: var(--black-a11);
+    padding-inline: var(--space-s);
+    border-radius: var(--radius-full);
+    font-size: var(--step-0);
+  }
+
+  .link {
+    display: block;
+    position: relative;
+    font-size: var(--step-1);
+    user-select: none;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--mauve-3);
+    overflow: hidden;
+    border-radius: var(--radius-l);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+
+      .album-overlay {
+        opacity: 1;
+      }
+    }
+  }
+
+  .covered-as {
+    font-size: var(--step--1);
+  }
+</style>

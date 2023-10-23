@@ -1,0 +1,7 @@
+.error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--red-9);
+  margin-block-start: var(--space-xs);
+}
