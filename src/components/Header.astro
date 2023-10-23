@@ -93,9 +93,11 @@ import Logo from "./Logo.astro";
     border-radius: var(--radius-full);
     border: none;
 
-    &:hover {
-      background: var(--violet-9);
-      color: white;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background: var(--violet-9);
+        color: white;
+      }
     }
 
     &:focus {

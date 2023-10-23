@@ -215,9 +215,11 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
     border-radius: var(--radius-full);
     font-weight: var(--font-weight-bold);
 
-    &:hover {
-      background-color: var(--violet-3);
-      color: var(--violet-12);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--violet-3);
+        color: var(--violet-12);
+      }
     }
 
     :global(svg) {

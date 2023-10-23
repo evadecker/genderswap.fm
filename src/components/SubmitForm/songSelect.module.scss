@@ -55,8 +55,10 @@
   line-height: 0;
   color: var(--mauve-11);
 
-  &:hover {
-    background: var(--mauve-4);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: var(--mauve-4);
+    }
   }
 }
 

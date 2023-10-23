@@ -87,23 +87,25 @@
         overflow: visible;
       }
 
-      &:hover {
-        .gender {
-          transform: rotate(-5deg);
-        }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          .gender {
+            transform: rotate(-5deg);
+          }
 
-        .swap {
-          transform: rotate(8deg);
-        }
+          .swap {
+            transform: rotate(8deg);
+          }
 
-        .fm {
-          transform: rotate(-10deg);
-        }
+          .fm {
+            transform: rotate(-10deg);
+          }
 
-        .gender-letter,
-        .swap-letter,
-        .fm-letter {
-          animation: wiggle 0.4s linear infinite alternate both;
+          .gender-letter,
+          .swap-letter,
+          .fm-letter {
+            animation: wiggle 0.4s linear infinite alternate both;
+          }
         }
       }
     }

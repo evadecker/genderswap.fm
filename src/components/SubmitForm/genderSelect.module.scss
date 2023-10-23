@@ -33,8 +33,10 @@
   padding-inline-end: var(--space-m);
   cursor: pointer;
 
-  &:hover {
-    background-color: var(--mauve-4);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--mauve-4);
+    }
   }
 
   &[data-state="on"] {

@@ -38,8 +38,10 @@ import Icon from "./Icon.astro";
       text-decoration-color: var(--mauve-7);
       text-underline-offset: 0.15em;
 
-      &:hover {
-        text-decoration-color: inherit;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          text-decoration-color: inherit;
+        }
       }
     }
   }
