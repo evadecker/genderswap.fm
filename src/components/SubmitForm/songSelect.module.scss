@@ -2,22 +2,36 @@
 .selectedSong {
   background: var(--mauve-3);
   border-radius: var(--radius-l);
-  padding: var(--space-s);
-  display: flex;
-  align-items: center;
+  padding: var(--space-m);
+  display: grid;
+  grid-template: "album content clear";
+  grid-template-columns: var(--space-3xl) 1fr var(--space-2xl);
+  align-items: flex-start;
   gap: var(--space-m);
+
+  @media (max-width: 480px) {
+    grid-template:
+      "album clear"
+      "content content";
+    grid-template-columns: var(--space-3xl) 1fr;
+
+    .clearSelection {
+      justify-self: flex-end;
+    }
+  }
 }
 
 .selectedAlbum {
   border-radius: var(--radius-m);
-  width: 120px;
-  height: 120px;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
 }
 
 .selectedLabel {
   display: flex;
   flex-direction: column;
   flex: 1;
+  grid-area: content;
 }
 
 .selectedName {
@@ -34,8 +48,8 @@
   border: none;
   flex-shrink: 0;
   background: transparent;
-  width: 40px;
-  height: 40px;
+  width: var(--space-2xl);
+  height: var(--space-2xl);
   border-radius: var(--radius-full);
   cursor: pointer;
   line-height: 0;
@@ -93,12 +107,12 @@
   margin-top: var(--space-s);
   overflow-y: scroll;
   background-color: var(--mauve-3);
+  border: 1px solid var(--mauve-6);
   border-radius: var(--radius-m);
   box-shadow:
     0px 10px 38px -10px rgba(22, 23, 24, 0.35),
     0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   width: var(--radix-select-trigger-width);
-  max-height: 50vw;
   padding: var(--space-xs);
   z-index: 10;
 
@@ -133,8 +147,8 @@
 }
 
 .resultAlbum {
-  width: 60px;
-  height: 60px;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
   background: var(--mauve-3);
   border-radius: var(--radius-xs);
 }

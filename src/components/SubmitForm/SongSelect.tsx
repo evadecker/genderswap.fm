@@ -29,8 +29,11 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     }
 
     try {
-      // Encode characters and replace all forward slashes with dashes
-      const encoded = encodeURIComponent(query.replace(/\//g, "-"));
+      const encoded = encodeURIComponent(
+        query
+          .replace(/\//g, "-") // Replace all forward slashes with dashes
+          .replace(/\?/g, "") // Remove question marks
+      );
       const response = await fetch(`/api/getSpotifyResults/${encoded}`, {
         method: "GET",
       });
@@ -58,7 +61,7 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     },
     defaultHighlightedIndex: 0,
     items: searchResults || [],
-    itemToString: (item) => (item ? item.name : ""),
+    itemToString: () => "",
     onSelectedItemChange: ({ selectedItem }) => {
       field.onChange(selectedItem);
     },

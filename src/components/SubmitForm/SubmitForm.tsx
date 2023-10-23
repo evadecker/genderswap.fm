@@ -116,7 +116,7 @@ export const SubmitForm = () => {
 
   return (
     <Toast.Provider>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.submitForm} onSubmit={handleSubmit(onSubmit)}>
         <h1 className={styles.header}>Submit a cover</h1>
         <Steps>
           <Step title="Select the original">
