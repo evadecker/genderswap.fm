@@ -5,7 +5,13 @@ import { supabase } from "../lib/supabase";
 
 const { data: covers } = await supabase
   .from("covers")
-  .select("original_id, cover_id, slug")
+  .select(
+    `
+    slug,
+    original:original_id(id, name, artists, album_name, album_img),
+    cover:cover_id(id, name, artists, album_name, album_img)
+  `
+  )
   .order("created_at", { ascending: false });
 ---
 
@@ -20,11 +26,20 @@ const { data: covers } = await supabase
     </header>
     <div class="covers-grid">
       {
-        covers?.map((cover) => (
+        covers?.map(({ original, cover, slug }) => (
+          // @ts-ignore
+          // Supabase types are wrong, this works fine
           <CoverCard
-            originalId={cover.original_id}
-            coverId={cover.cover_id}
-            slug={cover.slug}
+            originalSongId={original.id}
+            originalSongName={original.name}
+            originalSongArtist={original.artists[0]}
+            originalAlbumImg={original.album_img[0]}
+            originalAlbumName={original.album_name}
+            coverSongId={cover.id}
+            coverSongArtist={cover.artists[0]}
+            coverAlbumImg={cover.album_img[0]}
+            coverAlbumName={cover.album_name}
+            slug={slug}
           />
         ))
       }

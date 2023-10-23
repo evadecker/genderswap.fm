@@ -5,13 +5,32 @@ import { supabase } from "../../lib/supabase";
 import Tag from "../../components/Tag.astro";
 import dayjs from "dayjs";
 import { getReadableTitle } from "../../helpers/helpers";
+import type { Tables } from "../../types/types";
 
 const { slug } = Astro.params;
 
+// We have to redefine this type because Supabase is inferring it incorrectly
+type Cover = {
+  original: Tables<"songs">;
+  cover: Tables<"songs">;
+  created_at: string;
+  description: string;
+  contributor: string;
+};
+
 const { data } = await supabase
   .from("covers")
-  .select("original_id, cover_id, created_at, description, contributor")
+  .select(
+    `
+    original:original_id(id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature),
+    cover:cover_id(id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature),
+    created_at,
+    description,
+    contributor
+  `
+  )
   .eq("slug", slug!!)
+  .returns<Cover>()
   .single();
 
 if (!data) {
@@ -21,26 +40,10 @@ if (!data) {
   });
 }
 
-const { data: original } = await supabase
-  .from("songs")
-  .select(
-    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
-  )
-  .eq("id", data.original_id)
-  .single();
-
-const { data: cover } = await supabase
-  .from("songs")
-  .select(
-    "id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature"
-  )
-  .eq("id", data.cover_id)
-  .single();
-
-const { created_at, description, contributor } = data;
+const { original, cover, created_at, description, contributor } = data as Cover;
 
 let coveredAs;
-if (original?.name.toLowerCase() !== cover?.name.toLowerCase()) {
+if (original?.name.toLowerCase() !== cover?.name?.toLowerCase()) {
   coveredAs = cover?.name;
 }
 
@@ -48,7 +51,7 @@ const title =
   original && cover
     ? getReadableTitle({
         originalName: original.name,
-        originalArtists: original?.artists,
+        originalArtists: original.artists,
         coverArtists: cover.artists,
       })
     : "Loading...";

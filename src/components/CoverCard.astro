@@ -2,62 +2,62 @@
 import { supabase } from "../lib/supabase";
 
 type Props = {
-  originalId: string;
-  coverId: string;
+  originalSongId: string;
+  originalSongName: string;
+  originalSongArtist: string;
+  originalAlbumImg: string;
+  originalAlbumName: string;
+  coverSongId: string;
+  coverSongArtist: string;
+  coverAlbumImg: string;
+  coverAlbumName: string;
   slug: string;
 };
 
-const { originalId, coverId, slug } = Astro.props;
-
-const { data: originalSong } = await supabase
-  .from("songs")
-  .select("id, name, artists, album_img, album_name")
-  .eq("id", originalId)
-  .single();
-
-const { data: coverSong } = await supabase
-  .from("songs")
-  .select("id, name, artists, album_img, album_name")
-  .eq("id", coverId)
-  .single();
+const {
+  originalSongId,
+  originalSongName,
+  originalSongArtist,
+  originalAlbumImg,
+  originalAlbumName,
+  coverSongId,
+  coverSongArtist,
+  coverAlbumImg,
+  coverAlbumName,
+  slug,
+} = Astro.props;
 ---
 
 <div class="cover-card">
   <div class="albums">
-    <div class="album" transition:name={`album-${originalSong?.id}`}>
+    <div class="album" transition:name={`album-${originalSongId}`}>
       {
-        originalSong?.album_img && (
-          <img
-            src={originalSong.album_img[0]}
-            alt={`${originalSong.album_name} album art`}
-          />
+        originalAlbumImg && (
+          <img src={originalAlbumImg} alt={`${originalAlbumName} album art`} />
         )
       }
     </div>
-    <div class="album" transition:name={`album-${coverSong?.id}`}>
+    <div class="album" transition:name={`album-${coverSongId}`}>
       {
-        coverSong?.album_img && (
-          <img
-            src={coverSong.album_img[0]}
-            alt={`${coverSong.album_name} album art`}
-          />
+        coverAlbumImg && (
+          <img src={coverAlbumImg} alt={`${coverAlbumName} album art`} />
         )
       }
     </div>
   </div>
   <div class="content">
     <h2 class="title">
-      {originalSong?.name}
+      {originalSongName}
     </h2>
     <div class="artist">
-      <strong>{coverSong?.artists[0]}</strong> covering <strong
-        >{originalSong?.artists[0]}</strong
+      <strong>{coverSongArtist}</strong> covering <strong
+        >{originalSongArtist}</strong
       >
     </div>
     <a
       class="link"
       href={`/cover/${slug}`}
-      aria-label={`More about ${originalSong?.name}`}></a>
+      aria-label={`More about ${originalSongName}`}></a>
   </div>
 </div>
 
