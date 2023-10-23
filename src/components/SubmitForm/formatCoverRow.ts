@@ -1,5 +1,5 @@
-import type { AudioFeatures, Track } from "@spotify/web-api-ts-sdk";
-import type { Enums, Tables } from "../../types/types";
+import type { Track } from "@spotify/web-api-ts-sdk";
+import type { Tables } from "../../types/types";
 
 type Props = {
   original: Track;

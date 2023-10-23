@@ -6,7 +6,7 @@ import { type Track } from "@spotify/web-api-ts-sdk";
 import { supabase } from "../../lib/supabase";
 import * as Toast from "@radix-ui/react-toast";
 import toastStyles from "./toast.module.scss";
-import { useForm, type SubmitHandler, get } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 import type { Enums } from "../../types/types";
 import { DescriptionInput } from "./DescriptionInput";

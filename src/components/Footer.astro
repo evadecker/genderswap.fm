@@ -7,7 +7,7 @@ import Icon from "./Icon.astro";
     <span>
       A project by <a href="https://evadecker.com">Eva Decker</a>
     </span>
-    <span class="divider">&middot;</span>
+    <a href="/about">About</a>
     <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
   </div>
   <div class="toggle">
@@ -46,6 +46,10 @@ import Icon from "./Icon.astro";
 
   .credits {
     font-size: var(--step--1);
+
+    & * + * {
+      margin-inline-start: var(--space-m);
+    }
   }
 
   .divider {
