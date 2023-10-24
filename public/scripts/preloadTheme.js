@@ -1,3 +1,26 @@
+const setTheme = (theme) => {
+  const inactiveTheme = theme === "light" ? "dark" : "light";
+  document.body.classList.remove(inactiveTheme);
+  document.body.classList.add(theme);
+
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme !== null)
+    metaTheme.setAttribute("content", theme === "dark" ? "#121113" : "#FDFCFD");
+
+  window.localStorage.setItem("theme", theme);
+
+  const lightToggle = document.querySelector("[data-theme-toggle-light]");
+  const darkToggle = document.querySelector("[data-theme-toggle-dark]");
+
+  if (theme === "light") {
+    lightToggle?.classList.add("active");
+    darkToggle?.classList.remove("active");
+  } else {
+    lightToggle?.classList.remove("active");
+    darkToggle?.classList.add("active");
+  }
+};
+
 function getUserPreference() {
   if (window.localStorage.getItem("theme")) {
     return window.localStorage.getItem("theme");
@@ -8,42 +31,9 @@ function getUserPreference() {
     : "light";
 }
 
-const setTheme = () => {
+const setInitialTheme = () => {
   const userPreference = getUserPreference();
-  document.body.classList.remove("light", "dark");
-  document.body.classList.add(userPreference);
-
-  const metaTheme = document.querySelector('meta[name="theme-color"]');
-  if (metaTheme !== null)
-    metaTheme.setAttribute(
-      "content",
-      userPreference === "dark" ? "#121113" : "#FDFCFD"
-    );
-
-  window.localStorage.setItem("theme", userPreference);
+  setTheme(userPreference);
 };
 
-setTheme();
-
-// Update body class after swap
-document.addEventListener("astro:after-swap", setTheme);
-
-document.addEventListener(
-  "astro:page-load",
-  () => {
-    const lightToggle = document.querySelector("[data-theme-toggle-light]");
-    const darkToggle = document.querySelector("[data-theme-toggle-dark]");
-
-    const userPreference = getUserPreference();
-
-    // Update class on toggle
-    if (userPreference === "light") {
-      lightToggle?.classList.add("active");
-      darkToggle?.classList.remove("active");
-    } else {
-      lightToggle?.classList.remove("active");
-      darkToggle?.classList.add("active");
-    }
-  },
-  { once: true }
-);
+setInitialTheme();
