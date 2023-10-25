@@ -14,7 +14,7 @@ export const TAGS: Record<Enums<"tags">, Tag> = {
   },
   acousticness_down: {
     label: "less acoustic",
-    description: "These covers take an acoustic song somewhere now.",
+    description: "These covers take an acoustic song somewhere new.",
     slug: "less-acoustic",
   },
   danceability_up: {
