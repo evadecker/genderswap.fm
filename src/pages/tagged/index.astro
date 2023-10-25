@@ -1,0 +1,30 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagCloud from "../../components/TagCloud.astro";
+import { TAGS } from "../../types/tags";
+import { Enums } from "../../types/types";
+
+const tags = Object.keys(TAGS) as Enums<"tags">[];
+
+const title = "Explore by tag";
+const description = "Find covers that are…";
+---
+
+<BaseLayout
+  title={title}
+  description="Find covers that are slower (or faster), happier (or sadder), more danceable (or less), or other things."
+>
+  <PageHeader title={title} description={description} />
+  <div class="tags">
+    <TagCloud tags={tags} />
+  </div>
+</BaseLayout>
+
+<style>
+  .tags {
+    margin-inline: auto;
+    padding-inline: var(--space-xl);
+    max-width: 60ch;
+  }
+</style>

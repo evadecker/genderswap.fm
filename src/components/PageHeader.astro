@@ -1,0 +1,33 @@
+---
+type Props = {
+  title: string;
+  description?: string;
+};
+
+const { title, description } = Astro.props;
+---
+
+<header class="header">
+  <h1 class="title">{title}</h1>
+  {description && <p class="description">{description}</p>}
+  <slot />
+</header>
+
+<style>
+  .header {
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-3xl);
+    padding-inline: var(--space-l);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-l);
+    text-wrap: balance;
+  }
+
+  .description {
+    font-size: var(--step-2);
+    text-wrap: balance;
+  }
+</style>

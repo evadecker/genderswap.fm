@@ -18,6 +18,7 @@ export interface Database {
           id: number
           original_id: string
           slug: string
+          tags: Database["public"]["Enums"]["tags"][] | null
         }
         Insert: {
           contributor?: string | null
@@ -27,6 +28,7 @@ export interface Database {
           id?: number
           original_id: string
           slug: string
+          tags?: Database["public"]["Enums"]["tags"][] | null
         }
         Update: {
           contributor?: string | null
@@ -36,6 +38,7 @@ export interface Database {
           id?: number
           original_id?: string
           slug?: string
+          tags?: Database["public"]["Enums"]["tags"][] | null
         }
         Relationships: [
           {
@@ -132,10 +135,49 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_tags_initial:
+        | {
+            Args: {
+              original_id: string
+              cover_id: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              original_id: string
+              cover_id: string
+              target_table: string
+            }
+            Returns: undefined
+          }
     }
     Enums: {
       gender: "male" | "female" | "other"
+      tags:
+        | "acousticness_up"
+        | "acousticness_down"
+        | "danceability_up"
+        | "danceability_down"
+        | "duration_up"
+        | "duration_down"
+        | "energy_up"
+        | "energy_down"
+        | "instrumentalness_up"
+        | "instrumentalness_down"
+        | "key_change"
+        | "tempo_up"
+        | "tempo_down"
+        | "time_signature_change"
+        | "transition_ftm"
+        | "transition_mtf"
+        | "valence_up"
+        | "valence_down"
+        | "years_apart_10"
+        | "years_apart_20"
+        | "years_apart_30"
+        | "years_apart_40"
+        | "years_apart_50"
     }
     CompositeTypes: {
       [_ in never]: never

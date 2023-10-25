@@ -1,11 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
 import CoverComparison from "../../components/CoverComparison.astro";
 import { supabase } from "../../lib/supabase";
-import Tag from "../../components/Tag.astro";
 import dayjs from "dayjs";
 import { getReadableTitle } from "../../helpers/helpers";
-import type { Tables } from "../../types/types";
+import type { Enums, Tables } from "../../types/types";
+import TagCloud from "../../components/TagCloud.astro";
 
 const { slug } = Astro.params;
 
@@ -16,6 +17,7 @@ export type Cover = {
   created_at: string;
   description: string;
   contributor: string;
+  tags: Enums<"tags">[];
 };
 
 const { data } = await supabase
@@ -26,7 +28,8 @@ const { data } = await supabase
     cover:cover_id(id, name, url, artists, gender, album_name, album_img, album_year, energy, key, tempo, danceability, valence, time_signature),
     created_at,
     description,
-    contributor
+    contributor,
+    tags
   `
   )
   .eq("slug", slug!!)
@@ -40,7 +43,8 @@ if (!data) {
   });
 }
 
-const { original, cover, created_at, description, contributor } = data as Cover;
+const { original, cover, created_at, description, contributor, tags } =
+  data as Cover;
 
 const title =
   original && cover
@@ -51,97 +55,13 @@ const title =
       })
     : "Loading...";
 
-let tags = [];
-
-const distanceInYears = cover.album_year!! - original.album_year!!;
-
-if (distanceInYears >= 50) {
-  tags.push("50+ years apart");
-} else if (distanceInYears >= 40) {
-  tags.push("40+ years apart");
-} else if (distanceInYears >= 30) {
-  tags.push("30+ years apart");
-} else if (distanceInYears >= 20) {
-  tags.push("20+ years apart");
-} else if (distanceInYears >= 10) {
-  tags.push("10+ years apart");
-}
-
-const energyDifference = Math.abs(original.energy!! - cover.energy!!);
-if (energyDifference >= 0.5) {
-  tags.push("big energy difference");
-}
-
-const tempoDifference = cover.tempo!! - original.tempo!!;
-if (tempoDifference <= -50) {
-  tags.push("50+ BPM slower");
-} else if (tempoDifference <= -40) {
-  tags.push("40+ BPM slower");
-} else if (tempoDifference <= -30) {
-  tags.push("30+ BPM slower");
-} else if (tempoDifference <= -20) {
-  tags.push("20+ BPM slower");
-} else if (tempoDifference >= 50) {
-  tags.push("50+ BPM faster");
-} else if (tempoDifference >= 40) {
-  tags.push("40+ BPM faster");
-} else if (tempoDifference >= 30) {
-  tags.push("30+ BPM faster");
-} else if (tempoDifference >= 20) {
-  tags.push("20+ BPM faster");
-}
-
-if (original.key !== cover.key) {
-  tags.push("key change");
-}
-
-if (original.time_signature !== cover.time_signature) {
-  tags.push("time signature change");
-}
-
-const valenceChange = cover.valence!! - original.valence!!;
-if (valenceChange >= 0.3) {
-  tags.push("happier");
-} else if (valenceChange <= -0.3) {
-  tags.push("sadder");
-}
-
-const danceabilityChange = cover.danceability!! - original.danceability!!;
-if (danceabilityChange >= 0.3) {
-  tags.push("more danceable");
-} else if (danceabilityChange <= -0.3) {
-  tags.push("less danceable");
-}
-
-if (
-  original.gender.toString() === "female" &&
-  cover.gender.toString() === "male"
-) {
-  tags.push("FTM");
-} else if (
-  original.gender.toString() === "male" &&
-  cover.gender.toString() === "female"
-) {
-  tags.push("MTF");
-}
-
 const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 ---
 
 <BaseLayout title={title} description={description!!}>
-  <header class="header">
-    <h1 class="title">{original.name}</h1>
-    {description && <p class="description">{description}</p>}
-    {
-      tags && (
-        <div class="tags">
-          {tags.map((tag: string) => (
-            <Tag text={tag} />
-          ))}
-        </div>
-      )
-    }
-  </header>
+  <PageHeader title={original.name} description={description}>
+    <TagCloud tags={tags} />
+  </PageHeader>
   <CoverComparison cover={data} />
   <footer class="footer">
     <span
@@ -151,33 +71,7 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
   </footer>
 </BaseLayout>
 
-<style lang="scss">
-  .header {
-    padding-block-start: var(--space-xl);
-    padding-block-end: var(--space-3xl);
-    padding-inline: var(--space-m);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-m);
-    text-wrap: balance;
-  }
-
-  .description {
-    font-size: var(--step-1);
-    text-wrap: balance;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-s);
-    margin-block-start: var(--space-s);
-  }
-
+<style>
   .footer {
     padding-block: var(--space-2xl);
     display: flex;
