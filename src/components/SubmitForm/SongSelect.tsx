@@ -166,7 +166,7 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
           ))}
         </ul>
       </div>
-      {error && <ErrorMessage error="Select a song" />}
+      {error?.message && <ErrorMessage error={error.message} />}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { type Track } from "@spotify/web-api-ts-sdk";
 import { supabase } from "../../lib/supabase";
 import * as Toast from "@radix-ui/react-toast";
 import toastStyles from "./toast.module.scss";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler, useWatch } from "react-hook-form";
 
 import type { Enums } from "../../types/types";
 import { DescriptionInput } from "./DescriptionInput";
@@ -47,6 +47,8 @@ export const SubmitForm = () => {
     },
   });
 
+  const selectedOriginal = useWatch({ control, name: "original" });
+
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     const {
       original,
@@ -59,6 +61,10 @@ export const SubmitForm = () => {
 
     // Save name to local storage for reuse
     window.localStorage.setItem("contributor", contributor);
+
+    if (!original || !cover) {
+      return;
+    }
 
     // Shape track data for submission to the 'songs' table
     const originalSongRow =
@@ -125,7 +131,12 @@ export const SubmitForm = () => {
           <Step title="Select the original">
             <SongSelect
               name="original"
-              rules={{ required: true }}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please select a song",
+                },
+              }}
               control={control}
             />
             <GenderSelect
@@ -137,7 +148,16 @@ export const SubmitForm = () => {
           <Step title="Select the cover">
             <SongSelect
               name="cover"
-              rules={{ required: true }}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Please select a song",
+                },
+                validate: (value) =>
+                  (selectedOriginal &&
+                    (value as Track).id !== selectedOriginal.id) ||
+                  "Cover cannot be the same as the original",
+              }}
               control={control}
             />
             <GenderSelect
@@ -185,16 +205,18 @@ export const SubmitForm = () => {
           Submit
         </button>
       </form>
-      {toastMessage && (
-        <Toast.Root className={toastStyles.root} duration={4000}>
-          <Toast.Title className={toastStyles.title}>
-            {toastMessage.title}
-          </Toast.Title>
-          <Toast.Description className={toastStyles.description}>
-            {toastMessage.description}
-          </Toast.Description>
-        </Toast.Root>
-      )}
+      <Toast.Root
+        open={!!toastMessage}
+        className={toastStyles.root}
+        duration={4000}
+      >
+        <Toast.Title className={toastStyles.title}>
+          {toastMessage?.title}
+        </Toast.Title>
+        <Toast.Description className={toastStyles.description}>
+          {toastMessage?.description}
+        </Toast.Description>
+      </Toast.Root>
       <Toast.Viewport className={toastStyles.viewport} />
     </Toast.Provider>
   );
