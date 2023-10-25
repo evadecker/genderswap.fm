@@ -3,7 +3,7 @@ import styles from "./songSelect.module.scss";
 import classNames from "classnames";
 import { useDebounce } from "@uidotdev/usehooks";
 
-import { useEffect, useState, type FocusEventHandler, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCombobox } from "downshift";
 import {
   useController,

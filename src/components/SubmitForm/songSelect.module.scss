@@ -117,6 +117,7 @@
   width: var(--radix-select-trigger-width);
   padding: var(--space-xs);
   z-index: 10;
+  max-height: 40vh;
 
   &.hidden {
     display: none;
