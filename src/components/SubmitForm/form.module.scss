@@ -34,6 +34,15 @@
     opacity: 0.7;
     cursor: default;
   }
+
+  &:focus {
+    outline: 3px solid var(--violet-a9);
+    outline-offset: 3px;
+  }
+
+  :global(svg) {
+    width: var(--space-xl);
+  }
 }
 
 @keyframes spin {

@@ -18,10 +18,10 @@ import Icon from "./Icon.astro";
       data-theme-toggle-light
       aria-label="Enable light theme"
     >
-      <Icon icon="sun" />
+      <Icon icon="sun" size="small" />
     </button>
     <button type="button" data-theme-toggle-dark aria-label="Enable dark theme">
-      <Icon icon="moon" />
+      <Icon icon="moon" size="small" />
     </button>
   </div>
 </footer>
@@ -123,11 +123,10 @@ import Icon from "./Icon.astro";
     line-height: 0;
 
     button {
+      all: unset;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: none;
-      background: none;
       width: 32px;
       height: 32px;
       border-radius: var(--radius-full);

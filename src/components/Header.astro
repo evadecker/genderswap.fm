@@ -47,8 +47,8 @@ import Logo from "./Logo.astro";
     <nav>
       <a href="/new" class="button">
         <Icon icon="add" />
-         Submit a cover</a
-      >
+        <span>Submit a cover</span>
+      </a>
     </nav>
   </div>
 </header>
@@ -80,6 +80,7 @@ import Logo from "./Logo.astro";
   }
 
   .button {
+    all: unset;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,9 +90,8 @@ import Logo from "./Logo.astro";
     line-height: 1;
     font-weight: var(--font-weight-bold);
     padding-block: var(--space-xs);
-    padding-inline: var(--space-xs) var(--space-m);
+    padding-inline: var(--space-s) var(--space-m);
     border-radius: var(--radius-full);
-    border: none;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
