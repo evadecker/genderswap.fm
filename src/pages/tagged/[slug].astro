@@ -10,7 +10,7 @@ import Tag from "../../components/Tag.astro";
 const { slug } = Astro.params;
 
 const tag: Enums<"tags"> | undefined = Object.keys(TAGS).find(
-  (key) => TAGS[key].slug === slug
+  (key) => TAGS[key as Enums<"tags">].slug === slug
 ) as Enums<"tags"> | undefined;
 
 if (!tag) {
@@ -43,7 +43,7 @@ const title = `Tagged “${TAGS[tag].label}”`;
 const description = TAGS[tag].description;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={`${title} on Genderswap.fm`} description={description}>
   <PageHeader title={title} description={description}>
     <Tag text="Explore all tags" url="/tagged" />
   </PageHeader>
