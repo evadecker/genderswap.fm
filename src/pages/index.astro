@@ -2,6 +2,7 @@
 import CoverCardGrid from "../components/CoverCardGrid.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Tag from "../components/Tag.astro";
+import TagCloud from "../components/TagCloud.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { supabase } from "../lib/supabase";
 
@@ -25,7 +26,10 @@ const { data: covers } = await supabase
     title="Genderswap.fm"
     description="Some covers deliver the age-old simple pleasures of drag."
   >
-    <Tag text="Explore by tag" url="/tagged" />
+    <TagCloud>
+      <Tag text="Explore by tag" url="/tagged" />
+      <Tag text="Get random cover" url="/random" />
+    </TagCloud>
   </PageHeader>
   <CoverCardGrid covers={covers as any} />
 </BaseLayout>

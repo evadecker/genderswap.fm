@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagCloud from "../../components/TagCloud.astro";
 import { TAGS } from "../../types/tags";
 import { type Enums } from "../../types/types";
+import Tag from "../../components/Tag.astro";
 
 const tags = Object.keys(TAGS) as Enums<"tags">[];
 
@@ -17,7 +18,13 @@ const description = "Find covers that are…";
 >
   <PageHeader title={title} description={description} />
   <div class="tags">
-    <TagCloud tags={tags} />
+    <TagCloud>
+      {
+        tags.map((tag) => (
+          <Tag text={TAGS[tag].label} url={`/tagged/${TAGS[tag].slug}`} />
+        ))
+      }
+    </TagCloud>
   </div>
 </BaseLayout>
 
@@ -26,5 +33,6 @@ const description = "Find covers that are…";
     margin-inline: auto;
     padding-inline: var(--space-xl);
     max-width: 60ch;
+    padding-block-end: var(--space-3xl);
   }
 </style>

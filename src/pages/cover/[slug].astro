@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import { getReadableTitle } from "../../helpers/helpers";
 import type { Enums, Tables } from "../../types/types";
 import TagCloud from "../../components/TagCloud.astro";
+import Tag from "../../components/Tag.astro";
+import { TAGS } from "../../types/tags";
 
 const { slug } = Astro.params;
 
@@ -60,7 +62,13 @@ const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 
 <BaseLayout title={title} description={description!!}>
   <PageHeader title={original.name} description={description}>
-    <TagCloud tags={tags} />
+    <TagCloud>
+      {
+        tags.map((tag) => (
+          <Tag text={TAGS[tag].label} url={`/tagged/${TAGS[tag].slug}`} />
+        ))
+      }
+    </TagCloud>
   </PageHeader>
   <CoverComparison cover={data} />
   <footer class="footer">
