@@ -7,11 +7,14 @@ import { Enums } from "../../types/types";
 
 const tags = Object.keys(TAGS) as Enums<"tags">[];
 
-const title = "Explore Tags";
-const description = "Explore all the genderswapped cover tags.";
+const title = "Explore by tag";
+const description = "Find covers that are…";
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description="Find covers that are slower (or faster), happier (or sadder), more danceable (or less), or other things."
+>
   <PageHeader title={title} description={description} />
   <div class="tags">
     <TagCloud tags={tags} />

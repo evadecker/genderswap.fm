@@ -108,22 +108,26 @@ export const TAGS: Record<Enums<"tags">, Tag> = {
   },
   years_apart_10: {
     label: "10+ years apart",
-    description: "These covers were released over 10 years after the original.",
+    description:
+      "These covers were released between 10 and 20 years after the original.",
     slug: "10-years-apart",
   },
   years_apart_20: {
     label: "20+ years apart",
-    description: "These covers were released over 20 years after the original.",
+    description:
+      "These covers were released between 20 and 30 years after the original.",
     slug: "20-years-apart",
   },
   years_apart_30: {
     label: "30+ years apart",
-    description: "These covers were released over 30 years after the original.",
+    description:
+      "These covers were released between 30 and 40 years after the original.",
     slug: "30-years-apart",
   },
   years_apart_40: {
     label: "40+ years apart",
-    description: "These covers were released over 40 years after the original.",
+    description:
+      "These covers were released between 40 and 50 years after the original.",
     slug: "40-years-apart",
   },
   years_apart_50: {
