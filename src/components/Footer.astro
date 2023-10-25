@@ -3,23 +3,25 @@ import Icon from "./Icon.astro";
 ---
 
 <footer transition:animate="fade">
-  <div class="credits">
-    <span>
+  <nav>
+    <span class="credits">
       A project by <a href="https://evadecker.com">Eva Decker</a>
     </span>
-    <a href="/about">About</a>
-    <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
-  </div>
+    <div class="links">
+      <a href="/about">About</a>
+      <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
+    </div>
+  </nav>
   <div class="toggle">
     <button
       type="button"
       data-theme-toggle-light
       aria-label="Enable light theme"
     >
-      <Icon icon="sun" />
+      <Icon icon="sun" size="small" />
     </button>
     <button type="button" data-theme-toggle-dark aria-label="Enable dark theme">
-      <Icon icon="moon" />
+      <Icon icon="moon" size="small" />
     </button>
   </div>
 </footer>
@@ -76,12 +78,14 @@ import Icon from "./Icon.astro";
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 0;
 
     a {
       font-weight: var(--font-weight-bold);
       text-decoration: underline;
       text-decoration-color: var(--mauve-7);
       text-underline-offset: 0.15em;
+      white-space: nowrap;
 
       @media (hover: hover) and (pointer: fine) {
         &:hover {
@@ -91,12 +95,16 @@ import Icon from "./Icon.astro";
     }
   }
 
-  .credits {
+  nav,
+  .links {
     font-size: var(--step--1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
 
-    & * + * {
-      margin-inline-start: var(--space-m);
-    }
+  .credits {
+    white-space: nowrap;
   }
 
   .divider {
@@ -115,11 +123,10 @@ import Icon from "./Icon.astro";
     line-height: 0;
 
     button {
+      all: unset;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: none;
-      background: none;
       width: 32px;
       height: 32px;
       border-radius: var(--radius-full);

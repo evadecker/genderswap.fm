@@ -35,7 +35,7 @@ export const SubmitForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isSubmitSuccessful },
   } = useForm<FormInput>({
     defaultValues: {
       original: null,
@@ -172,7 +172,7 @@ export const SubmitForm = () => {
           </Step>
         </Steps>
         <button
-          disabled={isSubmitting}
+          disabled={isSubmitting || isSubmitSuccessful}
           className={styles.submitButton}
           type="submit"
         >
@@ -181,18 +181,22 @@ export const SubmitForm = () => {
               className={styles.spinner}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              width="24"
-              height="24"
               fill="currentColor"
             >
               <path d="M12 3C16.9706 3 21 7.02944 21 12H19C19 8.13401 15.866 5 12 5V3Z"></path>
+            </svg>
+          ) : isSubmitSuccessful ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"></path>
             </svg>
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
-              width="24"
-              height="24"
               fill="currentColor"
             >
               <path

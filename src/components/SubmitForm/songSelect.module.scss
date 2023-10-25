@@ -8,17 +8,6 @@
   grid-template-columns: var(--space-3xl) 1fr var(--space-2xl);
   align-items: flex-start;
   gap: var(--space-m);
-
-  @media (max-width: 480px) {
-    grid-template:
-      "album clear"
-      "content content";
-    grid-template-columns: var(--space-3xl) 1fr;
-
-    .clearSelection {
-      justify-self: flex-end;
-    }
-  }
 }
 
 .selectedAlbum {
@@ -42,10 +31,10 @@
 }
 
 .clearSelection {
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
   flex-shrink: 0;
   background: transparent;
   width: var(--space-2xl);
