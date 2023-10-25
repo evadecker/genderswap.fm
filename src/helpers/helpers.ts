@@ -25,3 +25,17 @@ export const getReadableTitle = ({
 }) => {
   return `${coverArtists[0]}’s cover of ${originalName} by ${originalArtists[0]}`;
 };
+
+export const removeSongExtraText = (song: string) => {
+  const songNoExtras = song
+    // Remove parentheses from songs *if* they have a space beforehand
+    // MATCH: "Crazy in Love (feat. Jay-Z)" -> "Crazy in Love"
+    // DO NOT MATCH: "(I Can't Get No) Satisfaction"
+    .replace(/\s\([^()]*\)/g, "")
+    .trim()
+    // Remove everything after a ' - ' in the song name
+    // "Can't Get You out of My Head - Live at KEXP" -> "Can't Get You out of My Head"
+    .split(" - ")[0];
+
+  return songNoExtras;
+};

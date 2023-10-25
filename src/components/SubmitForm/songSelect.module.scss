@@ -117,6 +117,7 @@
   width: var(--radix-select-trigger-width);
   padding: var(--space-xs);
   z-index: 10;
+  max-height: 40vh;
 
   &.hidden {
     display: none;
@@ -124,7 +125,6 @@
 }
 
 .result {
-  line-height: 1;
   color: var(--mauve-12);
   border-radius: var(--radius-s);
   padding: var(--space-xs);
@@ -145,7 +145,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  gap: var(--space-2xs);
+  gap: var(--space-s);
 }
 
 .resultAlbum {
@@ -161,13 +161,13 @@
 }
 
 .resultName,
-.resultArtist {
-  padding-block: var(--space-2xs);
+.resultArtist,
+.resultAlbumNameAndYear {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.resultArtist {
+.resultLabelDetails {
   font-size: var(--step--1);
 }

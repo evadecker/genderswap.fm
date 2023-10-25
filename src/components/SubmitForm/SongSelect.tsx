@@ -3,7 +3,7 @@ import styles from "./songSelect.module.scss";
 import classNames from "classnames";
 import { useDebounce } from "@uidotdev/usehooks";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCombobox } from "downshift";
 import {
   useController,
@@ -12,6 +12,7 @@ import {
 } from "react-hook-form";
 import type { FormInput } from "./SubmitForm";
 import { ErrorMessage } from "./ErrorMessage";
+import { removeSongExtraText } from "../../helpers/helpers";
 
 export const SongSelect = (props: UseControllerProps<FormInput>) => {
   const { control, name } = props;
@@ -19,10 +20,14 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     field,
     fieldState: { error },
   } = useController(props);
-  const song = useWatch({ control, name }) as Track;
+  const original = useWatch({ control, name: "original" }) as Track;
+  const cover = useWatch({ control, name: "cover" }) as Track;
+  const song = name === "original" ? original : cover;
 
+  const [hasPrefilledInput, setHasPrefilledInput] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Track[] | undefined>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 250);
 
@@ -73,6 +78,22 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
     },
   });
 
+  const prefillInputWithOriginal = () => {
+    if (
+      name === "cover" &&
+      original !== null &&
+      searchQuery === "" &&
+      !hasPrefilledInput
+    ) {
+      setSearchQuery(removeSongExtraText(original.name).toLowerCase() + " ");
+      // Only run once
+      setHasPrefilledInput(true);
+      // Move cursor to the end
+      const textInput = inputRef.current;
+      textInput?.setSelectionRange(searchQuery.length, searchQuery.length);
+    }
+  };
+
   const SongPreview = ({ song }: { song: Track }) => (
     <div className={styles.selectedSong}>
       <img
@@ -114,10 +135,18 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
           [styles.hidden]: song,
         })}
       >
-        <label {...getLabelProps()} hidden>
+        <label
+          {...getLabelProps({
+            hidden: true,
+          })}
+        >
           Search
         </label>
-        <div className={styles.inputWrapper} {...getToggleButtonProps()}>
+        <div
+          {...getToggleButtonProps({
+            className: styles.inputWrapper,
+          })}
+        >
           <svg
             className={styles.searchIcon}
             xmlns="http://www.w3.org/2000/svg"
@@ -128,28 +157,35 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
             <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path>
           </svg>
           <input
-            className={styles.searchInput}
-            type="search"
-            placeholder={
-              name === "original" ? "abba angeleyes" : "the czars angeleyes"
-            }
-            {...getInputProps()}
+            {...getInputProps({
+              className: styles.searchInput,
+              type: "search",
+              onFocus: prefillInputWithOriginal,
+              placeholder:
+                name === "original" ? "abba angeleyes" : "the czars angeleyes",
+              value: searchQuery,
+              ref: inputRef,
+            })}
           />
         </div>
         <ul
-          className={classNames(styles.searchResults, {
-            [styles.hidden]: !(isOpen && !!searchResults),
+          {...getMenuProps({
+            className: classNames(styles.searchResults, {
+              [styles.hidden]: !(isOpen && !!searchResults),
+            }),
           })}
-          {...getMenuProps()}
         >
           {searchResults?.map((track, index) => (
             <li
-              key={track.id}
-              className={classNames(styles.result, {
-                [styles.selected]: selectedItem === track,
-                [styles.highlighted]: highlightedIndex === index,
+              {...getItemProps({
+                key: track.id,
+                className: classNames(styles.result, {
+                  [styles.selected]: selectedItem === track,
+                  [styles.highlighted]: highlightedIndex === index,
+                }),
+                item: track,
+                index,
               })}
-              {...getItemProps({ item: track, index })}
             >
               <img
                 className={styles.resultAlbum}
@@ -158,8 +194,14 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
               />
               <div className={styles.resultLabel}>
                 <div className={styles.resultName}>{track.name}</div>
-                <div className={styles.resultArtist}>
-                  {track.artists.map((artist) => artist.name).join(", ")}
+                <div className={styles.resultLabelDetails}>
+                  <div className={styles.resultArtist}>
+                    {track.artists.map((artist) => artist.name).join(", ")}{" "}
+                    {" · "}
+                    <span className={styles.resultYear}>
+                      {track.album.release_date.slice(0, 4)}
+                    </span>
+                  </div>
                 </div>
               </div>
             </li>

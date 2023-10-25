@@ -11,7 +11,7 @@ export const GET: APIRoute = async ({ params }) => {
 
   if (!query) return Response.json({});
 
-  const results = (await spotify.search(query, ["track"], undefined, 20)).tracks
+  const results = (await spotify.search(query, ["track"], undefined, 10)).tracks
     .items;
 
   return Response.json(results);

@@ -1,5 +1,6 @@
 import type { Track } from "@spotify/web-api-ts-sdk";
 import type { Tables } from "../../types/types";
+import { removeSongExtraText } from "../../helpers/helpers";
 
 type Props = {
   original: Track;
@@ -26,20 +27,13 @@ export const formatCoverRow = async ({
   };
 
   const makeSlug = (cover: Track) => {
-    // Remove parentheses from songs if they have a space beforehand
-    // MATCH: "Crazy in Love (feat. Jay-Z)" -> "Crazy in Love"
-    // DO NOT MATCH: "(I Can't Get No) Satisfaction"
-    const songNoParentheses = cover.name.replace(/\s\([^()]*\)/g, "").trim();
-
-    // Remove everything after a ' - ' in the song name
-    // "Can't Get You out of My Head - Live at KEXP" -> "Can't Get You out of My Head"
-    const songNoDash = songNoParentheses.split(" - ")[0];
-
-    const slug = `${slugify(songNoDash)}-${slugify(cover.artists[0].name)}`;
+    const slug = `${slugify(removeSongExtraText(cover.name))}-${slugify(
+      cover.artists[0].name
+    )}`;
     return slug;
   };
 
-  const row: Omit<Tables<"covers">, "id" | "created_at"> = {
+  const row: Omit<Tables<"covers">, "id" | "created_at" | "tags"> = {
     original_id: original.id,
     cover_id: cover.id,
     slug: makeSlug(cover),
