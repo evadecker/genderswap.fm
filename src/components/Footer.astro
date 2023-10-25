@@ -1,9 +1,21 @@
 ---
+import { supabase } from "../lib/supabase";
 import Icon from "./Icon.astro";
+
+const { count } = await supabase
+  .from("covers")
+  .select("*", { count: "estimated", head: true });
 ---
 
 <footer transition:animate="fade">
   <nav>
+    {
+      count && (
+        <span class="count">
+          <strong>{`${count} covers`}</strong> and counting
+        </span>
+      )
+    }
     <span class="credits">
       A project by <a href="https://evadecker.com">Eva Decker</a>
     </span>
