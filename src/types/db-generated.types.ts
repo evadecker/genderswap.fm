@@ -135,22 +135,10 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      generate_tags_initial:
-        | {
-            Args: {
-              original_id: string
-              cover_id: string
-            }
-            Returns: undefined
-          }
-        | {
-            Args: {
-              original_id: string
-              cover_id: string
-              target_table: string
-            }
-            Returns: undefined
-          }
+      get_random_cover_slug: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       gender: "male" | "female" | "other"

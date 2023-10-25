@@ -1,21 +1,9 @@
 ---
-import Tag from "../components/Tag.astro";
-import { TAGS } from "../types/tags";
-import type { Enums } from "../types/types";
 
-type Props = {
-  tags: Enums<"tags">[];
-};
-
-const { tags } = Astro.props;
 ---
 
 <div class="tags">
-  {
-    tags.map((tag) => (
-      <Tag text={TAGS[tag].label} url={`/tagged/${TAGS[tag].slug}`} />
-    ))
-  }
+  <slot />
 </div>
 
 <style>
