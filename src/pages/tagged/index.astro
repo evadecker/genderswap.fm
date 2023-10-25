@@ -1,0 +1,27 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagCloud from "../../components/TagCloud.astro";
+import { TAGS } from "../../types/tags";
+import { Enums } from "../../types/types";
+
+const tags = Object.keys(TAGS) as Enums<"tags">[];
+
+const title = "Explore Tags";
+const description = "Explore all the genderswapped cover tags.";
+---
+
+<BaseLayout title={title} description={description}>
+  <PageHeader title={title} description={description} />
+  <div class="tags">
+    <TagCloud tags={tags} />
+  </div>
+</BaseLayout>
+
+<style>
+  .tags {
+    margin-inline: auto;
+    padding-inline: var(--space-xl);
+    max-width: 60ch;
+  }
+</style>

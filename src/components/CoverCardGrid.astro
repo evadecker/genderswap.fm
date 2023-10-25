@@ -1,0 +1,46 @@
+---
+import type { Tables } from "../types/types";
+import CoverCard from "./CoverCard.astro";
+
+type Cover = {
+  slug: string;
+  original: Tables<"songs">;
+  cover: Tables<"songs">;
+};
+
+type Props = {
+  covers: Cover[];
+};
+
+const { covers } = Astro.props;
+---
+
+<div class="covers-grid">
+  {
+    covers?.map(({ original, cover, slug }) => (
+      <CoverCard
+        originalSongId={original.id}
+        originalSongName={original.name}
+        originalSongArtist={original.artists[0]}
+        originalAlbumImg={original.album_img[0]}
+        originalAlbumName={original.album_name}
+        coverSongId={cover.id}
+        coverSongArtist={cover.artists[0]}
+        coverAlbumImg={cover.album_img[0]}
+        coverAlbumName={cover.album_name}
+        slug={slug}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .covers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    align-items: center;
+    gap: var(--space-xl);
+    row-gap: var(--space-3xl);
+    padding: var(--space-2xl);
+  }
+</style>

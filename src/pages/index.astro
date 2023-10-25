@@ -1,5 +1,6 @@
 ---
-import CoverCard from "../components/CoverCard.astro";
+import CoverCardGrid from "../components/CoverCardGrid.astro";
+import PageHeader from "../components/PageHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { supabase } from "../lib/supabase";
 
@@ -19,60 +20,9 @@ const { data: covers } = await supabase
   title="Genderswap.fm"
   description="Some covers deliver the age-old simple pleasures of drag."
 >
-  <div class="main">
-    <header>
-      <h1>Genderswap.fm</h1>
-      <p>Some covers deliver the age-old simple pleasures of drag.</p>
-    </header>
-    <div class="covers-grid">
-      {
-        covers?.map(({ original, cover, slug }) => (
-          // @ts-ignore
-          // Supabase types are wrong, this works fine
-          <CoverCard
-            originalSongId={original.id}
-            originalSongName={original.name}
-            originalSongArtist={original.artists[0]}
-            originalAlbumImg={original.album_img[0]}
-            originalAlbumName={original.album_name}
-            coverSongId={cover.id}
-            coverSongArtist={cover.artists[0]}
-            coverAlbumImg={cover.album_img[0]}
-            coverAlbumName={cover.album_name}
-            slug={slug}
-          />
-        ))
-      }
-    </div>
-  </div>
+  <PageHeader
+    title="Genderswap.fm"
+    description="Some covers deliver the age-old simple pleasures of drag."
+  />
+  <CoverCardGrid covers={covers as any} />
 </BaseLayout>
-
-<style lang="scss">
-  .main {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-3xl);
-    flex: 1;
-    min-height: 100%;
-    padding: var(--space-xl);
-
-    p {
-      font-size: var(--step-1);
-      margin-block-start: 0.4em;
-    }
-  }
-
-  header {
-    text-wrap: balance;
-  }
-
-  .covers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-xl);
-    row-gap: var(--space-3xl);
-  }
-</style>

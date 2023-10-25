@@ -1,14 +1,23 @@
 ---
 type Props = {
   text: string;
+  url?: string;
 };
 
-const { text } = Astro.props;
+const { text, url } = Astro.props;
 ---
 
-<div class="tag">
-  {text}
-</div>
+<>
+  {
+    url ? (
+      <a href={url} class="tag">
+        {text}
+      </a>
+    ) : (
+      <div class="tag">{text}</div>
+    )
+  }
+</>
 
 <style>
   .tag {
@@ -19,5 +28,9 @@ const { text } = Astro.props;
     padding-inline: var(--space-m);
     border-radius: var(--radius-full);
     font-size: var(--step-0);
+  }
+
+  a.tag:hover {
+    background: var(--mauve-4);
   }
 </style>
