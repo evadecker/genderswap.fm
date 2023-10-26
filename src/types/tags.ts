@@ -20,7 +20,7 @@ export const TAGS: Record<Enums<"tags">, Tag> = {
   danceability_up: {
     label: "more danceable",
     description:
-      "A stable rhythm and a strong beat make these covers more dance-friendly than their original.",
+      "A stable rhythm and a strong beat make these covers more dance-friendly than the original.",
     slug: "more-danceable",
   },
   danceability_down: {
@@ -70,12 +70,12 @@ export const TAGS: Record<Enums<"tags">, Tag> = {
   },
   tempo_up: {
     label: "faster",
-    description: "These covers are at least 30 BPM faster than the original.",
+    description: "These covers are at least 40 BPM faster than the original.",
     slug: "faster",
   },
   tempo_down: {
     label: "slower",
-    description: "These covers are at least 30 BPM slower than the original.",
+    description: "These covers are at least 40 BPM slower than the original.",
     slug: "slower",
   },
   time_signature_change: {
