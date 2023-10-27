@@ -83,7 +83,7 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
       {
         coveredAs && (
           <div class="covered-as" itemprop="name">
-            Covered as “{coveredAs}”
+            Covered as <strong>{coveredAs}</strong>
           </div>
         )
       }
@@ -104,7 +104,7 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
 
   .compare {
     display: grid;
-    max-width: 100%;
+    max-width: 1200px;
     margin-inline: auto;
     padding-inline: var(--space-xl);
     scroll-padding-inline: var(--space-xl);
@@ -149,7 +149,6 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
   .album {
     user-select: none;
     width: 100%;
-    max-width: 600px;
     aspect-ratio: 1 / 1;
     background: var(--mauve-3);
     overflow: hidden;
@@ -231,5 +230,9 @@ if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
     :global(svg) {
       width: var(--space-xl);
     }
+  }
+
+  .covered-as {
+    color: var(--mauve-11);
   }
 </style>
