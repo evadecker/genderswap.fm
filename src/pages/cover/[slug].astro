@@ -4,7 +4,7 @@ import PageHeader from "../../components/PageHeader.astro";
 import CoverComparison from "../../components/CoverComparison.astro";
 import { supabase } from "../../lib/supabase";
 import dayjs from "dayjs";
-import { getReadableTitle } from "../../helpers/helpers";
+import { getReadableTitle, smartquotes } from "../../helpers/helpers";
 import type { Enums, Tables } from "../../types/types";
 import TagCloud from "../../components/TagCloud.astro";
 import Tag from "../../components/Tag.astro";
@@ -58,10 +58,13 @@ const title =
     : "Loading...";
 
 const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
+
+const pageTitle = smartquotes(original.name);
+const pageDescription = description ? smartquotes(description) : undefined;
 ---
 
-<BaseLayout title={title} description={description!!}>
-  <PageHeader title={original.name} description={description}>
+<BaseLayout title={title} description={pageDescription}>
+  <PageHeader title={pageTitle} description={pageDescription}>
     <TagCloud>
       {
         tags.map((tag) => (

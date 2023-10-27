@@ -1,5 +1,5 @@
 ---
-import { slugify } from "../helpers/helpers";
+import { slugify, smartquotes } from "../helpers/helpers";
 import type { Cover } from "../pages/cover/[slug].astro";
 import Icon from "./Icon.astro";
 
@@ -42,12 +42,12 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
          Listen to original
       </a>
       <h2 class="artist" itemprop="byArtist">
-        {originalSong.artists.join(", ") ?? "Loading..."}
+        {smartquotes(originalSong.artists.join(", ")) ?? "Loading..."}
       </h2>
       <time class="album-year" itemprop="datePublished">
         {originalSong.album_year}
       </time>
-      <em class="album-name">{originalSong.album_name}</em>
+      <em class="album-name">{smartquotes(originalSong.album_name)}</em>
     </div>
   </div>
   <div
@@ -75,16 +75,16 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
          Listen to cover
       </a>
       <h2 class="artist" itemprop="byArtist">
-        {coverSong.artists.join(", ") ?? "Loading..."}
+        {smartquotes(coverSong.artists.join(", ")) ?? "Loading..."}
       </h2>
       <time class="album-year" itemprop="datePublished">
         {coverSong.album_year}
       </time>
-      <em class="album-name">{coverSong.album_name}</em>
+      <em class="album-name">{smartquotes(coverSong.album_name)}</em>
       {
         coveredAs && (
           <div class="covered-as" itemprop="name">
-            Covered as <strong>{coveredAs}</strong>
+            Covered as <strong>{smartquotes(coveredAs)}</strong>
           </div>
         )
       }
