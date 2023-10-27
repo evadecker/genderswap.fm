@@ -3,6 +3,7 @@ import CoverCardGrid from "../components/CoverCardGrid.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Tag from "../components/Tag.astro";
 import TagCloud from "../components/TagCloud.astro";
+import { slugifyCover } from "../helpers/helpers";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { supabase } from "../lib/supabase";
 
@@ -16,6 +17,12 @@ const { data: covers } = await supabase
   `
   )
   .order("created_at", { ascending: false });
+
+const slug = slugifyCover(
+  "Leaving on a Jet Plane/Take Me Home Country Roads”",
+  "Judy Collins"
+);
+console.log(slug);
 ---
 
 <BaseLayout
