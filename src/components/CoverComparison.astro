@@ -1,4 +1,5 @@
 ---
+import { slugify } from "../helpers/helpers";
 import type { Cover } from "../pages/cover/[slug].astro";
 import Icon from "./Icon.astro";
 
@@ -10,7 +11,7 @@ const { cover } = Astro.props;
 const { original: originalSong, cover: coverSong } = cover;
 
 let coveredAs;
-if (originalSong.name.toLowerCase() !== coverSong.name.toLowerCase()) {
+if (slugify(originalSong.name) !== slugify(coverSong.name)) {
   coveredAs = coverSong.name;
 }
 ---
