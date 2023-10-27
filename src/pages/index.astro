@@ -17,12 +17,6 @@ const { data: covers } = await supabase
   `
   )
   .order("created_at", { ascending: false });
-
-const slug = slugifyCover(
-  "Leaving on a Jet Plane/Take Me Home Country Roads”",
-  "Judy Collins"
-);
-console.log(slug);
 ---
 
 <BaseLayout
