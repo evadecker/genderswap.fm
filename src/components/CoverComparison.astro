@@ -105,7 +105,7 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
 
   .compare {
     display: grid;
-    max-width: 1200px;
+    max-width: 100%;
     margin-inline: auto;
     padding-inline: var(--space-xl);
     scroll-padding-inline: var(--space-xl);
@@ -127,6 +127,10 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
       -ms-overflow-style: none; // Edge
       scrollbar-width: none; // Firefox
     }
+  }
+
+  .track {
+    max-width: 600px;
   }
 
   .track:first-child {
