@@ -207,10 +207,10 @@ export const GET: APIRoute = async ({ params }) => {
   };
 
   const indivisible = readFileSync(
-    resolve("./public/fonts/Indivisible-Regular.otf")
+    resolve(process.cwd() + "/public/fonts/Indivisible-Regular.otf")
   );
   const indivisibleSemiBold = readFileSync(
-    resolve("./public/fonts/Indivisible-SemiBold.otf")
+    resolve(process.cwd() + "/public/fonts/Indivisible-SemiBold.otf")
   );
 
   const svg = await satori(html, {
