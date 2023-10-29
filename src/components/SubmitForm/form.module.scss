@@ -1,4 +1,7 @@
 .submitForm {
+  max-inline-size: 54ch;
+  margin-inline: auto;
+  padding-inline: var(--space-xl);
   padding-block-end: var(--space-2xl);
 }
 
