@@ -9,7 +9,7 @@ dateModified: 2023-10-29 18:53:00-04:00
 
 ## What’s this site for?
 
-Occasionally, people make music, and then wildly different people cover that music with wildly different sounds and results. I like when this happens. I especially like when it happens without changing the pronouns of the original piece. “[Look into his angel eyes…](cover/the-czars-angel-eyes)” hits differently when it comes from a sparsely accompanied, gravelly male voice, instead of, ah, ABBA. Covers are neat!
+Occasionally, people make music, and then wildly different people cover that music with wildly different sounds and results. I like when this happens. I especially like when it happens without changing the pronouns of the original piece. “[Look into his angel eyes…](cover/angel-eyes-the-czars)” hits differently when it comes from a sparsely accompanied, gravelly male voice, instead of, ah, ABBA. Covers are neat!
 
 I was first inspired by Andrea Lawlor's [_Paul Takes the Form of a Mortal Girl_](https://bookshop.org/a/97627/9780525566182):
 
