@@ -23,7 +23,9 @@ export const getReadableTitle = ({
   originalArtists: string[];
   coverArtists: string[];
 }) => {
-  return `${coverArtists[0]}’s cover of ${originalName} by ${originalArtists[0]}`;
+  return smartquotes(
+    `${coverArtists[0]}'s cover of ${originalName} by ${originalArtists[0]}`
+  );
 };
 
 export const removeSongExtraText = (song: string) => {

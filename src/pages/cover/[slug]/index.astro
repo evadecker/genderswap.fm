@@ -1,14 +1,14 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHeader from "../../components/PageHeader.astro";
-import CoverComparison from "../../components/CoverComparison.astro";
-import { supabase } from "../../lib/supabase";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHeader from "../../../components/PageHeader.astro";
+import CoverComparison from "../../../components/CoverComparison.astro";
+import { supabase } from "../../../lib/supabase";
 import dayjs from "dayjs";
-import { getReadableTitle, smartquotes } from "../../helpers/helpers";
-import type { Enums, Tables } from "../../types/types";
-import TagCloud from "../../components/TagCloud.astro";
-import Tag from "../../components/Tag.astro";
-import { TAGS } from "../../types/tags";
+import { getReadableTitle, smartquotes } from "../../../helpers/helpers";
+import type { Enums, Tables } from "../../../types/types";
+import TagCloud from "../../../components/TagCloud.astro";
+import Tag from "../../../components/Tag.astro";
+import { TAGS } from "../../../types/tags";
 
 const { slug } = Astro.params;
 
@@ -59,11 +59,16 @@ const title =
 
 const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 
-const pageTitle = smartquotes(original.name);
+const pageTitle = original.name;
 const pageDescription = description ? smartquotes(description) : undefined;
 ---
 
-<BaseLayout title={title} description={pageDescription}>
+<BaseLayout
+  title={title}
+  description={pageDescription}
+  ogImage={`/cover/${slug}/og.png`}
+  ogAlt={title}
+>
   <PageHeader title={pageTitle} description={pageDescription}>
     <TagCloud>
       {
