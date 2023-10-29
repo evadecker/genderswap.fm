@@ -62,10 +62,11 @@ const formattedModifiedDate = dayjs(dateModified).format("MMMM D, YYYY");
       font-size: var(--step-1);
       color: var(--mauve-11);
       margin-block-start: var(--space-m);
-    }
-
-    .prose-dates * + * {
-      margin-inline-start: var(--space-l);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      column-gap: var(--space-l);
     }
 
     .prose a {
@@ -142,6 +143,16 @@ const formattedModifiedDate = dayjs(dateModified).format("MMMM D, YYYY");
       content: "—";
       color: var(--mauve-11);
       margin-inline-end: 0.3em;
+    }
+
+    .prose img {
+      /* This width is just for Andrea Lawlor's email;
+         if other images are added, might need to enable MDX
+         and set width per-image */
+      width: 585px;
+      max-width: 100%;
+      border-radius: var(--radius-s);
+      margin-inline: auto;
     }
   </style>
 </BaseLayout>

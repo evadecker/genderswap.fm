@@ -166,6 +166,8 @@ export interface Database {
         | "years_apart_30"
         | "years_apart_40"
         | "years_apart_50"
+        | "transition_ftf"
+        | "transition_mtm"
     }
     CompositeTypes: {
       [_ in never]: never
