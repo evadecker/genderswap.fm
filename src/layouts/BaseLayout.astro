@@ -11,9 +11,11 @@ import Header from "../components/Header.astro";
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogAlt?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage, ogAlt } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -53,8 +55,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Genderswap.fm" />
-    <meta property="og:image" content="/og-image.png" />
-    <meta property="og:image:alt" content="The Genderswap.fm logo" />
+    <meta property="og:image" content={ogImage ?? "/og-image.png"} />
+    <meta property="og:image:alt" content={ogAlt ?? "Genderswap.fm"} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />

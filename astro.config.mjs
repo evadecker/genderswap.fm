@@ -15,5 +15,9 @@ export default defineConfig({
     speedInsights: {
       enabled: true,
     },
+    includeFiles: [
+      "./public/fonts/Indivisible-Regular.otf",
+      "./public/fonts/Indivisible-SemiBold.otf",
+    ],
   }),
 });
