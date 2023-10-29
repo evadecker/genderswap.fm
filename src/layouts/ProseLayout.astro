@@ -62,10 +62,11 @@ const formattedModifiedDate = dayjs(dateModified).format("MMMM D, YYYY");
       font-size: var(--step-1);
       color: var(--mauve-11);
       margin-block-start: var(--space-m);
-    }
-
-    .prose-dates * + * {
-      margin-inline-start: var(--space-l);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      column-gap: var(--space-l);
     }
 
     .prose a {
