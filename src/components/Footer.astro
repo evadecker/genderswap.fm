@@ -84,6 +84,11 @@ const { count } = await supabase
     width: 100%;
     padding-inline: var(--space-m);
     padding-block: var(--space-l);
+    @supports (padding: max(0px)) {
+      padding-inline-start: max(var(--space-m), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
+      padding-block-end: max(var(--space-l), env(safe-area-inset-bottom));
+    }
     display: grid;
     grid-template-areas:
       "count count"
