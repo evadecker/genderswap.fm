@@ -59,7 +59,7 @@ const title =
 
 const formattedDate = dayjs(created_at).format("MMMM D, YYYY");
 
-const pageTitle = original.name;
+const pageTitle = smartquotes(original.name);
 const pageDescription = description ? smartquotes(description) : undefined;
 ---
 

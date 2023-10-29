@@ -143,5 +143,14 @@ const formattedModifiedDate = dayjs(dateModified).format("MMMM D, YYYY");
       color: var(--mauve-11);
       margin-inline-end: 0.3em;
     }
+
+    .prose img {
+      /* This width is just for Andrea Lawlor's email;
+         if other images are added, might need to enable MDX
+         and set width per-image */
+      max-width: 585px;
+      border-radius: var(--radius-s);
+      margin-inline: auto;
+    }
   </style>
 </BaseLayout>
