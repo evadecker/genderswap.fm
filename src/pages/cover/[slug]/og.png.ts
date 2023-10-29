@@ -12,7 +12,7 @@ export const config = {
   runtime: "edge",
 };
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, url }) => {
   const { slug } = params;
 
   const { data } = await supabase
@@ -204,16 +204,14 @@ export const GET: APIRoute = async ({ params }) => {
     },
   };
 
-  const rootURL = import.meta.env.DEV
-    ? "http://localhost:4321"
-    : "https://genderswap.fm";
+  // const rootURL = import.meta.url;
 
   const indivisible = await fetch(
-    `${rootURL}/fonts/Indivisible-Regular.otf`
+    new URL("/fonts/Indivisible-Regular.otf", url)
   ).then((res) => res.arrayBuffer());
 
   const indivisibleSemiBold = await fetch(
-    `${rootURL}/fonts/Indivisible-SemiBold.otf`
+    new URL("/fonts/Indivisible-SemiBold.otf", url)
   ).then((res) => res.arrayBuffer());
 
   const svg = await satori(html, {
