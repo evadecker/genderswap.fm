@@ -65,7 +65,7 @@ export const GET: APIRoute = async ({ params, url }) => {
         fontFamily: "Indivisible",
         color: "#EEEEF0",
         fontSize: "32px",
-        padding: "48px",
+        padding: "48px 60px",
       },
       children: [
         {
@@ -129,7 +129,7 @@ export const GET: APIRoute = async ({ params, url }) => {
                           borderRadius: "8px",
                           boxShadow: albumBoxShadow,
                           transform:
-                            "rotate(-8deg) scale(0.9) translateX(120px)",
+                            "rotate(-6deg) scale(0.9) translateX(132px) translateY(-16px)",
                         },
                       },
                     },
@@ -176,9 +176,8 @@ export const GET: APIRoute = async ({ params, url }) => {
                         backgroundColor: "#2B292D",
                         padding: "7px 16px 8px 16px",
                         borderRadius: "40px",
-                        fontSize: "24px",
+                        fontSize: "28px",
                         lineHeight: 1.2,
-                        marginTop: "24px",
                         color: "#B5B2BC",
                       },
                       children: tag,
