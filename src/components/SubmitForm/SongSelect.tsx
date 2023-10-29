@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import type { FormInput } from "./SubmitForm";
 import { ErrorMessage } from "./ErrorMessage";
-import { removeSongExtraText } from "../../helpers/helpers";
+import { removeSongExtraText, smartquotes } from "../../helpers/helpers";
 
 export const SongSelect = (props: UseControllerProps<FormInput>) => {
   const { control, name } = props;
@@ -102,10 +102,10 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
         alt={song.name}
       />
       <div className={styles.selectedLabel}>
-        <div className={styles.selectedName}>{song.name}</div>
+        <div className={styles.selectedName}>{smartquotes(song.name)}</div>
         <div>{song.artists.map((artist) => artist.name).join(", ")}</div>
         <div className={styles.selectedAlbumNameAndYear}>
-          <em>{song.album.name}</em> &middot;{" "}
+          <em>{smartquotes(song.album.name)}</em> &middot;{" "}
           {song.album.release_date.slice(0, 4)}
         </div>
       </div>
