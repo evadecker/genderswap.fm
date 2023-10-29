@@ -94,6 +94,18 @@ export const TAGS: Record<Enums<"tags">, Tag> = {
     description: "Girls cover boys.",
     slug: "mtf",
   },
+  transition_ftf: {
+    label: "FTF",
+    description:
+      "Girls cover girls, but that doesn't mean the gender is the same.",
+    slug: "ftf",
+  },
+  transition_mtm: {
+    label: "MTM",
+    description:
+      "Boys cover boys, but that doesn't mean the gender is the same.",
+    slug: "mtm",
+  },
   valence_up: {
     label: "happier",
     description:
