@@ -1,10 +1,16 @@
 import type { APIRoute } from "astro";
 import satori from "satori";
 import sharp from "sharp";
+import { resolve } from "path";
+import { readFileSync } from "fs";
 import { supabase } from "../../../lib/supabase";
 import { type Cover } from "./index.astro";
 import { getReadableTitle } from "../../../helpers/helpers";
 import { TAGS } from "../../../types/tags";
+
+export const config = {
+  runtime: "edge",
+};
 
 export const GET: APIRoute = async ({ params }) => {
   const { slug } = params;
@@ -198,21 +204,17 @@ export const GET: APIRoute = async ({ params }) => {
     },
   };
 
-  const getIndivisible = async () => {
-    const response = await fetch(
-      new URL("/fonts/Indivisible-Regular.otf", import.meta.url)
-    );
-    const indivisible = await response.arrayBuffer();
-    return indivisible;
-  };
+  const rootURL = import.meta.env.DEV
+    ? "http://localhost:4321"
+    : "https://genderswap.fm";
 
-  const getIndivisibleSemiBold = async () => {
-    const response = await fetch(
-      new URL("/fonts/Indivisible-SemiBoldRegular.otf", import.meta.url)
-    );
-    const indivisibleSemiBold = await response.arrayBuffer();
-    return indivisibleSemiBold;
-  };
+  const indivisible = await fetch(
+    `${rootURL}/fonts/Indivisible-Regular.otf`
+  ).then((res) => res.arrayBuffer());
+
+  const indivisibleSemiBold = await fetch(
+    `${rootURL}/fonts/Indivisible-SemiBold.otf`
+  ).then((res) => res.arrayBuffer());
 
   const svg = await satori(html, {
     width: 1200,
@@ -220,13 +222,13 @@ export const GET: APIRoute = async ({ params }) => {
     fonts: [
       {
         name: "Indivisible",
-        data: await getIndivisible(),
+        data: indivisible,
         style: "normal",
         weight: 400,
       },
       {
         name: "Indivisible",
-        data: await getIndivisibleSemiBold(),
+        data: indivisibleSemiBold,
         style: "normal",
         weight: 600,
       },
