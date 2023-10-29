@@ -61,6 +61,10 @@ import Logo from "./Logo.astro";
     z-index: 1000;
     padding-inline-start: var(--space-m);
     padding-inline-end: var(--space-m);
+    @supports (padding: max(0px)) {
+      padding-inline-start: max(var(--space-m), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
+    }
     pointer-events: none;
   }
 

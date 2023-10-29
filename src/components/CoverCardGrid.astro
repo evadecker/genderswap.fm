@@ -34,7 +34,7 @@ const { covers } = Astro.props;
   }
 </div>
 
-<style>
+<style lang="scss">
   .covers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -42,5 +42,9 @@ const { covers } = Astro.props;
     gap: var(--space-xl);
     row-gap: var(--space-3xl);
     padding: var(--space-2xl);
+    @supports (padding: max(0px)) {
+      padding-inline-start: max(var(--space-2xl), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-2xl), env(safe-area-inset-right));
+    }
   }
 </style>
