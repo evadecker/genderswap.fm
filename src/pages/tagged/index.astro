@@ -6,6 +6,9 @@ import { TAGS } from "../../types/tags";
 import { type Enums } from "../../types/types";
 import Tag from "../../components/Tag.astro";
 
+// Static page
+export const prerender = true;
+
 const tags = Object.keys(TAGS) as Enums<"tags">[];
 
 const title = "Explore by tag";
