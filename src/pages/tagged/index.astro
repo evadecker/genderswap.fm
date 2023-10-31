@@ -5,6 +5,7 @@ import TagCloud from "../../components/TagCloud.astro";
 import { TAGS } from "../../types/tags";
 import { type Enums } from "../../types/types";
 import Tag from "../../components/Tag.astro";
+import { supabase } from "../../lib/supabase";
 
 // Static page
 export const prerender = true;
@@ -23,9 +24,20 @@ const description = "Find covers that are…";
   <div class="tags">
     <TagCloud>
       {
-        tags.map((tag) => (
-          <Tag text={TAGS[tag].label} url={`/tagged/${TAGS[tag].slug}`} />
-        ))
+        tags.map(async (tag) => {
+          const { count } = await supabase
+            .from("covers")
+            .select("tags", { count: "exact", head: true })
+            .contains("tags", [tag]);
+
+          return (
+            <Tag
+              text={TAGS[tag].label}
+              count={count?.toString()}
+              url={`/tagged/${TAGS[tag].slug}`}
+            />
+          );
+        })
       }
     </TagCloud>
   </div>

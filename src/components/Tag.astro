@@ -1,10 +1,11 @@
 ---
 type Props = {
   text: string;
+  count?: string;
   url?: string;
 };
 
-const { text, url } = Astro.props;
+const { text, count, url } = Astro.props;
 ---
 
 <>
@@ -12,16 +13,22 @@ const { text, url } = Astro.props;
     url ? (
       <a href={url} class="tag">
         {text}
+        {count && <span class="count">{count}</span>}
       </a>
     ) : (
-      <div class="tag">{text}</div>
+      <div class="tag">
+        {text}
+        {count && <span class="count">{count}</span>}
+      </div>
     )
   }
 </>
 
 <style>
   .tag {
-    display: inline-block;
+    display: inline-flex;
+    gap: var(--space-xs);
+    align-items: center;
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-block: var(--space-2xs);
@@ -32,5 +39,10 @@ const { text, url } = Astro.props;
 
   a.tag:hover {
     background: var(--mauve-4);
+  }
+
+  .count {
+    color: var(--mauve-10);
+    font-size: var(--step--1);
   }
 </style>
