@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
-    minmax(max(calc(var(--space-m) * 12), 20%), 1fr)
+    minmax(calc(var(--space-3xl) * 4), 1fr)
   );
   align-items: center;
   gap: var(--space-xl);
@@ -11,6 +11,18 @@
   @supports (padding: max(0px)) {
     padding-inline-start: max(var(--space-l), env(safe-area-inset-left));
     padding-inline-end: max(var(--space-l), env(safe-area-inset-right));
+  }
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(var(--space-3xl) * 3.5), 1fr)
+    );
+  }
+  @media (max-width: 580px) {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(var(--space-3xl) * 3), 1fr)
+    );
   }
 }
 
