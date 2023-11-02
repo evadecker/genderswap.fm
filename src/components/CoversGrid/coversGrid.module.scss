@@ -7,10 +7,9 @@
   align-items: center;
   gap: var(--space-xl);
   row-gap: var(--space-2xl);
-  padding: var(--space-xl);
   @supports (padding: max(0px)) {
-    padding-inline-start: max(var(--space-xl), env(safe-area-inset-left));
-    padding-inline-end: max(var(--space-xl), env(safe-area-inset-right));
+    padding-inline-start: max(var(--space-l), env(safe-area-inset-left));
+    padding-inline-end: max(var(--space-l), env(safe-area-inset-right));
   }
 }
 
