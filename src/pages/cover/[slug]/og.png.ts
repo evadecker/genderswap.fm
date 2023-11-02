@@ -1,12 +1,11 @@
 import type { APIRoute } from "astro";
 import satori from "satori";
 import sharp from "sharp";
-import { resolve } from "path";
-import { readFileSync } from "fs";
 import { supabase } from "../../../lib/supabase";
 import { type Cover } from "./index.astro";
 import { getReadableTitle } from "../../../helpers/helpers";
 import { TAGS } from "../../../types/tags";
+import type { ReactNode } from "react";
 
 export const config = {
   runtime: "edge",
@@ -205,8 +204,6 @@ export const GET: APIRoute = async ({ params, url }) => {
     },
   };
 
-  // const rootURL = import.meta.url;
-
   const indivisible = await fetch(
     new URL("/fonts/Indivisible-Regular.otf", url)
   ).then((res) => res.arrayBuffer());
@@ -215,7 +212,7 @@ export const GET: APIRoute = async ({ params, url }) => {
     new URL("/fonts/Indivisible-SemiBold.otf", url)
   ).then((res) => res.arrayBuffer());
 
-  const svg = await satori(html, {
+  const svg = await satori(html as ReactNode, {
     width: 1200,
     height: 630,
     fonts: [

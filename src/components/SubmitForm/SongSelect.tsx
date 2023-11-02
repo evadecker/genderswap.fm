@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import type { FormInput } from "./SubmitForm";
 import { ErrorMessage } from "./ErrorMessage";
-import { removeSongExtraText, smartquotes } from "../../helpers/helpers";
+import { smartquotes } from "../../helpers/helpers";
 
 export const SongSelect = (props: UseControllerProps<FormInput>) => {
   const { control, name } = props;
@@ -24,7 +24,6 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
   const cover = useWatch({ control, name: "cover" }) as Track;
   const song = name === "original" ? original : cover;
 
-  const [hasPrefilledInput, setHasPrefilledInput] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Track[] | undefined>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -77,22 +76,6 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
       field.onChange(selectedItem);
     },
   });
-
-  const prefillInputWithOriginal = () => {
-    if (
-      name === "cover" &&
-      original !== null &&
-      searchQuery === "" &&
-      !hasPrefilledInput
-    ) {
-      setSearchQuery(removeSongExtraText(original.name).toLowerCase() + " ");
-      // Only run once
-      setHasPrefilledInput(true);
-      // Move cursor to the end
-      const textInput = inputRef.current;
-      textInput?.setSelectionRange(searchQuery.length, searchQuery.length);
-    }
-  };
 
   const SongPreview = ({ song }: { song: Track }) => (
     <div className={styles.selectedSong}>
@@ -160,7 +143,6 @@ export const SongSelect = (props: UseControllerProps<FormInput>) => {
             {...getInputProps({
               className: styles.searchInput,
               type: "search",
-              onFocus: prefillInputWithOriginal,
               placeholder:
                 name === "original" ? "abba angeleyes" : "the czars angeleyes",
               value: searchQuery,
