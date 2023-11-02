@@ -1,22 +1,9 @@
 ---
-import CoverCardGrid from "../components/CoverCardGrid.astro";
+import { CoversGrid } from "../components/CoversGrid/CoversGrid";
 import PageHeader from "../components/PageHeader.astro";
 import Tag from "../components/Tag.astro";
 import TagCloud from "../components/TagCloud.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { supabase } from "../lib/supabase";
-
-const { data: covers } = await supabase
-  .from("covers")
-  .select(
-    `
-    slug,
-    original:original_id(id, name, artists, album_name, album_img),
-    cover:cover_id(id, name, artists, album_name, album_img)
-  `
-  )
-  .order("created_at", { ascending: false })
-  .range(0, 23); // 24 entries total
 ---
 
 <BaseLayout
@@ -32,5 +19,5 @@ const { data: covers } = await supabase
       <Tag text="Get random cover" url="/random" />
     </TagCloud>
   </PageHeader>
-  <CoverCardGrid covers={covers as any} />
+  <CoversGrid client:only />
 </BaseLayout>
