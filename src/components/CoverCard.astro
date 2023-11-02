@@ -15,12 +15,10 @@ type Props = {
 };
 
 const {
-  originalSongId,
   originalSongName,
   originalSongArtist,
   originalAlbumImg,
   originalAlbumName,
-  coverSongId,
   coverSongArtist,
   coverAlbumImg,
   coverAlbumName,
@@ -32,14 +30,14 @@ const title = smartquotes(originalSongName);
 
 <div class="cover-card">
   <div class="albums">
-    <div class="album" transition:name={`album-${originalSongId}`}>
+    <div class="album">
       {
         originalAlbumImg && (
           <img src={originalAlbumImg} alt={`${originalAlbumName} album art`} />
         )
       }
     </div>
-    <div class="album" transition:name={`album-${coverSongId}`}>
+    <div class="album">
       {
         coverAlbumImg && (
           <img src={coverAlbumImg} alt={`${coverAlbumName} album art`} />

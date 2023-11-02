@@ -11,13 +11,16 @@
   }
 }
 
+.coverCardWrapper {
+  align-self: flex-start;
+}
+
 .coverCard {
   position: relative;
   border-radius: var(--radius-m);
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-self: flex-start;
   gap: var(--space-2xl);
   text-align: center;
 
@@ -101,4 +104,44 @@
 .link {
   position: absolute;
   inset: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadMore {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  background: var(--mauve-12);
+  color: var(--mauve-1);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  padding-block: var(--space-s);
+  padding-inline: var(--space-xl);
+  margin-inline: auto;
+  margin-block-end: var(--space-xl);
+  font-size: var(--step-1);
+  font-weight: var(--font-weight-bold);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: var(--violet-9);
+      color: white;
+    }
+  }
+
+  &[disabled] {
+    opacity: 0;
+    cursor: default;
+  }
+
+  &:focus {
+    outline: 3px solid var(--violet-a9);
+    outline-offset: 3px;
+  }
 }

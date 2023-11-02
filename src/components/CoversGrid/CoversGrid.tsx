@@ -3,6 +3,7 @@ import { CoverCard } from "./CoverCard";
 import styles from "./coversGrid.module.scss";
 import { supabase } from "../../lib/supabase";
 import type { Tables } from "../../types/types";
+import { motion } from "framer-motion";
 
 // We have to redefine this type because Supabase is inferring it incorrectly
 export type GridItem = {
@@ -12,13 +13,12 @@ export type GridItem = {
 };
 
 export const CoversGrid = () => {
-  const COVERS_PER_PAGE = 24;
+  const COVERS_PER_PAGE = 32;
 
   const [loadedCovers, setLoadedCovers] = useState<GridItem[]>([]);
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isLast, setIsLast] = useState(false);
-  const loaderRef = useRef(null);
 
   const fetchCovers = useCallback(async () => {
     if (isLoading || isLast) return;
@@ -55,49 +55,45 @@ export const CoversGrid = () => {
   }, [isLoading, index]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const target = entries[0];
-      if (target.isIntersecting && !isLast) {
-        fetchCovers();
-      }
-    });
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
-    };
-  }, [fetchCovers]);
-
-  // Initial load
-  useEffect(() => {
     fetchCovers();
   }, []);
 
   return (
-    <div className={styles.coversGrid}>
-      {loadedCovers?.map(({ original, cover, slug }) => (
-        <CoverCard
-          key={slug}
-          originalSongId={original.id}
-          originalSongName={original.name}
-          originalSongArtist={original.artists[0]}
-          originalAlbumImg={original.album_img[0]}
-          originalAlbumName={original.album_name}
-          coverSongId={cover.id}
-          coverSongArtist={cover.artists[0]}
-          coverAlbumImg={cover.album_img[0]}
-          coverAlbumName={cover.album_name}
-          slug={slug}
-        />
-      ))}
-      <div ref={loaderRef} className={styles.loader}>
-        {isLoading && "Loading..."}
+    <>
+      <div className={styles.coversGrid}>
+        {loadedCovers?.map(({ original, cover, slug }, index) => (
+          <motion.div
+            className={styles.coverCardWrapper}
+            key={slug}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              delay: (index % COVERS_PER_PAGE) * 0.03,
+            }}
+          >
+            <CoverCard
+              originalSongName={original.name}
+              originalSongArtist={original.artists[0]}
+              originalAlbumImg={original.album_img[0]}
+              originalAlbumName={original.album_name}
+              coverSongArtist={cover.artists[0]}
+              coverAlbumImg={cover.album_img[0]}
+              coverAlbumName={cover.album_name}
+              slug={slug}
+            />
+          </motion.div>
+        ))}
       </div>
-    </div>
+      {!isLast && (
+        <button
+          type="button"
+          className={styles.loadMore}
+          onClick={fetchCovers}
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading…" : "Load more"}
+        </button>
+      )}
+    </>
   );
 };

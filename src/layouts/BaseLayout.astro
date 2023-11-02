@@ -3,7 +3,7 @@ import "../styles/reset.css";
 import "../styles/theme.css";
 import "../styles/base.css";
 
-import { ViewTransitions } from "astro:transitions";
+// import { ViewTransitions } from "astro:transitions";
 
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
@@ -65,7 +65,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="stylesheet" href="https://use.typekit.net/hjc0gsm.css" />
     <title>{title}</title>
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
   </head>
   <body transition:animate="none">
     <script is:inline src="/scripts/preloadTheme.js"></script>

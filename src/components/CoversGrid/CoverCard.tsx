@@ -2,12 +2,10 @@ import { smartquotes } from "../../helpers/helpers.ts";
 import styles from "./coversGrid.module.scss";
 
 type Props = {
-  originalSongId: string;
   originalSongName: string;
   originalSongArtist: string;
   originalAlbumImg: string;
   originalAlbumName: string;
-  coverSongId: string;
   coverSongArtist: string;
   coverAlbumImg: string;
   coverAlbumName: string;
@@ -15,12 +13,10 @@ type Props = {
 };
 
 export const CoverCard = ({
-  originalSongId,
   originalSongName,
   originalSongArtist,
   originalAlbumImg,
   originalAlbumName,
-  coverSongId,
   coverSongArtist,
   coverAlbumImg,
   coverAlbumName,
@@ -31,10 +27,7 @@ export const CoverCard = ({
   return (
     <div className={styles.coverCard}>
       <div className={styles.albums}>
-        <div
-          className={styles.album}
-          // transition:name={`album-${originalSongId}`}
-        >
+        <div className={styles.album}>
           {originalAlbumImg && (
             <img
               src={originalAlbumImg}
@@ -42,10 +35,7 @@ export const CoverCard = ({
             />
           )}
         </div>
-        <div
-          className={styles.album}
-          // transition:name={`album-${coverSongId}`}
-        >
+        <div className={styles.album}>
           {coverAlbumImg && (
             <img src={coverAlbumImg} alt={`${coverAlbumName} album art`} />
           )}
