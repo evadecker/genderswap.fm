@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CoverCard } from "./CoverCard";
 import styles from "./coversGrid.module.scss";
 import { supabase } from "../../lib/supabase";
-import type { Tables } from "../../types/types";
+import type { Enums, Tables } from "../../types/types";
 import { motion } from "framer-motion";
 
 // We have to redefine this type because Supabase is inferring it incorrectly
@@ -12,7 +12,11 @@ export type GridItem = {
   slug: string;
 };
 
-export const CoversGrid = () => {
+type Props = {
+  filterBy?: Enums<"tags">;
+};
+
+export const CoversGrid = ({ filterBy }: Props) => {
   const COVERS_PER_PAGE = 32;
 
   const [loadedCovers, setLoadedCovers] = useState<GridItem[]>([]);
@@ -29,7 +33,7 @@ export const CoversGrid = () => {
     const to = from + COVERS_PER_PAGE - 1;
 
     try {
-      const { data } = await supabase
+      const covers = supabase
         .from("covers")
         .select(
           `
@@ -39,8 +43,13 @@ export const CoversGrid = () => {
         `
         )
         .order("created_at", { ascending: false })
-        .range(from, to)
-        .returns<GridItem[]>();
+        .range(from, to);
+
+      if (filterBy) {
+        covers.overlaps("tags", [filterBy]);
+      }
+
+      const { data } = await covers.returns<GridItem[]>();
 
       if (data) setLoadedCovers((prevCovers) => [...prevCovers, ...data]);
       setIndex((prevIndex) => prevIndex + 1);

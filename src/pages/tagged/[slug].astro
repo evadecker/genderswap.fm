@@ -1,11 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
-import CoverCardGrid from "../../components/CoverCardGrid.astro";
-import { supabase } from "../../lib/supabase";
 import { TAGS } from "../../types/tags";
 import type { Enums } from "../../types/types";
 import Tag from "../../components/Tag.astro";
+import { CoversGrid } from "../../components/CoversGrid/CoversGrid";
 
 const { slug } = Astro.params;
 
@@ -20,25 +19,6 @@ if (!tag) {
   });
 }
 
-const { data } = await supabase
-  .from("covers")
-  .select(
-    `
-    slug,
-    original:original_id(id, name, artists, album_name, album_img),
-    cover:cover_id(id, name, artists, album_name, album_img)
-  `
-  )
-  .order("created_at", { ascending: false })
-  .overlaps("tags", [tag]);
-
-if (!data) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
-}
-
 const title = `Tagged “${TAGS[tag].label}”`;
 const description = TAGS[tag].description;
 ---
@@ -47,5 +27,5 @@ const description = TAGS[tag].description;
   <PageHeader title={title} description={description}>
     <Tag text="Explore all tags" url="/tagged" />
   </PageHeader>
-  <CoverCardGrid covers={data as any} />
+  <CoversGrid filterBy={tag} client:only />
 </BaseLayout>
