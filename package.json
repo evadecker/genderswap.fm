@@ -13,7 +13,7 @@
   "dependencies": {
     "@astrojs/check": "^0.2.1",
     "@astrojs/react": "^3.0.4",
-    "@astrojs/sitemap": "^3.0.2",
+    "@astrojs/sitemap": "^3.0.3",
     "@astrojs/vercel": "^5.1.0",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-label": "^2.0.2",
@@ -21,10 +21,10 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.4",
-    "@types/react": "^18.2.33",
+    "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
     "@uidotdev/usehooks": "^2.4.1",
-    "astro": "^3.4.0",
+    "astro": "^3.4.2",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
     "downshift": "^8.2.2",
@@ -42,10 +42,10 @@
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.29.1",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.1",
-    "supabase": "^1.106.1"
+    "supabase": "^1.110.1"
   }
 }
