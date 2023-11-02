@@ -23,7 +23,7 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
     itemscope
     itemtype="https://schema.org/MusicRecording"
   >
-    <div class="album" transition:name={`album-${originalSong.id}`}>
+    <div class="album">
       <img
         class="album-art"
         src={originalSong.album_img[0]}
@@ -56,7 +56,7 @@ if (slugify(originalSong.name) !== slugify(coverSong.name)) {
     itemscope
     itemtype="https://schema.org/MusicRecording"
   >
-    <div class="album" transition:name={`album-${coverSong.id}`}>
+    <div class="album">
       <img
         class="album-art"
         src={coverSong.album_img[0]}
