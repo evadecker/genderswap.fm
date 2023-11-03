@@ -140,6 +140,7 @@
   font-size: var(--step-1);
 
   &:empty {
+    width: 70%;
     height: var(--space-xl);
   }
 }
@@ -149,6 +150,7 @@
   line-height: 1.3;
 
   &:empty {
+    width: 90%;
     height: var(--space-l);
   }
 }
