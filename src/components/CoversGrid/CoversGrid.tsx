@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CoverCard } from "./CoverCard";
 import styles from "./coversGrid.module.scss";
 import { supabase } from "../../lib/supabase";
 import type { Enums, Tables } from "../../types/types";
-import { motion } from "framer-motion";
+import { CoverCardSkeleton } from "./CoverCardSkeleton";
 
-// We have to redefine this type because Supabase is inferring it incorrectly
-export type GridItem = {
+type GridItem = {
   original: Tables<"songs">;
   cover: Tables<"songs">;
   slug: string;
@@ -17,20 +16,41 @@ type Props = {
 };
 
 export const CoversGrid = ({ filterBy }: Props) => {
-  const COVERS_PER_PAGE = 32;
+  const COVERS_PER_PAGE = 60;
+  const SKELETON_COVERS = 12;
 
+  const [page, setPage] = useState<number>(
+    Number(new URLSearchParams(window.location.search).get("page")) || 1
+  );
   const [loadedCovers, setLoadedCovers] = useState<GridItem[]>([]);
-  const [index, setIndex] = useState(0);
+  const [range, setRange] = useState({ from: 0, to: COVERS_PER_PAGE - 1 });
+  const [totalCovers, setTotalCovers] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirst, setIsFirst] = useState(page === 1);
   const [isLast, setIsLast] = useState(false);
 
+  const getTotalCovers = async () => {
+    const covers = supabase
+      .from("covers")
+      .select("id", { count: "exact", head: true });
+
+    if (filterBy) {
+      covers.overlaps("tags", [filterBy]);
+    }
+
+    const { count } = await covers;
+
+    if (count) setTotalCovers(count);
+  };
+
   const fetchCovers = useCallback(async () => {
-    if (isLoading || isLast) return;
+    if (isLoading) return;
 
     setIsLoading(true);
+    const newFrom = (page - 1) * COVERS_PER_PAGE;
+    const newTo = newFrom + COVERS_PER_PAGE - 1;
 
-    const from = index * COVERS_PER_PAGE;
-    const to = from + COVERS_PER_PAGE - 1;
+    setRange({ from: newFrom, to: newTo });
 
     try {
       const covers = supabase
@@ -43,7 +63,7 @@ export const CoversGrid = ({ filterBy }: Props) => {
         `
         )
         .order("created_at", { ascending: false })
-        .range(from, to);
+        .range(newFrom, newTo);
 
       if (filterBy) {
         covers.overlaps("tags", [filterBy]);
@@ -52,7 +72,6 @@ export const CoversGrid = ({ filterBy }: Props) => {
       const { data } = await covers.returns<GridItem[]>();
 
       if (data) setLoadedCovers((prevCovers) => [...prevCovers, ...data]);
-      setIndex((prevIndex) => prevIndex + 1);
       setIsLoading(false);
 
       if (!data || data.length < COVERS_PER_PAGE) {
@@ -61,48 +80,69 @@ export const CoversGrid = ({ filterBy }: Props) => {
     } catch (error) {
       console.error(error);
     }
-  }, [isLoading, index]);
+  }, [page]);
 
   useEffect(() => {
     fetchCovers();
+    getTotalCovers();
   }, []);
+
+  useEffect(() => {
+    setIsFirst(page === 1);
+  }, [page]);
+
+  const handleBack = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const newPage = page - 1;
+    if (newPage === 1) {
+      searchParams.delete("page");
+    } else {
+      searchParams.set("page", newPage.toString());
+    }
+    window.location.search = searchParams.toString();
+    setPage(newPage);
+  };
+
+  const handleNext = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const newPage = page + 1;
+    searchParams.set("page", newPage.toString());
+    window.location.search = searchParams.toString();
+    setPage(newPage);
+  };
 
   return (
     <>
       <div className={styles.coversGrid}>
-        {loadedCovers?.map(({ original, cover, slug }, index) => (
-          <motion.div
-            className={styles.coverCardWrapper}
-            key={slug}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              delay: (index % COVERS_PER_PAGE) * 0.03,
-            }}
-          >
-            <CoverCard
-              originalSongName={original.name}
-              originalSongArtist={original.artists[0]}
-              originalAlbumImg={original.album_img[0]}
-              originalAlbumName={original.album_name}
-              coverSongArtist={cover.artists[0]}
-              coverAlbumImg={cover.album_img[0]}
-              coverAlbumName={cover.album_name}
-              slug={slug}
-            />
-          </motion.div>
+        {!loadedCovers.length &&
+          [...Array(SKELETON_COVERS)].map((_) => <CoverCardSkeleton />)}
+        {loadedCovers?.map(({ original, cover, slug }) => (
+          <CoverCard
+            originalSongName={original.name}
+            originalSongArtist={original.artists[0]}
+            originalAlbumImg={original.album_img[0]}
+            originalAlbumName={original.album_name}
+            coverSongArtist={cover.artists[0]}
+            coverAlbumImg={cover.album_img[0]}
+            coverAlbumName={cover.album_name}
+            slug={slug}
+          />
         ))}
       </div>
-      {!isLast && (
-        <button
-          type="button"
-          className={styles.loadMore}
-          onClick={fetchCovers}
-          disabled={isLoading}
-        >
-          {isLoading ? "Loading…" : "Load more"}
-        </button>
-      )}
+      <div className={styles.pagination}>
+        <div className={styles.viewingCount}>
+          Viewing {range.from + 1}–{Math.min(range.to + 1, totalCovers)} of{" "}
+          {totalCovers} covers
+        </div>
+        <div className={styles.buttons}>
+          <button type="button" disabled={isFirst} onClick={handleBack}>
+            Back
+          </button>
+          <button type="button" disabled={isLast} onClick={handleNext}>
+            Next
+          </button>
+        </div>
+      </div>
     </>
   );
 };
