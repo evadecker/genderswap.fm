@@ -114,6 +114,10 @@
   animation: pulse 1s ease-in-out infinite;
 }
 
+.placeholder .album:first-child {
+  opacity: 0.8;
+}
+
 .content {
   display: flex;
   flex-direction: column;
