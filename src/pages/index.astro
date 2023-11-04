@@ -1,5 +1,5 @@
 ---
-import { CoversGrid } from "../components/CoversGrid/CoversGrid";
+import CoversGrid from "../components/CoversGrid/CoversGrid.svelte";
 import PageHeader from "../components/PageHeader.astro";
 import Tag from "../components/Tag.astro";
 import TagCloud from "../components/TagCloud.astro";
@@ -21,5 +21,5 @@ export const prerender = true;
       <Tag text="Get random cover" url="/random" />
     </TagCloud>
   </PageHeader>
-  <CoversGrid client:only />
+  <CoversGrid client:only="svelte" />
 </BaseLayout>

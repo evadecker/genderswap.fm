@@ -4,7 +4,7 @@ import PageHeader from "../../components/PageHeader.astro";
 import { TAGS } from "../../types/tags";
 import type { Enums } from "../../types/types";
 import Tag from "../../components/Tag.astro";
-import { CoversGrid } from "../../components/CoversGrid/CoversGrid";
+import CoversGrid from "../../components/CoversGrid/CoversGrid.svelte";
 
 const { slug } = Astro.params;
 
@@ -27,5 +27,5 @@ const description = TAGS[tag].description;
   <PageHeader title={title} description={description}>
     <Tag text="Explore all tags" url="/tagged" />
   </PageHeader>
-  <CoversGrid filterBy={tag} client:only />
+  <CoversGrid filterBy={tag} client:only="svelte" />
 </BaseLayout>
