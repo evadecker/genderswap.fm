@@ -40,7 +40,7 @@
           original:original_id(id, name, artists, album_name, album_img),
           cover:cover_id(id, name, artists, album_name, album_img)
         `,
-          { count: "exact" }
+          { count: "estimated" }
         )
         .order("created_at", { ascending: false })
         .range(newFrom, newTo);
