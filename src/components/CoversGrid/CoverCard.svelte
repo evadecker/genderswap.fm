@@ -96,13 +96,13 @@
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;
 
-    :not(.placeholder) {
+    &:not(:empty) {
       // https://shadows.brumm.af/
       box-shadow:
-        0px 1.8px 3.6px rgba(0, 0, 0, 0.017),
-        0px 5px 10px rgba(0, 0, 0, 0.025),
-        0px 12.1px 24.1px rgba(0, 0, 0, 0.033),
-        0px 40px 80px rgba(0, 0, 0, 0.05);
+        0px 1.8px 3.6px rgba(0, 0, 0, 0.024),
+        0px 5px 10px rgba(0, 0, 0, 0.035),
+        0px 12.1px 24.1px rgba(0, 0, 0, 0.046),
+        0px 40px 80px rgba(0, 0, 0, 0.07);
     }
 
     img {
@@ -137,14 +137,14 @@
     }
   }
 
-  .placeholder .album,
+  .album:empty,
   .title:empty,
   .artist:empty {
     animation: pulse 1s ease-in-out infinite;
   }
 
   .placeholder .album:first-child {
-    opacity: 0.8;
+    opacity: 0.6;
   }
 
   .content {

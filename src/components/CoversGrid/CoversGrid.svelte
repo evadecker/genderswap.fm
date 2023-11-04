@@ -9,7 +9,7 @@
     slug: string;
   };
 
-  export let filterBy: Enums<"tags">;
+  export let filterBy: Enums<"tags"> | null = null;
 
   const COVERS_PER_PAGE = 60;
   const SKELETON_COVERS = 12;
