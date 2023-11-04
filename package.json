@@ -14,6 +14,7 @@
     "@astrojs/check": "^0.2.1",
     "@astrojs/react": "^3.0.4",
     "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/svelte": "^4.0.3",
     "@astrojs/vercel": "^5.1.0",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-label": "^2.0.2",
@@ -35,6 +36,7 @@
     "sass": "^1.69.5",
     "satori": "^0.10.9",
     "sharp": "^0.32.6",
+    "svelte": "^4.0.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.1",
+    "prettier-plugin-svelte": "^3.0.3",
     "supabase": "^1.110.1"
   }
 }
