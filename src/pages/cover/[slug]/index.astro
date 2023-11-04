@@ -12,6 +12,9 @@ import { TAGS } from "../../../types/tags";
 
 const { slug } = Astro.params;
 
+// Cache for 1 week
+Astro.response.headers.set("Cache-Control", "max-age=604800");
+
 // We have to redefine this type because Supabase is inferring it incorrectly
 export type Cover = {
   original: Tables<"songs">;
