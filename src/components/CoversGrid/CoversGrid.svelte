@@ -23,6 +23,20 @@
   let isFirst = page === 1;
   let isLast = false;
 
+  const getTotalCovers = async () => {
+    const covers = supabase
+      .from("covers")
+      .select("id", { count: "exact", head: true });
+
+    if (filterBy) {
+      covers.overlaps("tags", [filterBy]);
+    }
+
+    const { count } = await covers;
+
+    if (count) totalCovers = count;
+  };
+
   const fetchCovers = async () => {
     if (isLoading) return;
     isLoading = true;
@@ -39,8 +53,7 @@
           slug,
           original:original_id(id, name, artists, album_name, album_img),
           cover:cover_id(id, name, artists, album_name, album_img)
-        `,
-          { count: "estimated" }
+        `
         )
         .order("created_at", { ascending: false })
         .range(newFrom, newTo);
@@ -49,10 +62,9 @@
         covers.overlaps("tags", [filterBy]);
       }
 
-      const { data, count } = await covers.returns<GridItem[]>();
+      const { data } = await covers.returns<GridItem[]>();
 
       if (data) loadedCovers = [...loadedCovers, ...data];
-      if (count) totalCovers = count;
       if (!data || data.length < COVERS_PER_PAGE) isLast = true;
 
       isLoading = false;
@@ -62,6 +74,7 @@
   };
 
   fetchCovers();
+  getTotalCovers();
 
   const handleBack = () => {
     const searchParams = new URLSearchParams(window.location.search);
