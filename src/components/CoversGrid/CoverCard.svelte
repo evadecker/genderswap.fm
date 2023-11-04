@@ -23,12 +23,12 @@
   <div class="albums">
     <div class="album">
       {#if original?.album_img}
-        <img src={original.album_img[0]} alt={`${original.name} album art`} />
+        <img src={original.album_img[1]} alt={`${original.name} album art`} />
       {/if}
     </div>
     <div class="album">
       {#if cover?.album_img}
-        <img src={cover.album_img[0]} alt={`${cover.name} album art`} />
+        <img src={cover.album_img[1]} alt={`${cover.name} album art`} />
       {/if}
     </div>
   </div>
