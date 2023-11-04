@@ -117,14 +117,16 @@
     Viewing {range.from + 1}–{Math.min(range.to + 1, totalCovers)} of{" "}
     {totalCovers} covers
   </div>
-  <div class="buttons">
-    <button type="button" disabled={isFirst} on:click={handleBack}>
-      Back
-    </button>
-    <button type="button" disabled={isLast} on:click={handleNext}>
-      Next
-    </button>
-  </div>
+  {#if !(isFirst && isLast)}
+    <div class="buttons">
+      <button type="button" disabled={isFirst} on:click={handleBack}>
+        Back
+      </button>
+      <button type="button" disabled={isLast} on:click={handleNext}>
+        Next
+      </button>
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
