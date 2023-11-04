@@ -69,6 +69,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body transition:animate="none">
     <script is:inline src="/scripts/preloadTheme.js"></script>
+    <script>
+      import "lazysizes";
+    </script>
     <Header />
     <main class="main" transition:animate="fade">
       <slot />

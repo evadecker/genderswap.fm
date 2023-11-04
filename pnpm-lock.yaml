@@ -59,6 +59,9 @@ dependencies:
   downshift:
     specifier: ^8.2.2
     version: 8.2.2(react@18.2.0)
+  lazysizes:
+    specifier: ^5.3.2
+    version: 5.3.2
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -4303,6 +4306,10 @@ packages:
     dependencies:
       language-subtag-registry: 0.3.22
     dev: true
+
+  /lazysizes@5.3.2:
+    resolution: {integrity: sha512-22UzWP+Vedi/sMeOr8O7FWimRVtiNJV2HCa+V8+peZOw6QbswN9k58VUhd7i6iK5bw5QkYrF01LJbeJe0PV8jg==}
+    dev: false
 
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
