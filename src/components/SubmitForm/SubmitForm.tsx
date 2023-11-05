@@ -70,7 +70,16 @@ export const SubmitForm = () => {
     const originalSongRow =
       original &&
       (await formatSongRow({ song: original, gender: originalGenders }));
-    if (originalSongRow) {
+
+    // Check if original already exists
+    const { data: existingOriginal } = await supabase
+      .from("songs")
+      .select("id")
+      .eq("id", originalSongRow.id)
+      .single();
+
+    // If it doesn't exist, insert it
+    if (originalSongRow && !existingOriginal) {
       const res = await supabase.from("songs").insert(originalSongRow);
       res.error &&
         setToastMessage({
@@ -82,7 +91,16 @@ export const SubmitForm = () => {
     // Shape cover data for submission to the 'songs' table
     const coverSongRow =
       cover && (await formatSongRow({ song: cover, gender: coverGenders }));
-    if (coverSongRow) {
+
+    // Check if cover already exists
+    const { data: existingCover } = await supabase
+      .from("songs")
+      .select("id")
+      .eq("id", coverSongRow.id)
+      .single();
+
+    // If it doesn't exist, insert it
+    if (coverSongRow && !existingCover) {
       const res = await supabase.from("songs").insert(coverSongRow);
       res.error &&
         setToastMessage({
@@ -102,6 +120,7 @@ export const SubmitForm = () => {
         description,
         contributor,
       }));
+
     if (coverRow) {
       const { data, error } = await supabase
         .from("covers")
