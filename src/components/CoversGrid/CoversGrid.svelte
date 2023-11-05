@@ -97,37 +97,44 @@
   };
 </script>
 
-<div class="coversGrid">
-  {#if !loadedCovers.length}
-    {#each [...Array(SKELETON_COVERS)] as []}
-      <CoverCard />
-    {/each}
-  {:else}
-    {#each loadedCovers as loadedCover}
-      <CoverCard
-        original={loadedCover.original}
-        cover={loadedCover.cover}
-        slug={loadedCover.slug}
-      />
-    {/each}
-  {/if}
-</div>
-<div class="pagination">
-  <div class="viewingCount">
-    Viewing {range.from + 1}–{Math.min(range.to + 1, totalCovers)} of{" "}
-    {totalCovers} covers
+{#if loadedCovers.length === 0}
+  <div class="empty">
+    <p>No covers found.</p>
+    <a href="/random" class="button">Get random cover</a>
   </div>
-  {#if !(isFirst && isLast)}
-    <div class="buttons">
-      <button type="button" disabled={isFirst} on:click={handleBack}>
-        Back
-      </button>
-      <button type="button" disabled={isLast} on:click={handleNext}>
-        Next
-      </button>
-    </div>
-  {/if}
-</div>
+{:else}
+  <div class="coversGrid">
+    {#if isLoading}
+      {#each [...Array(SKELETON_COVERS)] as []}
+        <CoverCard />
+      {/each}
+    {:else}
+      {#each loadedCovers as loadedCover}
+        <CoverCard
+          original={loadedCover.original}
+          cover={loadedCover.cover}
+          slug={loadedCover.slug}
+        />
+      {/each}
+      <div class="pagination">
+        <div class="viewingCount">
+          Viewing {range.from + 1}–{Math.min(range.to + 1, totalCovers)} of{" "}
+          {totalCovers} covers
+        </div>
+        {#if !(isFirst && isLast)}
+          <div class="buttons">
+            <button type="button" disabled={isFirst} on:click={handleBack}>
+              Back
+            </button>
+            <button type="button" disabled={isLast} on:click={handleNext}>
+              Next
+            </button>
+          </div>
+        {/if}
+      </div>
+    {/if}
+  </div>
+{/if}
 
 <style lang="scss">
   .coversGrid {
@@ -155,6 +162,46 @@
         auto-fill,
         minmax(calc(var(--space-3xl) * 3), 1fr)
       );
+    }
+  }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex: 1;
+    gap: var(--space-l);
+    padding-block-end: var(--space-3xl);
+
+    p {
+      font-size: var(--step-1);
+    }
+  }
+
+  .button {
+    background: var(--mauve-12);
+    color: var(--mauve-1);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-full);
+    padding-block: var(--space-s);
+    padding-inline: var(--space-xl);
+    margin-inline: auto;
+    font-size: var(--step-1);
+    font-weight: var(--font-weight-bold);
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background: var(--violet-9);
+        color: white;
+      }
+    }
+
+    &:focus {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
     }
   }
 
