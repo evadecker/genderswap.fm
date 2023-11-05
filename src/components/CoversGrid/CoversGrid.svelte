@@ -97,7 +97,7 @@
   };
 </script>
 
-{#if loadedCovers.length === 0}
+{#if !isLoading && loadedCovers.length === 0}
   <div class="empty">
     <p>No covers found.</p>
     <a href="/random" class="button">Get random cover</a>
