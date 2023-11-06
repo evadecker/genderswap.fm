@@ -2,15 +2,9 @@
 	import { theme } from '$lib/stores/theme';
 	import SunIcon from '~icons/ri/sun-line';
 	import MoonIcon from '~icons/ri/moon-line';
-
-	// TODO: Fix
-	const count = 180;
 </script>
 
 <footer>
-	<div class="count">
-		<em>{`${count ?? 'A bunch of'} covers and counting`}</em>
-	</div>
 	<nav class="nav">
 		<span class="credits">
 			A project by <a href="https://evadecker.com">Eva Decker</a>
@@ -53,11 +47,8 @@
 			padding-block-end: max(var(--space-l), env(safe-area-inset-bottom));
 		}
 		display: grid;
-		grid-template-areas:
-			'count count'
-			'nav toggle';
+		grid-template-areas: 'nav toggle';
 		grid-template-columns: 1fr fit-content(64px);
-		grid-template-rows: 1px auto;
 		align-items: center;
 		row-gap: var(--space-l);
 		z-index: 0;
@@ -74,32 +65,6 @@
 					text-decoration-color: inherit;
 				}
 			}
-		}
-	}
-
-	.count {
-		grid-area: count;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-		font-size: var(--step--1);
-		color: var(--mauve-11);
-
-		em {
-			background-color: var(--mauve-1);
-			padding-inline: var(--space-s);
-		}
-
-		&::before {
-			content: '';
-			height: 1px;
-			background-color: var(--mauve-6);
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 50%;
-			z-index: -1;
 		}
 	}
 

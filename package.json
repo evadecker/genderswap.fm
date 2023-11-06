@@ -12,7 +12,8 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts"
 	},
 	"devDependencies": {
 		"@iconify-json/ri": "^1.1.12",
@@ -28,6 +29,7 @@
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
 		"sass": "^1.69.5",
+		"supabase": "^1.110.1",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
@@ -38,6 +40,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@radix-ui/colors": "^3.0.0"
+		"@radix-ui/colors": "^3.0.0",
+		"@supabase/supabase-js": "^2.38.4"
 	}
 }
