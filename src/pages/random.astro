@@ -1,7 +1,0 @@
----
-import { supabase } from "../lib/supabase";
-
-const { data: randomSlug } = await supabase.rpc("get_random_cover_slug");
-
-return Astro.redirect(`/cover/${randomSlug}`);
----
