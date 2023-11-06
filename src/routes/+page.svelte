@@ -3,6 +3,8 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import CoverCard from '$lib/components/CoverCard.svelte';
 	import { goto } from '$app/navigation';
+	import TagCloud from '$lib/components/TagCloud.svelte';
+	import Tag from '$lib/components/Tag.svelte';
 
 	export let data;
 
@@ -37,10 +39,10 @@
 	title="Genderswap.fm"
 	description="Some covers deliver the age-old simple pleasures of drag."
 >
-	<!-- <TagCloud>
-      <Tag text="Explore by tag" url="/tagged" />
-      <Tag text="Get random cover" url="/random" />
-    </TagCloud> -->
+	<TagCloud>
+		<Tag text="Explore by tag" url="/tagged" />
+		<Tag text="Get random cover" url="/random" />
+	</TagCloud>
 </PageHeader>
 
 {#await data}
