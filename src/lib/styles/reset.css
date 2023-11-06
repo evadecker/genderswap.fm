@@ -1,16 +1,16 @@
 * {
-	margin: 0;
-	scroll-behavior: smooth;
+  margin: 0;
+  scroll-behavior: smooth;
 }
 
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	-webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 img,
@@ -18,25 +18,25 @@ picture,
 video,
 canvas,
 svg {
-	display: block;
-	max-inline-size: 100%;
-	height: auto;
+  display: block;
+  max-inline-size: 100%;
+  height: auto;
 }
 
 svg {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 svg * {
-	transform-box: fill-box;
+  transform-box: fill-box;
 }
 
 input,
 button,
 textarea,
 select {
-	font: inherit;
-	color: inherit;
+  font: inherit;
+  color: inherit;
 }
 
 p,
@@ -46,10 +46,10 @@ h3,
 h4,
 h5,
 h6 {
-	overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 a {
-	color: unset;
-	text-decoration: none;
+  color: unset;
+  text-decoration: none;
 }
