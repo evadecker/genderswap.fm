@@ -1,7 +1,7 @@
 <script lang="ts">
-	import '../styles/reset.css';
-	import '../styles/theme.css';
-	import '../styles/base.css';
+	import '$lib/styles/reset.css';
+	import '$lib/styles/theme.css';
+	import '$lib/styles/base.css';
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
