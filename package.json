@@ -41,6 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"@radix-ui/colors": "^3.0.0",
-		"@supabase/supabase-js": "^2.38.4"
+		"@supabase/supabase-js": "^2.38.4",
+		"dayjs": "^1.11.10"
 	}
 }
