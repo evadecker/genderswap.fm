@@ -47,8 +47,8 @@ export const slugify = (str: string) => {
       .replace(/[\u0300-\u036f]/g, '') // remove all the accents, which happen to be all in the \u03xx UNICODE block.
       .trim() // trim leading or trailing whitespace
       .toLowerCase() // convert to lowercase
-      // remove . , " ' “ ” ‘ ’ # ! $ %  & * ; : = _ ` ~ | { } ( ) [ ] ^ *
-      .replace(/[.,"'“”‘’#!?$%&%;:=_`~|{}()[\]\^\*]/g, '')
+      // remove . , " ' “ ” ‘ ’ # ! $ %  & * ; : = _ ` ~ @ < > + | { } ( ) [ ] ^ *
+      .replace(/[.,"'“”‘’#!?$%&%;:=_`~@<>+|{}()[\]\^\*]/g, '')
       .replace(/\/+/g, '-') // replace forward slashes with hyphens
       .replace(/\s+/g, '-') // replace spaces with hyphens
       .replace(/-+/g, '-') // remove consecutive hyphens

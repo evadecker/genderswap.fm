@@ -73,7 +73,6 @@
               url={currentTag === tag ? '/' : `/?tag=${tag}`}
               isActive={currentTag === tag}
             />
-            <!-- count={count?.toString()}  -->
           {/each}
         </TagCloud>
       </div>
