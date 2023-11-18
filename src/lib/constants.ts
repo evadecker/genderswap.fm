@@ -1,0 +1,2 @@
+export const MAX_DESCRIPTION_CHARS = 160;
+export const MAX_CONTRIBUTOR_CHARS = 24;

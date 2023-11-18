@@ -1,11 +1,12 @@
+import { preprocessMeltUI } from '@melt-ui/pp';
+import sequence from 'svelte-sequential-preprocessor';
 import adapter from '@sveltejs/adapter-vercel';
 import { mdsvex } from 'mdsvex';
 import preprocess from 'svelte-preprocess';
-
-/** @type {import('@sveltejs/kit').Config} */
+/** @type {import('@sveltejs/kit').Config}*/
 const config = {
   extensions: ['.svelte', '.md'],
-  preprocess: [
+  preprocess: sequence([
     preprocess({
       typescript: true,
       scss: true
@@ -15,11 +16,11 @@ const config = {
       layout: {
         _: './src/routes/about/layout.svelte'
       }
-    })
-  ],
+    }),
+    preprocessMeltUI()
+  ]),
   kit: {
     adapter: adapter()
   }
 };
-
 export default config;

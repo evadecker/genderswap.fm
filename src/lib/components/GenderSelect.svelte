@@ -1,0 +1,112 @@
+<script lang="ts">
+  import { createToggleGroup, melt } from '@melt-ui/svelte';
+  import MenIcon from '~icons/ri/men-line';
+  import WomenIcon from '~icons/ri/women-line';
+  import SparklingIcon from '~icons/ri/sparkling-line';
+  import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+  import type { Enums } from '$lib/types/types';
+
+  export let name: string;
+  export let value: Enums<'gender'>[];
+  export let errors: string[] | undefined = undefined;
+
+  const {
+    elements: { root, item },
+    states: { value: innerValue }
+  } = createToggleGroup({
+    type: 'multiple',
+    onValueChange: ({ next }) => {
+      value = next as Enums<'gender'>[];
+      return next;
+    }
+  });
+
+  $: innerValue.set(value);
+</script>
+
+<fieldset use:melt={$root} class="genderSelect" {name}>
+  <legend class="label" aria-invalid={errors ? 'true' : undefined}>
+    Vocals include{' '}
+    <span class="instructions">select all that apply</span>
+  </legend>
+  <div class="toggleWrapper">
+    <div class="toggleGroup">
+      <button use:melt={$item('male')} aria-label={`Select men`}>
+        <MenIcon />
+        men
+      </button>
+      <button use:melt={$item('female')} aria-label={`Select women`}>
+        <WomenIcon />
+        women
+      </button>
+      <button use:melt={$item('other')} aria-label={`Select other`}>
+        <SparklingIcon />
+        other
+      </button>
+    </div>
+    {#if errors}
+      {#each errors as error}
+        <ErrorMessage {error} />
+      {/each}
+    {/if}
+  </div>
+</fieldset>
+
+<style lang="scss">
+  .genderSelect {
+    all: unset;
+  }
+
+  .label {
+    display: block;
+    padding-block-end: var(--space-xs);
+  }
+
+  .instructions {
+    font-size: var(--step--1);
+    font-style: italic;
+  }
+
+  .toggleWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toggleGroup {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  button {
+    all: unset;
+    background-color: var(--mauve-3);
+    color: var(--mauve-11);
+    border-radius: var(--radius-full);
+    display: flex;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding-block: var(--space-xs);
+    padding-inline: var(--space-s);
+    padding-inline-end: var(--space-m);
+    cursor: pointer;
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--mauve-4);
+      }
+    }
+
+    &[data-state='on'] {
+      background-color: var(--violet-9);
+      border-color: var(--violet-9);
+      color: white;
+    }
+
+    &:focus {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
+    }
+  }
+</style>

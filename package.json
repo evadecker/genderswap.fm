@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.1.12",
+    "@melt-ui/pp": "^0.1.4",
+    "@melt-ui/svelte": "^0.61.2",
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-vercel": "^3.0.3",
@@ -33,17 +35,22 @@
     "supabase": "^1.110.1",
     "svelte": "^4.0.5",
     "svelte-check": "^3.4.3",
+    "svelte-sequential-preprocessor": "^2.0.1",
+    "sveltekit-superforms": "^1.10.2",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
     "unplugin-icons": "^0.17.3",
     "vite": "^4.4.2",
-    "vitest": "^0.32.2"
+    "vitest": "^0.32.2",
+    "zod": "^3.22.4"
   },
   "type": "module",
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
+    "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.4",
     "dayjs": "^1.11.10",
+    "svelte-autosize": "^1.1.0",
     "svelte-preprocess": "^5.0.4"
   }
 }
