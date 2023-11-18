@@ -31,7 +31,7 @@ I encourage you to _make it up_. Because gender is kinda made up, too, and this 
 
 ## How do you tag covers?
 
-Tags like “20+ BPM faster”, “key change”, and “sadder” come from the Spotify Audio Features API. Spotify runs an automated analysis on every track, and then different fields like “valence” get returned with a number. I ask the computer to compare numbers from two tracks, and voilà! A tag is born. [Explore all tags here.](/tagged)
+Tags like “20+ BPM faster”, “key change”, and “sadder” come from the Spotify Audio Features API. Spotify runs an automated analysis on every track, and then different fields like “valence” get returned with a number. I ask the computer to compare numbers from two tracks, and voilà! A tag is born. [Explore all tags on the homepage.](/)
 
 ## Can I submit tracks that aren’t on Spotify?
 
