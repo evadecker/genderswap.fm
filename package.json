@@ -13,7 +13,8 @@
     "format": "prettier --plugin-search-dir . --write .",
     "test:integration": "playwright test",
     "test:unit": "vitest",
-    "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts"
+    "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts",
+    "postbuild": "npx svelte-sitemap --out-dir .vercel/output/static --domain https://genderswap.fm"
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.1.12",
@@ -51,6 +52,7 @@
     "@supabase/supabase-js": "^2.38.4",
     "dayjs": "^1.11.10",
     "svelte-autosize": "^1.1.0",
-    "svelte-preprocess": "^5.0.4"
+    "svelte-preprocess": "^5.0.4",
+    "svelte-sitemap": "^2.6.0"
   }
 }
