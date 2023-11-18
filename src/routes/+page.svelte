@@ -11,6 +11,7 @@
   import { slide } from 'svelte/transition';
   import ArrowDropDown from '~icons/ri/arrow-drop-down-line';
   import ArrowDropUp from '~icons/ri/arrow-drop-up-line';
+  import 'lazysizes';
 
   export let data;
 
