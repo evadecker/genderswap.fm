@@ -1,11 +1,12 @@
 <script lang="ts">
   export let text: string;
-  export let count: number = 0;
-  export let url: string = '';
+  export let count: number | null = 0;
+  export let url: string;
+  export let isActive: boolean = false;
 </script>
 
 {#if url}
-  <a href={url} class="tag">
+  <a href={url} class="tag" class:active={isActive}>
     {text}
     {#if count}
       <span class="count">{count}</span>
@@ -20,8 +21,9 @@
   </div>
 {/if}
 
-<style>
+<style lang="scss">
   .tag {
+    all: unset;
     display: inline-flex;
     gap: var(--space-xs);
     align-items: baseline;
@@ -31,10 +33,16 @@
     padding-inline: var(--space-m);
     border-radius: var(--radius-full);
     font-size: var(--step-0);
+
+    &.active {
+      background: var(--mauve-12);
+      color: var(--mauve-1);
+    }
   }
 
-  a.tag:hover {
+  a.tag:hover:not(.active) {
     background: var(--mauve-4);
+    cursor: pointer;
   }
 
   .count {

@@ -4,7 +4,7 @@
   import dayjs from 'dayjs';
   import TagCloud from '$lib/components/TagCloud.svelte';
   import Tag from '$lib/components/Tag.svelte';
-  import { TAGS } from '$lib/types/tags';
+  import { TAGS } from '$lib/constants';
 
   export let data;
 
@@ -22,7 +22,7 @@
   {#if data.tags}
     <TagCloud>
       {#each data.tags as tag}
-        <Tag text={TAGS[tag].label} url={`/tagged/${TAGS[tag].slug}`} />
+        <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} />
       {/each}
     </TagCloud>
   {/if}

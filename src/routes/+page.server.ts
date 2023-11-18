@@ -1,5 +1,6 @@
+import { TAGS } from '$lib/constants';
 import { supabase } from '$lib/supabase';
-import type { Tables } from '$lib/types/types';
+import type { Enums, Tables } from '$lib/types/types';
 
 type GridItem = {
   original: Tables<'songs'>;
@@ -11,7 +12,7 @@ const PAGE_SIZE = 60;
 
 export async function load({ url }) {
   const page = Number(url.searchParams.get('page') ?? 1);
-  const tags = url.searchParams.get('tags');
+  const tag = url.searchParams.get('tag');
 
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
@@ -29,8 +30,8 @@ export async function load({ url }) {
     .order('created_at', { ascending: false })
     .range(from, to);
 
-  if (tags) {
-    covers.overlaps('tags', [tags]);
+  if (tag) {
+    covers.overlaps('tags', [tag]);
   }
 
   const { data, count } = await covers.returns<GridItem[]>();

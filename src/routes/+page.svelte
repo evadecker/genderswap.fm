@@ -5,10 +5,15 @@
   import { goto } from '$app/navigation';
   import TagCloud from '$lib/components/TagCloud.svelte';
   import Tag from '$lib/components/Tag.svelte';
+  import { TAGS } from '$lib/constants.js';
+  import type { Enums } from '$lib/types/types.js';
 
   export let data;
 
+  const tags = Object.keys(TAGS) as Enums<'tags'>[];
+
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
+  $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -40,7 +45,10 @@
   description="Some covers deliver the age-old simple pleasures of drag."
 >
   <TagCloud>
-    <Tag text="Explore by tag" url="/tagged" />
+    {#each tags as tag}
+      <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} isActive={currentTag === tag} />
+      <!-- count={count?.toString()}  -->
+    {/each}
     <Tag text="Get random cover" url="/random" />
   </TagCloud>
 </PageHeader>
