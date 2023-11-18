@@ -10,6 +10,7 @@
   import { MAX_CONTRIBUTOR_CHARS, MAX_DESCRIPTION_CHARS } from '$lib/constants';
   import ErrorMessage from '$lib/components/ErrorMessage.svelte';
   import { browser } from '$app/environment';
+  import { page } from '$app/stores';
 
   export let data: PageData;
 
@@ -45,6 +46,12 @@
     if (browser) window.localStorage.setItem('contributor', $form.contributor);
   };
 </script>
+
+<svelte:head>
+  <title>Submit a cover</title>
+  <meta name="description" content="Upload a fresh gender-swapped cover to the catalogue." />
+  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
+</svelte:head>
 
 <form class="submitForm" method="POST" use:enhance>
   <h1 class="header">Submit a cover</h1>
@@ -139,6 +146,7 @@
     inline-size: 100%;
     max-inline-size: 50ch;
     margin-inline: auto;
+    padding-inline: var(--space-l);
     padding-block-end: var(--space-2xl);
   }
 

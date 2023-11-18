@@ -5,6 +5,7 @@
   import TagCloud from '$lib/components/TagCloud.svelte';
   import Tag from '$lib/components/Tag.svelte';
   import { TAGS } from '$lib/constants';
+  import { page } from '$app/stores';
 
   export let data;
 
@@ -12,10 +13,14 @@
 </script>
 
 <svelte:head>
-  <title>{data.pageTitle}</title>
-  <meta name="description" content={data.description} />
-  <!--   ogImage={`/cover/${slug}/og.png`}
-  ogAlt={title} -->
+  <title>{data.title}</title>
+  <meta
+    name="description"
+    content={data.description ?? 'Some covers deliver the age-old simple pleasures of drag.'}
+  />
+  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
+  <meta property="og:image" content={`${$page.url.pathname}/og.png`} />
+  <meta property="og:image:alt" content={data.pageTitle} />
 </svelte:head>
 
 <PageHeader title={data.pageTitle} description={data.description}>

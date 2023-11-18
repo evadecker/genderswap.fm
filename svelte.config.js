@@ -3,6 +3,7 @@ import sequence from 'svelte-sequential-preprocessor';
 import adapter from '@sveltejs/adapter-vercel';
 import { mdsvex } from 'mdsvex';
 import preprocess from 'svelte-preprocess';
+
 /** @type {import('@sveltejs/kit').Config}*/
 const config = {
   extensions: ['.svelte', '.md'],
@@ -14,13 +15,16 @@ const config = {
     mdsvex({
       extensions: ['.md'],
       layout: {
-        _: './src/routes/about/layout.svelte'
+        _: 'src/lib/components/ProseLayout.svelte'
       }
     }),
     preprocessMeltUI()
   ]),
   kit: {
-    adapter: adapter()
+    adapter: adapter({
+      runtime: 'nodejs20.x',
+      platform: 'node'
+    })
   }
 };
 export default config;

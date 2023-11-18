@@ -1,4 +1,5 @@
 <script>
+  import { page } from '$app/stores';
   import dayjs from 'dayjs';
 
   export let title;
@@ -13,6 +14,7 @@
 <svelte:head>
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
 </svelte:head>
 
 <article itemscope itemtype="https://schema.org/BlogPosting">

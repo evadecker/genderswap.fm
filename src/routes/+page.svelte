@@ -38,6 +38,8 @@
 <svelte:head>
   <title>Genderswap.fm</title>
   <meta name="description" content="Some covers deliver the age-old simple pleasures of drag." />
+  <meta property="og:image" content="%sveltekit.assets%/og-image.png" />
+  <meta property="og:image:alt" content="Genderswap.fm" />
 </svelte:head>
 
 <PageHeader
