@@ -12,6 +12,7 @@
     <div class="links">
       <a href="/about">About</a>
       <a href="https://github.com/evadecker/genderswap.fm">GitHub</a>
+      <a href="/random">Random</a>
     </div>
   </nav>
   <div class="toggle">

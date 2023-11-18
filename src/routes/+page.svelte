@@ -7,6 +7,10 @@
   import Tag from '$lib/components/Tag.svelte';
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
+  import { createCollapsible, melt } from '@melt-ui/svelte';
+  import { slide } from 'svelte/transition';
+  import ArrowDropDown from '~icons/ri/arrow-drop-down-line';
+  import ArrowDropUp from '~icons/ri/arrow-drop-up-line';
 
   export let data;
 
@@ -14,6 +18,11 @@
 
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
+
+  const {
+    elements: { root, content, trigger },
+    states: { open }
+  } = createCollapsible();
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -46,13 +55,26 @@
   title="Genderswap.fm"
   description="Some covers deliver the age-old simple pleasures of drag."
 >
-  <TagCloud>
-    {#each tags as tag}
-      <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} isActive={currentTag === tag} />
-      <!-- count={count?.toString()}  -->
-    {/each}
-    <Tag text="Get random cover" url="/random" />
-  </TagCloud>
+  <div use:melt={$root}>
+    <button use:melt={$trigger} class="toggle">
+      <span>Filter by tag</span>
+      {#if $open}
+        <ArrowDropUp />
+      {:else}
+        <ArrowDropDown />
+      {/if}
+    </button>
+    {#if $open}
+      <div use:melt={$content} transition:slide>
+        <TagCloud>
+          {#each tags as tag}
+            <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} isActive={currentTag === tag} />
+            <!-- count={count?.toString()}  -->
+          {/each}
+        </TagCloud>
+      </div>
+    {/if}
+  </div>
 </PageHeader>
 
 {#await data}
@@ -93,6 +115,25 @@
 {/await}
 
 <style lang="scss">
+  .toggle {
+    all: unset;
+    display: inline-flex;
+    gap: var(--space-xs);
+    align-items: center;
+    background: var(--mauve-3);
+    color: var(--mauve-11);
+    padding-block: var(--space-2xs);
+    padding-inline: var(--space-l);
+    padding-inline-end: var(--space-s);
+    border-radius: var(--radius-full);
+    font-size: var(--step-0);
+
+    &:hover {
+      background: var(--mauve-4);
+      cursor: pointer;
+    }
+  }
+
   .coversGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 4), 1fr));
