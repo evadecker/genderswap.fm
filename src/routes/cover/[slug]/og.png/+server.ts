@@ -5,10 +5,6 @@ import { getReadableTitle } from '$lib/helpers';
 import type { Cover } from '../+page.server';
 import { TAGS } from '$lib/constants';
 
-export const config = {
-  runtime: 'edge'
-};
-
 export async function GET({ params, url }) {
   const { slug } = params;
 
