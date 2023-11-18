@@ -68,7 +68,11 @@
       <div use:melt={$content} transition:slide>
         <TagCloud>
           {#each tags as tag}
-            <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} isActive={currentTag === tag} />
+            <Tag
+              text={TAGS[tag].label}
+              url={currentTag === tag ? '/' : `/?tag=${tag}`}
+              isActive={currentTag === tag}
+            />
             <!-- count={count?.toString()}  -->
           {/each}
         </TagCloud>
