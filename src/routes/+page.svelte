@@ -167,8 +167,6 @@
   .tags {
     margin-block-start: var(--space-s);
     position: relative;
-    padding-block-end: var(--space-m);
-    margin-block-end: calc(var(--space-m) * -1);
     display: flex;
     align-items: flex-start;
     gap: var(--space-xs);
@@ -179,6 +177,12 @@
       padding-inline: max(var(--space-m), env(safe-area-inset-right));
       margin-inline: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
     }
+    // Hide scrollbars on Chrome, Safari
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; // Edge
+    scrollbar-width: none; // Firefox
   }
 
   .tag-group {
@@ -197,6 +201,7 @@
     height: var(--space-xl);
     background: var(--mauve-3);
     color: var(--mauve-11);
+    padding-block: var(--space-2xs);
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
 
