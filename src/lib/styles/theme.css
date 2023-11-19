@@ -23,8 +23,7 @@
 
 :root {
   /* Font families */
-  --font-sans: indivisible, system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue',
-    sans-serif, serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue', sans-serif, serif;
 
   /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,22,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
   --step--1: clamp(0.8331rem, 0.7642rem + 0.3446vw, 1.0313rem);

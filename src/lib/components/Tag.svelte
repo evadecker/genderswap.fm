@@ -30,8 +30,8 @@
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-block: var(--space-2xs);
-    padding-inline: var(--space-m);
-    border-radius: var(--radius-full);
+    padding-inline: var(--space-s);
+    border-radius: var(--radius-s);
     font-size: var(--step-0);
     flex-shrink: 0;
     text-wrap: nowrap;
