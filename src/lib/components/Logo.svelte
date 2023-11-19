@@ -91,7 +91,7 @@
   }
 
   .logo {
-    width: 120px;
+    width: calc(var(--space-2xl) * 2.5);
     height: auto;
     pointer-events: auto;
 

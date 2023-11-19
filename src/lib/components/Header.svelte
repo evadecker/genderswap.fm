@@ -26,6 +26,7 @@
     padding-block: var(--space-s);
     padding-inline-start: var(--space-m);
     padding-inline-end: var(--space-m);
+    pointer-events: none;
     @supports (padding: max(0px)) {
       padding-inline-start: max(var(--space-m), env(safe-area-inset-left));
       padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
@@ -40,11 +41,13 @@
     background: var(--mauve-12);
     color: var(--mauve-1);
     line-height: 1;
+    gap: var(--space-xs);
     font-weight: var(--font-weight-bold);
     padding-inline-start: var(--space-s);
     padding-inline: var(--space-m);
-    height: var(--space-2xl);
+    padding-block: var(--space-xs);
     border-radius: var(--radius-full);
+    pointer-events: auto;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
