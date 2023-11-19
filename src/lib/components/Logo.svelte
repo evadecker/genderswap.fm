@@ -138,12 +138,10 @@
 
   .gender-bg {
     fill: var(--mauve-12);
-    mix-blend-mode: exclusion;
   }
 
   .swap-bg {
     fill: var(--mauve-12);
-    mix-blend-mode: exclusion;
   }
 
   .gender-letter,

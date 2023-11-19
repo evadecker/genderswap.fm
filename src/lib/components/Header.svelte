@@ -1,18 +1,16 @@
-<script>
+<script lang="ts">
   import Logo from './Logo.svelte';
   import AddIcon from '~icons/ri/add-line';
 </script>
 
 <header>
-  <div class="container">
-    <Logo />
-    <nav>
-      <a href="/new" class="button">
-        <AddIcon />
-        <span>Submit a cover</span>
-      </a>
-    </nav>
-  </div>
+  <Logo />
+  <nav>
+    <a href="/new" class="button">
+      <AddIcon />
+      Add a cover
+    </a>
+  </nav>
 </header>
 
 <style lang="scss">
@@ -21,42 +19,31 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    padding-block: var(--space-s);
     padding-inline-start: var(--space-m);
     padding-inline-end: var(--space-m);
     @supports (padding: max(0px)) {
       padding-inline-start: max(var(--space-m), env(safe-area-inset-left));
       padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
     }
-    pointer-events: none;
-  }
-
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-s) 0;
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-s);
-    pointer-events: auto;
   }
 
   .button {
     all: unset;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2xs);
     background: var(--mauve-12);
     color: var(--mauve-1);
     line-height: 1;
     font-weight: var(--font-weight-bold);
-    padding-block: var(--space-xs);
-    padding-inline: var(--space-s) var(--space-m);
+    padding-inline-start: var(--space-s);
+    padding-inline: var(--space-m);
+    height: var(--space-2xl);
     border-radius: var(--radius-full);
 
     @media (hover: hover) and (pointer: fine) {

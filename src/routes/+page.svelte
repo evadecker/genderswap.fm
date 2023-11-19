@@ -1,29 +1,29 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import PageHeader from '$lib/components/PageHeader.svelte';
   import CoverCard from '$lib/components/CoverCard.svelte';
   import { goto } from '$app/navigation';
-  import TagCloud from '$lib/components/TagCloud.svelte';
-  import Tag from '$lib/components/Tag.svelte';
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
-  import { createCollapsible, melt } from '@melt-ui/svelte';
-  import { slide } from 'svelte/transition';
-  import ArrowDropDown from '~icons/ri/arrow-drop-down-line';
-  import ArrowDropUp from '~icons/ri/arrow-drop-up-line';
-  import 'lazysizes';
+  import SearchIcon from '~icons/ri/search-line';
 
   export let data;
-
-  const tags = Object.keys(TAGS) as Enums<'tags'>[];
 
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
-  const {
-    elements: { root, content, trigger },
-    states: { open }
-  } = createCollapsible();
+  const tagGroups: Enums<'tags'>[][] = [
+    ['transition_mtf', 'transition_ftm', 'transition_mtm', 'transition_ftf'],
+    ['valence_up', 'valence_down'],
+    ['tempo_up', 'tempo_down'],
+    ['duration_up', 'duration_down'],
+    ['key_change'],
+    ['energy_up', 'energy_down'],
+    ['acousticness_up', 'acousticness_down'],
+    ['danceability_up', 'danceability_down'],
+    ['instrumentalness_up', 'instrumentalness_down'],
+    ['time_signature_change'],
+    ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50']
+  ];
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -53,35 +53,40 @@
   <meta property="og:image:alt" content="Genderswap.fm" />
 </svelte:head>
 
-<PageHeader
-  title="Genderswap.fm"
-  description="Some covers deliver the age-old simple pleasures of drag."
->
-  <div use:melt={$root}>
-    <button use:melt={$trigger} class="toggle">
-      <span>Filter by tag</span>
-      {#if $open}
-        <ArrowDropUp />
-      {:else}
-        <ArrowDropDown />
-      {/if}
-    </button>
-    {#if $open}
-      <div use:melt={$content} transition:slide>
-        <TagCloud>
-          {#each tags as tag}
-            <Tag
-              text={TAGS[tag].label}
-              url={currentTag === tag ? '/' : `/?tag=${tag}`}
-              isActive={currentTag === tag}
-            />
-          {/each}
-        </TagCloud>
+<header>
+  <!-- <label aria-label="Search" class="searchWrapper">
+    <div class="searchIcon">
+      <SearchIcon />
+    </div>
+    <input class="searchInput" id="search" type="search" placeholder="Search covers" />
+  </label> -->
+  <div class="tags">
+    <div class="tag-group">
+      <a class="tag" class:selected={!currentTag} href="/">All</a>
+    </div>
+    {#each tagGroups as tagGroup}
+      <div class="tag-group">
+        {#each tagGroup as tag}
+          <a
+            class="tag"
+            class:selected={currentTag === tag}
+            href={currentTag === tag ? '/' : `/?tag=${tag}`}
+          >
+            {TAGS[tag].label}
+          </a>
+        {/each}
       </div>
-    {/if}
+    {/each}
   </div>
-</PageHeader>
-
+  {#if currentTag}
+    <div class="tag-description">
+      <h2>Tagged: {TAGS[currentTag].label}</h2>
+      <p>
+        {TAGS[currentTag].description}
+      </p>
+    </div>
+  {/if}
+</header>
 {#await data}
   <div class="coversGrid">
     {#each [...Array(12)] as []}
@@ -92,7 +97,7 @@
   {#if value.covers === null || value.covers.length === 0}
     <div class="empty">
       <p>No covers found.</p>
-      <a href="/random" class="button">Get random cover</a>
+      <a href="/new" class="button">Add a cover</a>
     </div>
   {:else}
     <div class="coversGrid">
@@ -120,22 +125,114 @@
 {/await}
 
 <style lang="scss">
-  .toggle {
+  header {
+    padding-block-start: var(--space-l);
+    padding-inline: var(--space-m);
+  }
+
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    background: var(--mauve-3);
+    border-radius: var(--radius-full);
+    height: var(--space-2xl);
+    padding-inline: var(--space-m);
+
+    &:focus-within {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
+    }
+  }
+
+  .searchIcon {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .searchInput {
+    background: transparent;
+    border: none;
+    flex: 1;
+    height: 100%;
+
+    &::placeholder {
+      color: var(--mauve-8);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .tags {
+    margin-block-start: var(--space-s);
+    position: relative;
+    padding-block-end: var(--space-m);
+    margin-block-end: calc(var(--space-m) * -1);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    overflow-x: scroll;
+    margin-inline: calc(var(--space-m) * -1);
+    padding-inline: var(--space-m);
+    @supports (padding: max(0px)) {
+      padding-inline: max(var(--space-m), env(safe-area-inset-right));
+      margin-inline: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
+    }
+  }
+
+  .tag-group {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    flex-shrink: 0;
+    background: var(--mauve-3);
+    border-radius: var(--radius-s);
+  }
+
+  .tag {
     all: unset;
     display: inline-flex;
-    gap: var(--space-xs);
     align-items: center;
+    height: var(--space-xl);
     background: var(--mauve-3);
     color: var(--mauve-11);
-    padding-block: var(--space-2xs);
-    padding-inline: var(--space-l);
-    padding-inline-end: var(--space-s);
-    border-radius: var(--radius-full);
-    font-size: var(--step-0);
+    padding-inline: var(--space-s);
+    font-size: var(--step--1);
+    border-radius: var(--radius-s);
+
+    &:first-child {
+      border-top-left-radius: var(--radius-s);
+      border-bottom-left-radius: var(--radius-s);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--radius-s);
+      border-bottom-right-radius: var(--radius-s);
+    }
 
     &:hover {
       background: var(--mauve-4);
       cursor: pointer;
+    }
+
+    &.selected {
+      background: var(--mauve-12);
+      color: var(--mauve-1);
+    }
+  }
+
+  .tag-description {
+    text-align: center;
+    color: var(--mauve-11);
+    margin-block-start: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+
+    h2 {
+      font-size: var(--step-2);
     }
   }
 

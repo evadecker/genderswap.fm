@@ -33,6 +33,8 @@
     padding-inline: var(--space-m);
     border-radius: var(--radius-full);
     font-size: var(--step-0);
+    flex-shrink: 0;
+    text-wrap: nowrap;
 
     &.active {
       background: var(--mauve-12);

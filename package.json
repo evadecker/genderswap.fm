@@ -50,7 +50,6 @@
     "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.4",
     "dayjs": "^1.11.10",
-    "lazysizes": "^5.3.2",
     "satori": "^0.10.9",
     "sharp": "^0.32.6",
     "svelte-autosize": "^1.1.0",

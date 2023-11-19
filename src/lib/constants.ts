@@ -84,11 +84,11 @@ export const TAGS: Record<Enums<'tags'>, Tag> = {
   },
   valence_up: {
     label: 'happier',
-    description: 'These covers are happier and more cheerful than the original.'
+    description: 'These covers are more cheerful than the original.'
   },
   valence_down: {
     label: 'sadder',
-    description: 'These covers are sadder and more melancholy than the original.'
+    description: 'These covers are more melancholy than the original.'
   },
   years_apart_10: {
     label: '10+ years apart',
