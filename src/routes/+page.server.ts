@@ -1,6 +1,5 @@
-import { TAGS } from '$lib/constants';
 import { supabase } from '$lib/supabase';
-import type { Enums, Tables } from '$lib/types/types';
+import type { Tables } from '$lib/types/types';
 
 type GridItem = {
   original: Tables<'songs'>;
@@ -8,7 +7,7 @@ type GridItem = {
   slug: string;
 };
 
-const PAGE_SIZE = 60;
+const PAGE_SIZE = 40;
 
 export async function load({ url }) {
   const page = Number(url.searchParams.get('page') ?? 1);

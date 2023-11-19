@@ -198,7 +198,6 @@
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-inline: var(--space-s);
-    font-size: var(--step--1);
     border-radius: var(--radius-s);
 
     &:first-child {

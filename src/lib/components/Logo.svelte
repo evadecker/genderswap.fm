@@ -91,7 +91,7 @@
   }
 
   .logo {
-    width: calc(var(--space-2xl) * 2.5);
+    width: calc(var(--space-2xl) * 3);
     height: auto;
     pointer-events: auto;
 
@@ -138,10 +138,12 @@
 
   .gender-bg {
     fill: var(--mauve-12);
+    mix-blend-mode: difference;
   }
 
   .swap-bg {
     fill: var(--mauve-12);
+    mix-blend-mode: difference;
   }
 
   .gender-letter,
