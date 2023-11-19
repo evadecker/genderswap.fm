@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
-  import SearchIcon from '~icons/ri/search-line';
 
   export let data;
 

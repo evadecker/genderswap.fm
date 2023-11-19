@@ -55,7 +55,7 @@ export async function GET({ params, url }) {
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         backgroundColor: '#FDFCFD',
-        fontFamily: 'Indivisible',
+        fontFamily: 'Labil Grotesk',
         color: '#211F26',
         fontSize: '32px',
         padding: '48px 60px'
@@ -92,7 +92,8 @@ export async function GET({ params, url }) {
                               : title.length > 30
                               ? '72px'
                               : '80px',
-                          fontWeight: 600,
+                          fontWeight: 700,
+                          fontFeatureSettings: `'salt' 1 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1`,
                           lineHeight: 1
                         },
                         children: title
@@ -168,7 +169,7 @@ export async function GET({ params, url }) {
                     props: {
                       style: {
                         backgroundColor: '#F2EFF3',
-                        padding: '6px 16px 8px 16px',
+                        padding: '6px 16px 9px 16px',
                         borderRadius: '40px',
                         fontSize: '28px',
                         lineHeight: 1.2,
@@ -197,12 +198,12 @@ export async function GET({ params, url }) {
     }
   };
 
-  const indivisible = await fetch(new URL('/fonts/Indivisible-Regular.otf', url)).then((res) =>
+  const labil = await fetch(new URL('/fonts/LabilGrotesk-Regular.woff', url)).then((res) =>
     res.arrayBuffer()
   );
 
-  const indivisibleSemiBold = await fetch(new URL('/fonts/Indivisible-SemiBold.otf', url)).then(
-    (res) => res.arrayBuffer()
+  const labilBold = await fetch(new URL('/fonts/LabilGrotesk-Bold.woff', url)).then((res) =>
+    res.arrayBuffer()
   );
 
   const svg = await satori(html, {
@@ -210,16 +211,16 @@ export async function GET({ params, url }) {
     height: 630,
     fonts: [
       {
-        name: 'Indivisible',
-        data: indivisible,
+        name: 'Labil Grotesk',
+        data: labil,
         style: 'normal',
         weight: 400
       },
       {
-        name: 'Indivisible',
-        data: indivisibleSemiBold,
+        name: 'Labil Grotesk',
+        data: labilBold,
         style: 'normal',
-        weight: 600
+        weight: 700
       }
     ]
   });
