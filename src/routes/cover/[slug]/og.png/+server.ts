@@ -93,7 +93,6 @@ export async function GET({ params, url }) {
                               ? '72px'
                               : '80px',
                           fontWeight: 700,
-                          fontFeatureSettings: `'salt' 1 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1`,
                           lineHeight: 1
                         },
                         children: title
