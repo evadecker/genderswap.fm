@@ -166,6 +166,7 @@
     margin-inline: auto;
     font-size: var(--step-1);
     font-weight: var(--font-weight-bold);
+    font-feature-settings: var(--font-unstable);
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {

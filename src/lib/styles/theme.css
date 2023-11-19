@@ -21,9 +21,40 @@
 @import '@radix-ui/colors/white-alpha.css';
 @import '@radix-ui/colors/black-alpha.css';
 
+@font-face {
+  font-family: 'Labil Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/LabilGrotesk-Regular.woff2') format('woff2'),
+    url('/fonts/LabilGrotesk-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Labil Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/LabilGrotesk-RegularItalic.woff2') format('woff2'),
+    url('/fonts/LabilGrotesk-RegularItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Labil Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/LabilGrotesk-Bold.woff2') format('woff2'),
+    url('/fonts/LabilGrotesk-Bold.woff') format('woff');
+}
+
 :root {
   /* Font families */
-  --font-sans: system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue', sans-serif, serif;
+  --font-sans: 'Labil Grotesk', system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue',
+    sans-serif, serif;
+
+  --font-stable: 'salt' off;
+  --font-unstable: 'salt' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1;
 
   /* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,22,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
   --step--1: clamp(0.8331rem, 0.7642rem + 0.3446vw, 1.0313rem);

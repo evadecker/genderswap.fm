@@ -48,6 +48,7 @@
     padding-block: var(--space-xs);
     border-radius: var(--radius-full);
     pointer-events: auto;
+    font-feature-settings: var(--font-unstable);
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {

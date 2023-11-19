@@ -21,6 +21,7 @@ body {
   line-height: var(--line-height-body);
   text-rendering: optimizelegibility;
   font-synthesis: none;
+  font-feature-settings: var(--font-stable);
 }
 
 ::selection {
@@ -34,6 +35,7 @@ h4,
 h5,
 h6 {
   font-weight: var(--font-weight-bold);
+  font-feature-settings: var(--font-unstable);
 }
 
 h1 {

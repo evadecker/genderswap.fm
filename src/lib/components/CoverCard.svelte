@@ -57,6 +57,10 @@
     gap: var(--space-xl);
     text-align: center;
 
+    .title {
+      font-feature-settings: var(--font-stable);
+    }
+
     @media (hover: hover) and (pointer: fine) {
       &:not(.placeholder):hover {
         .album {
@@ -64,10 +68,7 @@
         }
 
         .title {
-          background: linear-gradient(to right, var(--violet-9), var(--red-9));
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          font-feature-settings: var(--font-unstable);
         }
       }
     }
