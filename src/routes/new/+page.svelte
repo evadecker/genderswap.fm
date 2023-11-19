@@ -11,6 +11,7 @@
   import ErrorMessage from '$lib/components/ErrorMessage.svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
+  import LoaderIcon from '~icons/ri/loader-4-line';
 
   export let data: PageData;
 
@@ -48,13 +49,13 @@
 </script>
 
 <svelte:head>
-  <title>Submit a cover</title>
+  <title>Add a cover</title>
   <meta name="description" content="Upload a fresh gender-swapped cover to the catalogue." />
   <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
 </svelte:head>
 
 <form class="submitForm" method="POST" use:enhance>
-  <h1 class="header">Submit a cover</h1>
+  <h1 class="header">Add a cover</h1>
   <Steps>
     <Step title="Select the original">
       <SongSelect name="original" bind:value={$form.original} errors={$errors.original} />
@@ -118,14 +119,9 @@
 
   <button disabled={$submitting} class="submitButton" type="submit" on:click={handleSubmit}>
     {#if $delayed}
-      <svg
-        class="spinner"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-      >
-        <path d="M12 3C16.9706 3 21 7.02944 21 12H19C19 8.13401 15.866 5 12 5V3Z" />
-      </svg>
+      <div class="spinner">
+        <LoaderIcon />
+      </div>
     {:else}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="currentColor">
         <path
