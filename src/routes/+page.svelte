@@ -2,11 +2,51 @@
   import { page } from '$app/stores';
   import CoverCard from '$lib/components/CoverCard.svelte';
   import { goto } from '$app/navigation';
-  import 'lazysizes';
+  import { TAGS } from '$lib/constants.js';
+  import type { Enums } from '$lib/types/types.js';
+  import SearchIcon from '~icons/ri/search-line';
+  import CloseCircleIcon from '~icons/ri/close-circle-fill';
 
   export let data;
 
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
+  $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
+
+  const tagOrder: Enums<'tags'>[] = [
+    'transition_mtf',
+    'transition_ftm',
+    'valence_up',
+    'valence_down',
+    'tempo_up',
+    'tempo_down',
+    'duration_up',
+    'duration_down',
+    'key_change',
+    'energy_up',
+    'energy_down'
+  ];
+
+  const tags = Object.keys(TAGS) as Enums<'tags'>[];
+  const sortedTags = tags.sort((a, b) => {
+    const indexA = tagOrder.indexOf(a);
+    const indexB = tagOrder.indexOf(b);
+
+    // If both elements are in the predefined order, sort based on their indices
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB;
+    }
+
+    // If only one element is in the predefined order, it comes first
+    if (indexA !== -1) {
+      return -1;
+    }
+    if (indexB !== -1) {
+      return 1;
+    }
+
+    // If neither element is in the predefined order, maintain their original order
+    return 0;
+  });
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -36,6 +76,29 @@
   <meta property="og:image:alt" content="Genderswap.fm" />
 </svelte:head>
 
+<header>
+  <label aria-label="Search" class="searchWrapper">
+    <div class="searchIcon">
+      <SearchIcon />
+    </div>
+    <input class="searchInput" id="search" type="search" placeholder="Search covers" />
+  </label>
+  <div class="tags">
+    {#if currentTag}
+      <a class="tag active" href={'/'}>
+        {TAGS[currentTag].label}
+        <CloseCircleIcon />
+      </a>
+    {/if}
+    <div class="scrollable">
+      {#each sortedTags as tag}
+        <a class="tag" href={`/?tag=${tag}`}>
+          {TAGS[tag].label}
+        </a>
+      {/each}
+    </div>
+  </div>
+</header>
 {#await data}
   <div class="coversGrid">
     {#each [...Array(12)] as []}
@@ -74,6 +137,95 @@
 {/await}
 
 <style lang="scss">
+  header {
+    padding-block-start: var(--space-l);
+    padding-inline: var(--space-m);
+  }
+
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    background: var(--mauve-3);
+    border-radius: var(--radius-full);
+    height: var(--space-2xl);
+    padding-inline: var(--space-m);
+
+    &:focus-within {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
+    }
+  }
+
+  .searchIcon {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .searchInput {
+    background: transparent;
+    border: none;
+    flex: 1;
+    height: 100%;
+
+    &::placeholder {
+      color: var(--mauve-8);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .tags {
+    margin-block-start: var(--space-s);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-s);
+    position: relative;
+
+    .scrollable {
+      padding-block-end: var(--space-m);
+      margin-block-end: calc(var(--space-m) * -1);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2xs);
+      overflow-x: scroll;
+      margin-inline-end: calc(var(--space-m) * -1);
+      padding-inline-end: var(--space-m);
+      @supports (padding: max(0px)) {
+        padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
+        margin-inline-end: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
+      }
+    }
+  }
+
+  .tag {
+    all: unset;
+    display: inline-flex;
+    gap: var(--space-2xs);
+    align-items: center;
+    background: var(--mauve-3);
+    color: var(--mauve-11);
+    height: var(--space-xl);
+    padding-inline: var(--space-s);
+    border-radius: var(--radius-full);
+    font-size: var(--step--1);
+    flex-shrink: 0;
+    text-wrap: nowrap;
+
+    &:hover {
+      background: var(--mauve-4);
+      cursor: pointer;
+    }
+
+    &.active {
+      background: var(--mauve-12);
+      color: var(--mauve-1);
+      padding-inline-end: var(--space-xs);
+    }
+  }
+
   .coversGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 4), 1fr));
