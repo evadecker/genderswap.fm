@@ -20,4 +20,4 @@ This will regenerate [src/types/db-generated.types.ts](src/types/db-generated.ty
 
 ## Colophon
 
-This site was built by [Eva Decker](https://evadecker.com) using [Sveltekit](https://kit.svelte.dev). It uses [Supabase](https://supabase.com) for data storage and it's hosted and deployed on [Vercel](https://vercel.com/). Tracks and audio features are fetched from Spotify's API via the [Typescript SDK](https://github.com/spotify/spotify-web-api-ts-sdk).
+This site was built by [Eva Decker](https://evadecker.com) using [Sveltekit](https://kit.svelte.dev). It uses [Supabase](https://supabase.com) for data storage and it's hosted and deployed on [Vercel](https://vercel.com/). Tracks and audio features are fetched from Spotify's API via the [Typescript SDK](https://github.com/spotify/spotify-web-api-ts-sdk). Text is set in [Labil Grotesk](https://www.kometa.xyz/typefaces/labil-grotesk/) by Kometa Typefaces.
