@@ -5,48 +5,25 @@
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
   import SearchIcon from '~icons/ri/search-line';
-  import CloseCircleIcon from '~icons/ri/close-circle-fill';
 
   export let data;
 
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
-  const tagOrder: Enums<'tags'>[] = [
-    'transition_mtf',
-    'transition_ftm',
-    'valence_up',
-    'valence_down',
-    'tempo_up',
-    'tempo_down',
-    'duration_up',
-    'duration_down',
-    'key_change',
-    'energy_up',
-    'energy_down'
+  const tagGroups: Enums<'tags'>[][] = [
+    ['transition_mtf', 'transition_ftm', 'transition_mtm', 'transition_ftf'],
+    ['valence_up', 'valence_down'],
+    ['tempo_up', 'tempo_down'],
+    ['duration_up', 'duration_down'],
+    ['key_change'],
+    ['energy_up', 'energy_down'],
+    ['acousticness_up', 'acousticness_down'],
+    ['danceability_up', 'danceability_down'],
+    ['instrumentalness_up', 'instrumentalness_down'],
+    ['time_signature_change'],
+    ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50']
   ];
-
-  const tags = Object.keys(TAGS) as Enums<'tags'>[];
-  const sortedTags = tags.sort((a, b) => {
-    const indexA = tagOrder.indexOf(a);
-    const indexB = tagOrder.indexOf(b);
-
-    // If both elements are in the predefined order, sort based on their indices
-    if (indexA !== -1 && indexB !== -1) {
-      return indexA - indexB;
-    }
-
-    // If only one element is in the predefined order, it comes first
-    if (indexA !== -1) {
-      return -1;
-    }
-    if (indexB !== -1) {
-      return 1;
-    }
-
-    // If neither element is in the predefined order, maintain their original order
-    return 0;
-  });
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -77,27 +54,38 @@
 </svelte:head>
 
 <header>
-  <label aria-label="Search" class="searchWrapper">
+  <!-- <label aria-label="Search" class="searchWrapper">
     <div class="searchIcon">
       <SearchIcon />
     </div>
     <input class="searchInput" id="search" type="search" placeholder="Search covers" />
-  </label>
+  </label> -->
   <div class="tags">
-    {#if currentTag}
-      <a class="tag active" href={'/'}>
-        {TAGS[currentTag].label}
-        <CloseCircleIcon />
-      </a>
-    {/if}
-    <div class="scrollable">
-      {#each sortedTags as tag}
-        <a class="tag" href={`/?tag=${tag}`}>
-          {TAGS[tag].label}
-        </a>
-      {/each}
+    <div class="tag-group">
+      <a class="tag" class:selected={!currentTag} href="/">All</a>
     </div>
+    {#each tagGroups as tagGroup}
+      <div class="tag-group">
+        {#each tagGroup as tag}
+          <a
+            class="tag"
+            class:selected={currentTag === tag}
+            href={currentTag === tag ? '/' : `/?tag=${tag}`}
+          >
+            {TAGS[tag].label}
+          </a>
+        {/each}
+      </div>
+    {/each}
   </div>
+  {#if currentTag}
+    <div class="tag-description">
+      <h2>Tagged: {TAGS[currentTag].label}</h2>
+      <p>
+        {TAGS[currentTag].description}
+      </p>
+    </div>
+  {/if}
 </header>
 {#await data}
   <div class="coversGrid">
@@ -179,50 +167,72 @@
 
   .tags {
     margin-block-start: var(--space-s);
+    position: relative;
+    padding-block-end: var(--space-m);
+    margin-block-end: calc(var(--space-m) * -1);
     display: flex;
     align-items: flex-start;
-    gap: var(--space-s);
-    position: relative;
-
-    .scrollable {
-      padding-block-end: var(--space-m);
-      margin-block-end: calc(var(--space-m) * -1);
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-2xs);
-      overflow-x: scroll;
-      margin-inline-end: calc(var(--space-m) * -1);
-      padding-inline-end: var(--space-m);
-      @supports (padding: max(0px)) {
-        padding-inline-end: max(var(--space-m), env(safe-area-inset-right));
-        margin-inline-end: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
-      }
+    gap: var(--space-xs);
+    overflow-x: scroll;
+    margin-inline: calc(var(--space-m) * -1);
+    padding-inline: var(--space-m);
+    @supports (padding: max(0px)) {
+      padding-inline: max(var(--space-m), env(safe-area-inset-right));
+      margin-inline: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
     }
+  }
+
+  .tag-group {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    flex-shrink: 0;
+    background: var(--mauve-3);
+    border-radius: var(--radius-s);
   }
 
   .tag {
     all: unset;
     display: inline-flex;
-    gap: var(--space-2xs);
     align-items: center;
+    height: var(--space-xl);
     background: var(--mauve-3);
     color: var(--mauve-11);
-    height: var(--space-xl);
     padding-inline: var(--space-s);
-    border-radius: var(--radius-full);
     font-size: var(--step--1);
-    flex-shrink: 0;
-    text-wrap: nowrap;
+    border-radius: var(--radius-s);
+
+    &:first-child {
+      border-top-left-radius: var(--radius-s);
+      border-bottom-left-radius: var(--radius-s);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--radius-s);
+      border-bottom-right-radius: var(--radius-s);
+    }
 
     &:hover {
       background: var(--mauve-4);
       cursor: pointer;
     }
 
-    &.active {
+    &.selected {
       background: var(--mauve-12);
       color: var(--mauve-1);
-      padding-inline-end: var(--space-xs);
+    }
+  }
+
+  .tag-description {
+    text-align: center;
+    color: var(--mauve-11);
+    margin-block-start: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+
+    h2 {
+      font-size: var(--step-2);
     }
   }
 
