@@ -57,18 +57,10 @@
     gap: var(--space-xl);
     text-align: center;
 
-    .title {
-      font-feature-settings: var(--font-stable);
-    }
-
     @media (hover: hover) and (pointer: fine) {
       &:not(.placeholder):hover {
         .album {
           transform: rotate(0) translateX(0);
-        }
-
-        .title {
-          font-feature-settings: var(--font-unstable);
         }
       }
     }
