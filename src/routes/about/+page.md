@@ -2,7 +2,7 @@
 title: About Genderswap.fm
 description: Covers from boys and girls and everyone in-between and beyond.
 datePublished: 2023-10-23 02:32:40-04:00
-dateModified: 2023-10-29 18:53:00-04:00
+dateModified: 2023-11-20 00:57:02-05:00
 ---
 
 ![Andrea Lawlor replies in an email “Whoa this is THE COOLEST thing I have EVER SEEN IN MY LIFE. Thank you! Wow!”](/images/andrea-lawlor-email.jpg)
@@ -31,7 +31,7 @@ I encourage you to _make it up_. Because gender is kinda made up, too, and this 
 
 ## How do you tag covers?
 
-Tags like “20+ BPM faster”, “key change”, and “sadder” come from the Spotify Audio Features API. Spotify runs an automated analysis on every track, and then different fields like “valence” get returned with a number. I ask the computer to compare numbers from two tracks, and voilà! A tag is born. [Explore all tags on the homepage.](/)
+Tags like “faster”, “key change”, and “sadder” come from the Spotify Audio Features API. Spotify runs an automated analysis on every track, and then different fields like “valence” get returned with a number. I ask the computer to compare numbers from two tracks, and voilà! A tag is born. [Explore all tags on the homepage.](/)
 
 ## Can I submit tracks that aren’t on Spotify?
 
