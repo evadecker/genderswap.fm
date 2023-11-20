@@ -108,6 +108,7 @@
             class="tag"
             class:selected={currentTag === tag}
             on:click={() => handleTagClick(tag)}
+            title={TAGS[tag].description}
           >
             {TAGS[tag].shortLabel ?? TAGS[tag].label}
           </button>
@@ -115,14 +116,6 @@
       </div>
     {/each}
   </div>
-  {#if currentTag}
-    <div class="tag-description">
-      <h2>Tagged: {TAGS[currentTag].label}</h2>
-      <p>
-        {TAGS[currentTag].description}
-      </p>
-    </div>
-  {/if}
 </header>
 {#await data}
   <div class="coversGrid">
@@ -264,22 +257,6 @@
     &.selected {
       background: var(--mauve-12);
       color: var(--mauve-1);
-    }
-  }
-
-  .tag-description {
-    text-align: center;
-    margin-block-start: var(--space-2xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-
-    h2 {
-      font-size: var(--step-2);
-    }
-
-    p {
-      color: var(--mauve-11);
     }
   }
 
