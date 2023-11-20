@@ -23,7 +23,7 @@
         <img
           src={original.album_img[1]}
           alt={`${original.name} album art`}
-          loading={lazy ? 'lazy' : undefined}
+          loading={lazy ? 'lazy' : 'eager'}
         />
       {/if}
     </div>
@@ -32,7 +32,7 @@
         <img
           src={cover.album_img[1]}
           alt={`${cover.name} album art`}
-          loading={lazy ? 'lazy' : undefined}
+          loading={lazy ? 'lazy' : 'eager'}
         />
       {/if}
     </div>
