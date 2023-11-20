@@ -5,6 +5,7 @@
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
   import SearchIcon from '~icons/ri/search-line';
+  import CloseCircleIcon from '~icons/ri/close-circle-fill';
 
   export let data;
 
@@ -96,11 +97,6 @@
     </label>
   </form>
   <div class="tags">
-    <div class="tag-group">
-      <button class="tag" class:selected={!currentTag} on:click={() => handleTagClick(null)}
-        >All</button
-      >
-    </div>
     {#each tagGroups as tagGroup}
       <div class="tag-group">
         {#each tagGroup as tag}
@@ -116,6 +112,16 @@
       </div>
     {/each}
   </div>
+  {#if currentTag}
+    <div class="filters">
+      <button class="tag active" on:click={() => handleTagClick(null)}
+        >{TAGS[currentTag].label}
+        <span class="close">
+          <CloseCircleIcon />
+        </span>
+      </button>
+    </div>
+  {/if}
 </header>
 {#await data}
   <div class="coversGrid">
@@ -233,6 +239,7 @@
     all: unset;
     display: inline-flex;
     align-items: center;
+    gap: var(--space-2xs);
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-block: var(--space-2xs);
@@ -252,12 +259,29 @@
     &:hover {
       background: var(--mauve-4);
       cursor: pointer;
+
+      .close {
+        color: var(--mauve-1);
+      }
     }
 
     &.selected {
+      background: var(--mauve-5);
+    }
+
+    &.active {
       background: var(--mauve-12);
       color: var(--mauve-1);
     }
+
+    .close {
+      color: var(--mauve-9);
+      font-size: 0.8em;
+    }
+  }
+
+  .filters {
+    padding-block-start: var(--space-s);
   }
 
   .coversGrid {
