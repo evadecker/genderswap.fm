@@ -204,15 +204,15 @@
     padding-block: var(--space-2xs);
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
+    position: relative;
 
-    &:first-child {
-      border-top-left-radius: var(--radius-s);
-      border-bottom-left-radius: var(--radius-s);
-    }
-
-    &:last-child {
-      border-top-right-radius: var(--radius-s);
-      border-bottom-right-radius: var(--radius-s);
+    &:not(.selected):not(:hover) + :not(.selected):not(:hover)::before {
+      content: '';
+      height: 50%;
+      width: 1px;
+      background: var(--mauve-6);
+      position: absolute;
+      left: -0.5px;
     }
 
     &:hover {
