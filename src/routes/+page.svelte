@@ -101,8 +101,13 @@
     </div>
   {:else}
     <div class="coversGrid">
-      {#each value.covers as cover}
-        <CoverCard original={cover.original} cover={cover.cover} slug={cover.slug} />
+      {#each value.covers as cover, index}
+        <CoverCard
+          original={cover.original}
+          cover={cover.cover}
+          slug={cover.slug}
+          lazy={index > 5}
+        />
       {/each}
     </div>
     <div class="pagination">

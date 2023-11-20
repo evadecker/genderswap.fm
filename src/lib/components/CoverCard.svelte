@@ -10,6 +10,7 @@
   export let original: Album | null = null;
   export let cover: Album | null = null;
   export let slug: string | null = null;
+  export let lazy: boolean = false;
 
   let isSkeleton = false;
   if (!original && !cover && !slug) isSkeleton = true;
@@ -19,12 +20,20 @@
   <div class="albums">
     <div class="album">
       {#if original?.album_img}
-        <img src={original.album_img[1]} alt={`${original.name} album art`} />
+        <img
+          src={original.album_img[1]}
+          alt={`${original.name} album art`}
+          loading={lazy ? 'lazy' : undefined}
+        />
       {/if}
     </div>
     <div class="album">
       {#if cover?.album_img}
-        <img src={cover.album_img[1]} alt={`${cover.name} album art`} />
+        <img
+          src={cover.album_img[1]}
+          alt={`${cover.name} album art`}
+          loading={lazy ? 'lazy' : undefined}
+        />
       {/if}
     </div>
   </div>
