@@ -5,6 +5,7 @@ export const MAX_CONTRIBUTOR_CHARS = 24;
 
 type Tag = {
   label: string;
+  shortLabel?: string;
   description: string;
 };
 
@@ -63,7 +64,7 @@ export const TAGS: Record<Enums<'tags'>, Tag> = {
     description: 'These covers are at least 40 BPM slower than the original.'
   },
   time_signature_change: {
-    label: 'time signature change',
+    label: 'different meter',
     description: 'These covers are in a different time signature than the original.'
   },
   transition_ftm: {
@@ -96,18 +97,22 @@ export const TAGS: Record<Enums<'tags'>, Tag> = {
   },
   years_apart_20: {
     label: '20+ years apart',
+    shortLabel: '20+',
     description: 'These covers were released between 20 and 30 years after the original.'
   },
   years_apart_30: {
     label: '30+ years apart',
+    shortLabel: '30+',
     description: 'These covers were released between 30 and 40 years after the original.'
   },
   years_apart_40: {
     label: '40+ years apart',
+    shortLabel: '40+',
     description: 'These covers were released between 40 and 50 years after the original.'
   },
   years_apart_50: {
     label: '50+ years apart',
+    shortLabel: '50+',
     description: 'These covers were released over 50 years after the original.'
   }
 };

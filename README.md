@@ -1,3 +1,5 @@
+![Some covers deliver the age-old simple pleasures of drag](/static/og-image.png)
+
 # genderswap.fm
 
 Genderswap.fm is a repository of song covers with performing artists of different genders.
