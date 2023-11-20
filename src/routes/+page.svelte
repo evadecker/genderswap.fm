@@ -4,9 +4,11 @@
   import { goto } from '$app/navigation';
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
+  import SearchIcon from '~icons/ri/search-line';
 
   export let data;
 
+  let currentQuery = $page.url.searchParams.get('q') || '';
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
@@ -24,6 +26,31 @@
     ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50'],
     ['transition_mtm', 'transition_ftf']
   ];
+
+  const handleSearch = () => {
+    const newURL = new URL($page.url);
+    const newQuery = (document.getElementById('search') as HTMLInputElement).value;
+
+    if (newQuery) {
+      newURL.searchParams.set('q', newQuery);
+    } else {
+      newURL.searchParams.delete('q');
+    }
+
+    goto(newURL);
+  };
+
+  const handleTagClick = (tag: Enums<'tags'> | null) => {
+    const newURL = new URL($page.url);
+
+    if (currentTag === tag || tag === null) {
+      newURL.searchParams.delete('tag');
+    } else {
+      newURL.searchParams.set('tag', tag);
+    }
+
+    goto(newURL);
+  };
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -54,26 +81,36 @@
 </svelte:head>
 
 <header>
-  <!-- <label aria-label="Search" class="searchWrapper">
-    <div class="searchIcon">
-      <SearchIcon />
-    </div>
-    <input class="searchInput" id="search" type="search" placeholder="Search covers" />
-  </label> -->
+  <form on:submit|preventDefault={handleSearch}>
+    <label aria-label="Search" class="searchWrapper">
+      <div class="searchIcon">
+        <SearchIcon />
+      </div>
+      <input
+        class="searchInput"
+        id="search"
+        type="search"
+        placeholder="Search covers…"
+        bind:value={currentQuery}
+      />
+    </label>
+  </form>
   <div class="tags">
     <div class="tag-group">
-      <a class="tag" class:selected={!currentTag} href="/">All</a>
+      <button class="tag" class:selected={!currentTag} on:click={() => handleTagClick(null)}
+        >All</button
+      >
     </div>
     {#each tagGroups as tagGroup}
       <div class="tag-group">
         {#each tagGroup as tag}
-          <a
+          <button
             class="tag"
             class:selected={currentTag === tag}
-            href={currentTag === tag ? '/' : `/?tag=${tag}`}
+            on:click={() => handleTagClick(tag)}
           >
             {TAGS[tag].shortLabel ?? TAGS[tag].label}
-          </a>
+          </button>
         {/each}
       </div>
     {/each}
@@ -134,47 +171,47 @@
     padding-inline: var(--space-m);
   }
 
-  // .searchWrapper {
-  //   display: flex;
-  //   align-items: center;
-  //   gap: var(--space-s);
-  //   background: var(--mauve-3);
-  //   border-radius: var(--radius-full);
-  //   height: var(--space-2xl);
-  //   padding-inline: var(--space-m);
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    background: var(--mauve-3);
+    border-radius: var(--radius-full);
+    height: var(--space-2xl);
+    padding-inline: var(--space-m);
 
-  //   &:focus-within {
-  //     outline: 3px solid var(--violet-a9);
-  //     outline-offset: 3px;
-  //   }
-  // }
+    &:focus-within {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
+    }
+  }
 
-  // .searchIcon {
-  //   flex-shrink: 0;
-  //   fill: currentColor;
-  // }
+  .searchIcon {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
 
-  // .searchInput {
-  //   background: transparent;
-  //   border: none;
-  //   flex: 1;
-  //   height: 100%;
+  .searchInput {
+    background: transparent;
+    border: none;
+    flex: 1;
+    height: 100%;
 
-  //   &::placeholder {
-  //     color: var(--mauve-8);
-  //   }
+    &::placeholder {
+      color: var(--mauve-8);
+    }
 
-  //   &:focus {
-  //     outline: none;
-  //   }
-  // }
+    &:focus {
+      outline: none;
+    }
+  }
 
   .tags {
     margin-block-start: var(--space-s);
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: var(--space-xs);
+    gap: var(--space-2xs);
     overflow-x: scroll;
     margin-inline: calc(var(--space-m) * -1);
     padding-inline: var(--space-m);
@@ -203,7 +240,6 @@
     all: unset;
     display: inline-flex;
     align-items: center;
-    height: var(--space-xl);
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-block: var(--space-2xs);

@@ -162,6 +162,7 @@
 
   .title {
     font-size: var(--step-1);
+    font-feature-settings: var(--font-stable);
 
     &:empty {
       width: 70%;
