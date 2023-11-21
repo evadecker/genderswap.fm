@@ -6,10 +6,12 @@
   import type { Enums } from '$lib/types/types.js';
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
+  import { scale } from 'svelte/transition';
 
   export let data;
 
   let currentQuery = $page.url.searchParams.get('q') || '';
+  $: currentQuery;
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
@@ -28,6 +30,24 @@
     ['transition_mtm', 'transition_ftf']
   ];
 
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  const debounce = (callback: () => void) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(callback, 250);
+  };
+
+  const handleClearSearch = () => {
+    const newURL = new URL($page.url);
+    newURL.searchParams.delete('tag');
+    newURL.searchParams.delete('q');
+    goto(newURL, { keepFocus: true });
+  };
+
+  const handleSearchFocus = (e: FocusEvent) => {
+    const input = e.target as HTMLInputElement;
+    input.select();
+  };
+
   const handleSearch = () => {
     const newURL = new URL($page.url);
     const newQuery = (document.getElementById('search') as HTMLInputElement).value;
@@ -38,10 +58,12 @@
       newURL.searchParams.delete('q');
     }
 
-    goto(newURL);
+    debounce(() => goto(newURL, { keepFocus: true }));
   };
 
   const handleTagClick = (tag: Enums<'tags'> | null) => {
+    console.log(tag);
+
     const newURL = new URL($page.url);
 
     if (currentTag === tag || tag === null) {
@@ -82,20 +104,37 @@
 </svelte:head>
 
 <header>
-  <form on:submit|preventDefault={handleSearch}>
-    <label aria-label="Search" class="searchWrapper">
-      <div class="searchIcon">
-        <SearchIcon />
-      </div>
-      <input
-        class="searchInput"
-        id="search"
-        type="search"
-        placeholder="Search covers…"
-        bind:value={currentQuery}
-      />
-    </label>
-  </form>
+  <div aria-label="Search" class="searchWrapper">
+    <div class="searchIcon">
+      <SearchIcon />
+    </div>
+    {#if currentTag}
+      <button class="tag active" on:click={() => handleTagClick(null)}
+        >{TAGS[currentTag].label}
+        <span class="close">
+          <CloseCircleIcon />
+        </span>
+      </button>
+    {/if}
+    <input
+      class="searchInput"
+      id="search"
+      type="search"
+      placeholder="Search covers…"
+      bind:value={currentQuery}
+      on:input={handleSearch}
+      on:focus={handleSearchFocus}
+    />
+    {#if currentQuery.length > 0}
+      <button
+        class="searchClear"
+        on:click={handleClearSearch}
+        transition:scale={{ duration: 200, start: 0.5 }}
+      >
+        <CloseCircleIcon />
+      </button>
+    {/if}
+  </div>
   <div class="tags">
     {#each tagGroups as tagGroup}
       <div class="tag-group">
@@ -112,16 +151,6 @@
       </div>
     {/each}
   </div>
-  {#if currentTag}
-    <div class="filters">
-      <button class="tag active" on:click={() => handleTagClick(null)}
-        >{TAGS[currentTag].label}
-        <span class="close">
-          <CloseCircleIcon />
-        </span>
-      </button>
-    </div>
-  {/if}
 </header>
 {#await data}
   <div class="coversGrid">
@@ -176,7 +205,7 @@
     gap: var(--space-s);
     background: var(--mauve-3);
     border-radius: var(--radius-full);
-    height: var(--space-2xl);
+    height: calc(var(--space-2xl) + var(--space-s));
     padding-inline: var(--space-m);
 
     &:focus-within {
@@ -200,8 +229,25 @@
       color: var(--mauve-8);
     }
 
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+    }
+
     &:focus {
       outline: none;
+    }
+  }
+
+  .searchClear {
+    all: unset;
+    cursor: pointer;
+    color: var(--mauve-11);
+
+    &:hover {
+      color: var(--mauve-12);
     }
   }
 
@@ -278,10 +324,6 @@
       color: var(--mauve-9);
       font-size: 0.8em;
     }
-  }
-
-  .filters {
-    padding-block-start: var(--space-s);
   }
 
   .coversGrid {

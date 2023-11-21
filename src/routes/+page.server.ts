@@ -34,7 +34,7 @@ export async function load({ url }) {
   }
 
   if (searchQuery) {
-    covers.textSearch('original.name, cover.name', searchQuery, {
+    covers.textSearch('fts', searchQuery, {
       config: 'english',
       type: 'websearch'
     });
