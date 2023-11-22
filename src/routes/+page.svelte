@@ -52,6 +52,7 @@
   const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
     currentQuery = e.currentTarget.value;
     const newURL = new URL($page.url);
+    newURL.searchParams.delete('page');
 
     if (currentQuery) {
       newURL.searchParams.set('q', currentQuery);
@@ -64,6 +65,7 @@
 
   const handleTagClick = (tag: Enums<'tags'> | null) => {
     const newURL = new URL($page.url);
+    newURL.searchParams.delete('page');
 
     if (currentTag === tag || tag === null) {
       newURL.searchParams.delete('tag');
