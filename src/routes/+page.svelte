@@ -7,11 +7,15 @@
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
   import { scale } from 'svelte/transition';
+  import type {
+    FocusEventHandler,
+    FormEventHandler,
+    KeyboardEventHandler
+  } from 'svelte/elements.js';
 
   export let data;
 
-  let currentQuery = $page.url.searchParams.get('q') || '';
-  $: currentQuery;
+  $: currentQuery = $page.url.searchParams.get('q') || '';
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
@@ -43,17 +47,24 @@
     goto(newURL, { keepFocus: true });
   };
 
-  const handleSearchFocus = (e: FocusEvent) => {
-    const input = e.target as HTMLInputElement;
-    input.select();
+  // const handleSearchFocus: FocusEventHandler<HTMLInputElement> = (e) => {
+  //   const input = e.currentTarget;
+  //   input.selectionStart = 0;
+  //   input.selectionEnd = input.value.length;
+  // };
+
+  const handleSearchKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Backspace' && currentQuery === '') {
+      handleClearSearch();
+    }
   };
 
-  const handleSearch = () => {
+  const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
+    currentQuery = e.currentTarget.value;
     const newURL = new URL($page.url);
-    const newQuery = (document.getElementById('search') as HTMLInputElement).value;
 
-    if (newQuery) {
-      newURL.searchParams.set('q', newQuery);
+    if (currentQuery) {
+      newURL.searchParams.set('q', currentQuery);
     } else {
       newURL.searchParams.delete('q');
     }
@@ -62,8 +73,6 @@
   };
 
   const handleTagClick = (tag: Enums<'tags'> | null) => {
-    console.log(tag);
-
     const newURL = new URL($page.url);
 
     if (currentTag === tag || tag === null) {
@@ -121,9 +130,9 @@
       id="search"
       type="search"
       placeholder="Search covers…"
-      bind:value={currentQuery}
+      value={currentQuery}
       on:input={handleSearch}
-      on:focus={handleSearchFocus}
+      on:keydown={handleSearchKeydown}
     />
     {#if currentQuery.length > 0}
       <button
@@ -245,6 +254,7 @@
     all: unset;
     cursor: pointer;
     color: var(--mauve-11);
+    flex-shrink: 0;
 
     &:hover {
       color: var(--mauve-12);
@@ -292,6 +302,8 @@
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
     position: relative;
+    flex-shrink: 0;
+    min-width: 0;
 
     &:not(.selected):not(:hover) + :not(.selected):not(:hover)::before {
       content: '';
