@@ -221,6 +221,7 @@
   .searchInput {
     background: transparent;
     border: none;
+    min-width: 0;
     flex: 1;
     height: 100%;
 
