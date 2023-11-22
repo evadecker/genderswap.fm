@@ -56,14 +56,14 @@
       newURL.searchParams.delete('q');
     }
 
-    debounce(() => goto(newURL, { keepFocus: true }));
+    debounce(() => goto(newURL, { keepFocus: true, replaceState: true }));
   };
 
   const handleClearSearch = () => {
     const newURL = new URL($page.url);
     newURL.searchParams.delete('tag');
     newURL.searchParams.delete('q');
-    goto(newURL, { keepFocus: true });
+    goto(newURL, { keepFocus: true, replaceState: true });
   };
 
   const handleKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
