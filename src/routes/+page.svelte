@@ -7,11 +7,20 @@
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
   import { scale } from 'svelte/transition';
-  import type { FormEventHandler, KeyboardEventHandler } from 'svelte/elements.js';
+  import type {
+    FocusEventHandler,
+    FormEventHandler,
+    KeyboardEventHandler
+  } from 'svelte/elements.js';
 
   export let data;
 
-  $: currentQuery = $page.url.searchParams.get('q') || '';
+  let isFocused = false;
+  let currentQuery = '';
+
+  $: if (!isFocused) {
+    currentQuery = $page.url.searchParams.get('q') || '';
+  }
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
@@ -36,19 +45,6 @@
     debounceTimer = setTimeout(callback, 250);
   };
 
-  const handleClearSearch = () => {
-    const newURL = new URL($page.url);
-    newURL.searchParams.delete('tag');
-    newURL.searchParams.delete('q');
-    goto(newURL, { keepFocus: true });
-  };
-
-  const handleSearchKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === 'Backspace' && currentQuery === '') {
-      handleClearSearch();
-    }
-  };
-
   const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
     currentQuery = e.currentTarget.value;
     const newURL = new URL($page.url);
@@ -61,6 +57,27 @@
     }
 
     debounce(() => goto(newURL, { keepFocus: true }));
+  };
+
+  const handleClearSearch = () => {
+    const newURL = new URL($page.url);
+    newURL.searchParams.delete('tag');
+    newURL.searchParams.delete('q');
+    goto(newURL, { keepFocus: true });
+  };
+
+  const handleKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Backspace' && currentQuery === '') {
+      handleClearSearch();
+    }
+  };
+
+  const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
+    isFocused = true;
+  };
+
+  const handleBlur: FocusEventHandler<HTMLInputElement> = () => {
+    isFocused = false;
   };
 
   const handleTagClick = (tag: Enums<'tags'> | null) => {
@@ -127,7 +144,9 @@
       placeholder="Search covers…"
       value={currentQuery}
       on:input={handleSearch}
-      on:keydown={handleSearchKeydown}
+      on:keydown={handleKeydown}
+      on:focus={handleFocus}
+      on:blur={handleBlur}
     />
     {#if currentQuery.length > 0}
       <button
