@@ -7,11 +7,7 @@
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
   import { scale } from 'svelte/transition';
-  import type {
-    FocusEventHandler,
-    FormEventHandler,
-    KeyboardEventHandler
-  } from 'svelte/elements.js';
+  import type { FormEventHandler, KeyboardEventHandler } from 'svelte/elements.js';
 
   export let data;
 
@@ -46,12 +42,6 @@
     newURL.searchParams.delete('q');
     goto(newURL, { keepFocus: true });
   };
-
-  // const handleSearchFocus: FocusEventHandler<HTMLInputElement> = (e) => {
-  //   const input = e.currentTarget;
-  //   input.selectionStart = 0;
-  //   input.selectionEnd = input.value.length;
-  // };
 
   const handleSearchKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Backspace' && currentQuery === '') {
