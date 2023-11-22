@@ -1,5 +1,4 @@
 <script lang="ts">
-  import PageHeader from '$lib/components/PageHeader.svelte';
   import CoverComparison from '$lib/components/CoverComparison.svelte';
   import dayjs from 'dayjs';
   import TagCloud from '$lib/components/TagCloud.svelte';
@@ -23,7 +22,15 @@
   <meta property="og:image:alt" content={data.pageTitle} />
 </svelte:head>
 
-<PageHeader title={data.pageTitle} description={data.description}>
+<header class="header">
+  <h1 class="title">{data.pageTitle}</h1>
+  <div class="subtitle">
+    <strong>{data.cover.artists[0]}</strong> covering{' '}
+    <strong>{data.original.artists[0]}</strong>
+  </div>
+  {#if data.description}
+    <p class="description">{data.description}</p>
+  {/if}
   {#if data.tags}
     <TagCloud>
       {#each data.tags as tag}
@@ -31,7 +38,7 @@
       {/each}
     </TagCloud>
   {/if}
-</PageHeader>
+</header>
 <CoverComparison cover={data} />
 <footer class="footer">
   <span
@@ -40,7 +47,38 @@
   >
 </footer>
 
-<style>
+<style lang="scss">
+  .header {
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-3xl);
+    padding-inline: var(--space-l);
+    @supports (padding: max(0px)) {
+      padding-inline-start: max(var(--space-l), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-l), env(safe-area-inset-right));
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    font-size: var(--step-2);
+    line-height: var(--line-height-h3);
+    color: var(--mauve-11);
+    margin-block-start: var(--space-m);
+    margin-block-end: var(--space-l);
+    text-wrap: balance;
+  }
+
+  .description {
+    font-size: var(--step-1);
+    text-wrap: balance;
+    margin-block-end: var(--space-l);
+    max-width: 40ch;
+  }
+
   .footer {
     padding-block: var(--space-2xl);
     display: flex;
