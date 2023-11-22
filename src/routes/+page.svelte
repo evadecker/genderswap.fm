@@ -4,9 +4,14 @@
   import { goto } from '$app/navigation';
   import { TAGS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
+  import SearchIcon from '~icons/ri/search-line';
+  import CloseCircleIcon from '~icons/ri/close-circle-fill';
+  import { scale } from 'svelte/transition';
+  import type { FormEventHandler, KeyboardEventHandler } from 'svelte/elements.js';
 
   export let data;
 
+  $: currentQuery = $page.url.searchParams.get('q') || '';
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
@@ -24,6 +29,50 @@
     ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50'],
     ['transition_mtm', 'transition_ftf']
   ];
+
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  const debounce = (callback: () => void) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(callback, 250);
+  };
+
+  const handleClearSearch = () => {
+    const newURL = new URL($page.url);
+    newURL.searchParams.delete('tag');
+    newURL.searchParams.delete('q');
+    goto(newURL, { keepFocus: true });
+  };
+
+  const handleSearchKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Backspace' && currentQuery === '') {
+      handleClearSearch();
+    }
+  };
+
+  const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
+    currentQuery = e.currentTarget.value;
+    const newURL = new URL($page.url);
+
+    if (currentQuery) {
+      newURL.searchParams.set('q', currentQuery);
+    } else {
+      newURL.searchParams.delete('q');
+    }
+
+    debounce(() => goto(newURL, { keepFocus: true }));
+  };
+
+  const handleTagClick = (tag: Enums<'tags'> | null) => {
+    const newURL = new URL($page.url);
+
+    if (currentTag === tag || tag === null) {
+      newURL.searchParams.delete('tag');
+    } else {
+      newURL.searchParams.set('tag', tag);
+    }
+
+    goto(newURL);
+  };
 
   const handleBack = () => {
     if (currentPage > 1) {
@@ -54,38 +103,53 @@
 </svelte:head>
 
 <header>
-  <!-- <label aria-label="Search" class="searchWrapper">
+  <div aria-label="Search" class="searchWrapper">
     <div class="searchIcon">
       <SearchIcon />
     </div>
-    <input class="searchInput" id="search" type="search" placeholder="Search covers" />
-  </label> -->
+    {#if currentTag}
+      <button class="tag active" on:click={() => handleTagClick(null)}
+        >{TAGS[currentTag].label}
+        <span class="close">
+          <CloseCircleIcon />
+        </span>
+      </button>
+    {/if}
+    <input
+      class="searchInput"
+      id="search"
+      type="search"
+      placeholder="Search covers…"
+      value={currentQuery}
+      on:input={handleSearch}
+      on:keydown={handleSearchKeydown}
+    />
+    {#if currentQuery.length > 0}
+      <button
+        class="searchClear"
+        on:click={handleClearSearch}
+        transition:scale={{ duration: 200, start: 0.5 }}
+      >
+        <CloseCircleIcon />
+      </button>
+    {/if}
+  </div>
   <div class="tags">
-    <div class="tag-group">
-      <a class="tag" class:selected={!currentTag} href="/">All</a>
-    </div>
     {#each tagGroups as tagGroup}
       <div class="tag-group">
         {#each tagGroup as tag}
-          <a
+          <button
             class="tag"
             class:selected={currentTag === tag}
-            href={currentTag === tag ? '/' : `/?tag=${tag}`}
+            on:click={() => handleTagClick(tag)}
+            title={TAGS[tag].description}
           >
             {TAGS[tag].shortLabel ?? TAGS[tag].label}
-          </a>
+          </button>
         {/each}
       </div>
     {/each}
   </div>
-  {#if currentTag}
-    <div class="tag-description">
-      <h2>Tagged: {TAGS[currentTag].label}</h2>
-      <p>
-        {TAGS[currentTag].description}
-      </p>
-    </div>
-  {/if}
 </header>
 {#await data}
   <div class="coversGrid">
@@ -134,47 +198,66 @@
     padding-inline: var(--space-m);
   }
 
-  // .searchWrapper {
-  //   display: flex;
-  //   align-items: center;
-  //   gap: var(--space-s);
-  //   background: var(--mauve-3);
-  //   border-radius: var(--radius-full);
-  //   height: var(--space-2xl);
-  //   padding-inline: var(--space-m);
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    background: var(--mauve-3);
+    border-radius: var(--radius-full);
+    height: calc(var(--space-2xl) + var(--space-s));
+    padding-inline: var(--space-m);
 
-  //   &:focus-within {
-  //     outline: 3px solid var(--violet-a9);
-  //     outline-offset: 3px;
-  //   }
-  // }
+    &:focus-within {
+      outline: 3px solid var(--violet-a9);
+      outline-offset: 3px;
+    }
+  }
 
-  // .searchIcon {
-  //   flex-shrink: 0;
-  //   fill: currentColor;
-  // }
+  .searchIcon {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
 
-  // .searchInput {
-  //   background: transparent;
-  //   border: none;
-  //   flex: 1;
-  //   height: 100%;
+  .searchInput {
+    background: transparent;
+    border: none;
+    min-width: 0;
+    flex: 1;
+    height: 100%;
 
-  //   &::placeholder {
-  //     color: var(--mauve-8);
-  //   }
+    &::placeholder {
+      color: var(--mauve-8);
+    }
 
-  //   &:focus {
-  //     outline: none;
-  //   }
-  // }
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .searchClear {
+    all: unset;
+    cursor: pointer;
+    color: var(--mauve-11);
+    flex-shrink: 0;
+
+    &:hover {
+      color: var(--mauve-12);
+    }
+  }
 
   .tags {
     margin-block-start: var(--space-s);
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: var(--space-xs);
+    gap: var(--space-2xs);
     overflow-x: scroll;
     margin-inline: calc(var(--space-m) * -1);
     padding-inline: var(--space-m);
@@ -203,13 +286,15 @@
     all: unset;
     display: inline-flex;
     align-items: center;
-    height: var(--space-xl);
+    gap: var(--space-2xs);
     background: var(--mauve-3);
     color: var(--mauve-11);
     padding-block: var(--space-2xs);
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
     position: relative;
+    flex-shrink: 0;
+    min-width: 0;
 
     &:not(.selected):not(:hover) + :not(.selected):not(:hover)::before {
       content: '';
@@ -223,27 +308,24 @@
     &:hover {
       background: var(--mauve-4);
       cursor: pointer;
+
+      .close {
+        color: var(--mauve-1);
+      }
     }
 
     &.selected {
+      background: var(--mauve-5);
+    }
+
+    &.active {
       background: var(--mauve-12);
       color: var(--mauve-1);
     }
-  }
 
-  .tag-description {
-    text-align: center;
-    margin-block-start: var(--space-2xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-
-    h2 {
-      font-size: var(--step-2);
-    }
-
-    p {
-      color: var(--mauve-11);
+    .close {
+      color: var(--mauve-9);
+      font-size: 0.8em;
     }
   }
 

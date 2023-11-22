@@ -12,6 +12,7 @@ const PAGE_SIZE = 40;
 export async function load({ url }) {
   const page = Number(url.searchParams.get('page') ?? 1);
   const tag = url.searchParams.get('tag');
+  const searchQuery = url.searchParams.get('q');
 
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
@@ -20,20 +21,28 @@ export async function load({ url }) {
     .from('covers')
     .select(
       `
-          slug,
-          original:original_id(id, name, artists, album_name, album_img),
-          cover:cover_id(id, name, artists, album_name, album_img)
-        `,
+        slug,
+        original:original_id(id, name, artists, album_name, album_img),
+        cover:cover_id(id, name, artists, album_name, album_img)
+      `,
       { count: 'estimated' }
     )
-    .order('created_at', { ascending: false })
-    .range(from, to);
+    .order('created_at', { ascending: false });
 
   if (tag) {
     covers.overlaps('tags', [tag]);
   }
 
-  const { data, count } = await covers.returns<GridItem[]>();
+  if (searchQuery) {
+    covers.textSearch('fts', searchQuery, {
+      config: 'english',
+      type: 'websearch'
+    });
+  }
+
+  const paginatedCovers = covers.range(from, to);
+
+  const { data, count } = await paginatedCovers.returns<GridItem[]>();
 
   return {
     covers: data,
