@@ -96,7 +96,10 @@
 
 <svelte:head>
   <title>Genderswap.fm</title>
-  <meta name="description" content="Some covers deliver the age-old simple pleasures of drag." />
+  <meta
+    name="description"
+    content="A catalogue of the best gender-swapped song covers. Search, listen, and add your own."
+  />
   <link rel="canonical" href="https://genderswap.fm" />
   <meta property="og:image" content={`${$page.url.origin}/og-image.png`} />
   <meta property="og:image:alt" content="Genderswap.fm" />
