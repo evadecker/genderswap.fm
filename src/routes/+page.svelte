@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import CoverCard from '$lib/components/CoverCard.svelte';
   import { goto } from '$app/navigation';
-  import { TAGS } from '$lib/constants.js';
+  import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
@@ -23,21 +23,6 @@
   }
   $: currentPage = Number($page.url.searchParams.get('page')) || 1;
   $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
-
-  const tagGroups: Enums<'tags'>[][] = [
-    ['transition_mtf', 'transition_ftm'],
-    ['valence_up', 'valence_down'],
-    ['tempo_up', 'tempo_down'],
-    ['duration_up', 'duration_down'],
-    ['key_change'],
-    ['time_signature_change'],
-    ['energy_up', 'energy_down'],
-    ['acousticness_up', 'acousticness_down'],
-    ['danceability_up', 'danceability_down'],
-    ['instrumentalness_up', 'instrumentalness_down'],
-    ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50'],
-    ['transition_mtm', 'transition_ftf']
-  ];
 
   let debounceTimer: ReturnType<typeof setTimeout>;
   const debounce = (callback: () => void) => {
@@ -159,7 +144,7 @@
     {/if}
   </div>
   <div class="tags">
-    {#each tagGroups as tagGroup}
+    {#each ORDERED_TAG_GROUPS as tagGroup}
       <div class="tag-group">
         {#each tagGroup as tag}
           <button

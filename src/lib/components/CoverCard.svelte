@@ -85,7 +85,7 @@
 
   .album {
     background-color: var(--mauve-4);
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-album);
     overflow: hidden;
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;

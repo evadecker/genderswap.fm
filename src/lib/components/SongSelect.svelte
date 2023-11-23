@@ -257,7 +257,7 @@
     width: var(--space-2xl);
     height: var(--space-2xl);
     background: var(--mauve-3);
-    border-radius: var(--radius-2xs);
+    border-radius: var(--radius-album);
   }
 
   .resultName {

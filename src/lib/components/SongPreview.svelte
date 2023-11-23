@@ -95,7 +95,7 @@
   }
 
   .selectedAlbum {
-    border-radius: var(--radius-2xs);
+    border-radius: var(--radius-album);
     width: calc(var(--space-3xl) * 2);
     height: calc(var(--space-3xl) * 2);
     flex-shrink: 0;

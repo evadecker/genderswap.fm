@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import { supabase } from '$lib/supabase';
 import { getReadableTitle } from '$lib/helpers';
 import type { Cover } from '../+page.server';
-import { TAGS } from '$lib/constants';
+import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants';
 
 export async function GET({ params, url }) {
   const { slug } = params;
@@ -38,7 +38,10 @@ export async function GET({ params, url }) {
         })
       : 'A cover on Genderswap.fm';
 
-  const displayTags = tags.slice(0, 4).map((tag) => TAGS[tag].label);
+  const orderedTags = tags.sort(
+    (a, b) => ORDERED_TAG_GROUPS.flat().indexOf(a) - ORDERED_TAG_GROUPS.flat().indexOf(b)
+  );
+  const displayTags = orderedTags.slice(0, 4).map((tag) => TAGS[tag].label);
   tags.length > 4 ? displayTags.push(`+${tags.length - 4}`) : null;
 
   const albumBoxShadow =
@@ -119,7 +122,7 @@ export async function GET({ params, url }) {
                         width: '340',
                         height: '340',
                         style: {
-                          borderRadius: '8px',
+                          borderRadius: '6px',
                           boxShadow: albumBoxShadow,
                           objectFit: 'cover',
                           transform: 'rotate(-6deg) scale(0.9) translateX(132px) translateY(-16px)'
@@ -169,7 +172,7 @@ export async function GET({ params, url }) {
                       style: {
                         backgroundColor: '#F2EFF3',
                         padding: '6px 16px 9px 16px',
-                        borderRadius: '40px',
+                        borderRadius: '12px',
                         fontSize: '28px',
                         lineHeight: 1.2,
                         color: '#65636D'
