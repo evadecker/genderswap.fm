@@ -14,53 +14,73 @@
   const formattedDate = dayjs(data.created_at).format('MMMM D, YYYY');
 
   onMount(async () => {
-    const fireConfetti = (placement: 'left' | 'right') => {
+    const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
       // https://www.flagcolorcodes.com/transgender
       const colors = ['#ffffff', '#5BCEFA', '#F5A9B8'];
-      const baseAngle = placement === 'left' ? 70 : 110;
-      const origin = placement === 'left' ? { x: -0, y: 1 } : { x: 1, y: 1 };
-      const drift = placement === 'left' ? 0.5 : -0.5;
+      const center = 90;
 
       const sharedProps = {
-        particleCount: 100,
-        scalar: 0.8,
-        angle: baseAngle,
+        scalar: 0.6,
         ticks: 300,
-        origin,
-        drift,
         colors,
         disableForReducedMotion: true,
         zIndex: 999
       };
 
+      const directionalProps = {
+        left: {
+          particleCount: 20,
+          startVelocity: 45,
+          angle: center - 15,
+          origin: { x: 0, y: 1 },
+          drift: 0.5
+        },
+        right: {
+          particleCount: 20,
+          startVelocity: 45,
+          angle: center + 15,
+          origin: { x: 1, y: 1 },
+          drift: -0.5
+        },
+        bottom: {
+          particleCount: 80,
+          startVelocity: 80,
+          angle: center,
+          origin: { x: 0.5, y: 1 },
+          drift: 0
+        }
+      };
+
       // The strongest blast of confetti, centered on the baseAngle
       confetti({
         ...sharedProps,
-        spread: 20,
-        startVelocity: 90,
+        ...directionalProps[placement],
+        spread: placement === 'bottom' ? 30 : 20,
         decay: 0.92
       });
 
       // A weaker last of confetti with a larger spread
       confetti({
         ...sharedProps,
-        spread: 50,
-        startVelocity: 60,
+        ...directionalProps[placement],
+        spread: placement === 'bottom' ? 50 : 40,
         decay: 0.9
       });
 
       // The weakest blast of confetti
       confetti({
         ...sharedProps,
-        spread: 60,
-        startVelocity: 40,
-        decay: 0.89
+        ...directionalProps[placement],
+        spread: placement === 'bottom' ? 90 : 80,
+        decay: 0.89,
+        startVelocity: 30
       });
     };
 
     if (isNew) {
-      setTimeout(() => fireConfetti('left'), 600);
-      setTimeout(() => fireConfetti('right'), 1200);
+      setTimeout(() => fireConfetti('left'), 1000);
+      setTimeout(() => fireConfetti('right'), 1600);
+      setTimeout(() => fireConfetti('bottom'), 2800);
     }
   });
 </script>
