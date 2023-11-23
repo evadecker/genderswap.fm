@@ -48,10 +48,32 @@
     url('/fonts/LabilGrotesk-Bold.woff') format('woff');
 }
 
+/* Font fallbacks */
+/* Manually sized via https://screenspan.net/fallback */
+@font-face {
+  font-family: 'Labil Grotesk fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  size-adjust: 101%;
+  ascent-override: 102%;
+  descent-override: 23%;
+  line-gap-override: normal;
+}
+
+@font-face {
+  font-family: 'Labil Grotesk fallback';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Arial Bold');
+  ascent-override: 102%;
+  descent-override: 23%;
+  line-gap-override: normal;
+}
+
 :root {
   /* Font families */
-  --font-sans: 'Labil Grotesk', system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue',
-    sans-serif, serif;
+  --font-sans: 'Labil Grotesk', 'Labil Grotesk fallback', system-ui, sans-serif;
 
   --font-stable: 'salt' off;
   --font-unstable: 'salt' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1;
