@@ -26,17 +26,16 @@
 
   const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     $form.description = e.currentTarget.value;
-    // Replace any newlines in form.description with a space
-    $form.description = $form.description.replace(/\r?\n|\r/g, ' ');
-    // Trim spaces
-    $form.description = $form.description.trim();
+    // Replace any newlines with spaces and trim
+    $form.description = $form.description.replace(/\r?\n|\r/g, ' ').trim();
+
+    $form.description = $form.description;
   };
 
-  const handleContributorKeyDown = (event: KeyboardEvent) => {
-    // Prevent leading spaces
-    if ($form.contributor.length === 0 && event.key === ' ') {
-      event.preventDefault();
-    }
+  const handleContributorInput: FormEventHandler<HTMLInputElement> = (e) => {
+    $form.contributor = e.currentTarget.value;
+    // Trim spaces
+    $form.contributor = $form.contributor.trim();
   };
 
   const handleSubmit = () => {
@@ -97,7 +96,7 @@
           Your first name <span class="optional">optional</span>
         </div>
         <input
-          on:keydown={handleContributorKeyDown}
+          on:input={handleContributorInput}
           bind:value={$form.contributor}
           name="contributor"
           type="text"
