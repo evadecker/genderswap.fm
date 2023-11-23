@@ -116,6 +116,7 @@
   --radius-m: var(--space-m);
   --radius-l: var(--space-l);
   --radius-full: 9999px;
+  --radius-album: max(3px, 1%);
 
   /* Font weights */
   --font-weight-normal: 400;

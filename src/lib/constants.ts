@@ -116,3 +116,18 @@ export const TAGS: Record<Enums<'tags'>, Tag> = {
     description: 'These covers were released over 50 years after the original.'
   }
 };
+
+export const ORDERED_TAG_GROUPS: Enums<'tags'>[][] = [
+  ['transition_mtf', 'transition_ftm'],
+  ['valence_up', 'valence_down'],
+  ['tempo_up', 'tempo_down'],
+  ['duration_up', 'duration_down'],
+  ['key_change'],
+  ['time_signature_change'],
+  ['energy_up', 'energy_down'],
+  ['acousticness_up', 'acousticness_down'],
+  ['danceability_up', 'danceability_down'],
+  ['instrumentalness_up', 'instrumentalness_down'],
+  ['years_apart_10', 'years_apart_20', 'years_apart_30', 'years_apart_40', 'years_apart_50'],
+  ['transition_mtm', 'transition_ftf']
+];

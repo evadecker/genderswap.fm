@@ -141,7 +141,7 @@
     aspect-ratio: 1 / 1;
     background: var(--mauve-3);
     overflow: hidden;
-    border-radius: var(--radius-s);
+    border-radius: var(--radius-album);
     position: relative;
     z-index: 1;
     box-shadow: 0px 1.7px 2.2px rgba(0, 0, 0, 0.02), 0px 4px 5.3px rgba(0, 0, 0, 0.028),
