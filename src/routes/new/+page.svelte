@@ -27,7 +27,7 @@
   const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     $form.description = e.currentTarget.value;
     // Replace any newlines with spaces and trim
-    $form.description = $form.description.replace(/\r?\n|\r/g, ' ').trim();
+    $form.description = $form.description.replace(/\r?\n|\r/g, ' ').trimStart();
 
     $form.description = $form.description;
   };
@@ -35,7 +35,7 @@
   const handleContributorInput: FormEventHandler<HTMLInputElement> = (e) => {
     $form.contributor = e.currentTarget.value;
     // Trim spaces
-    $form.contributor = $form.contributor.trim();
+    $form.contributor = $form.contributor.trimStart();
   };
 
   const handleSubmit = () => {
