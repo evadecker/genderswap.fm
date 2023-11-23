@@ -65,10 +65,9 @@
   font-family: 'Labil Grotesk fallback';
   font-style: normal;
   font-weight: 700;
-  src: local('Arial Black');
-  size-adjust: 82%;
-  ascent-override: 124%;
-  descent-override: 34%;
+  src: local('Arial');
+  ascent-override: 102%;
+  descent-override: 23%;
   line-gap-override: normal;
 }
 
