@@ -9,13 +9,20 @@
 
   export let song: Track;
   export let earlierRelease: Promise<Track | null> | null = null;
-  export let onUseEarlierRelease: (e) => void;
+  export let onUseEarlierRelease: () => void;
   export let onClearSelection: () => void;
 
+  let wasKeepThisReleaseClicked = false;
   let wasEarlierReleaseClicked = false;
 
+  const handleKeepThisRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    wasKeepThisReleaseClicked = true;
+  };
+
   const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
-    onUseEarlierRelease(e);
+    e.preventDefault();
+    onUseEarlierRelease();
     wasEarlierReleaseClicked = true;
   };
 </script>
@@ -36,13 +43,13 @@
     </button>
   </div>
   {#await earlierRelease then earlier}
-    {#if earlier}
+    {#if earlier && !wasKeepThisReleaseClicked}
       <div class="earlierReleaseBanner" transition:slide>
         {#if earlier.id === song.id || wasEarlierReleaseClicked}
           <div class="bannerContents">
             <CheckIcon />
             <div class="bannerLabel">
-              <strong class="bannerTitle">This is the earliest release we could find.</strong>
+              <strong class="bannerTitle">Earliest release available on Spotify</strong>
             </div>
           </div>
         {:else}
@@ -53,15 +60,18 @@
               <p>
                 A version of {earlier.artists[0].name}’s
                 <strong>{earlier.name}</strong>
-                was released in <strong>{earlier.album.release_date.slice(0, 4)}</strong> on
-                <strong>{earlier.album.name}</strong>—{getYearsEarlierText(
+                was released {getYearsEarlierText(
                   song.album.release_date,
                   earlier.album.release_date
-                )}.
+                )} in <strong>{earlier.album.release_date.slice(0, 4)}</strong> on the album
+                <strong>{earlier.album.name}</strong>.
               </p>
             </div>
           </div>
-          <button on:click={handleUseEarlierRelease}>Use earlier release</button>
+          <div class="bannerActions">
+            <button on:click={handleKeepThisRelease} class="secondary">Keep newer release</button>
+            <button on:click={handleUseEarlierRelease} class="primary">Use earlier release</button>
+          </div>
         {/if}
       </div>
     {/if}
@@ -128,7 +138,7 @@
   }
 
   .earlierReleaseBanner {
-    border-top: 2px solid var(--mauve-6);
+    border-top: 1px solid var(--mauve-6);
     padding: var(--space-m);
     display: flex;
     flex-direction: column;
@@ -145,21 +155,41 @@
     p {
       font-size: var(--step--1);
     }
+  }
+
+  .bannerActions {
+    margin-block-start: var(--space-m);
+    display: flex;
+    gap: var(--space-s);
+    flex-wrap: wrap;
 
     button {
       all: unset;
+      flex: 1;
       cursor: pointer;
       text-align: center;
       padding: var(--space-s) var(--space-m);
-      background: var(--mauve-12);
-      color: var(--mauve-1);
       border-radius: var(--radius-s);
-      margin-block-start: var(--space-m);
-      font-weight: var(--font-weight-bold);
 
-      &:hover {
-        background: var(--violet-9);
-        color: var(--mauve-12);
+      font-weight: var(--font-weight-bold);
+      text-wrap: nowrap;
+
+      &.primary {
+        background: var(--mauve-12);
+        color: var(--mauve-1);
+
+        &:hover {
+          background: var(--violet-9);
+          color: var(--mauve-12);
+        }
+      }
+
+      &.secondary {
+        background: var(--mauve-5);
+
+        &:hover {
+          background: var(--mauve-6);
+        }
       }
     }
   }

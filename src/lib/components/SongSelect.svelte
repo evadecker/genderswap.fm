@@ -80,8 +80,7 @@
     value = undefined;
   };
 
-  const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault();
+  const handleUseEarlierRelease = async () => {
     const earlierRelease = await discoveredEarlierRelease;
     if (earlierRelease) value = earlierRelease;
   };
