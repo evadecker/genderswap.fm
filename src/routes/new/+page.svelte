@@ -12,6 +12,7 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import LoaderIcon from '~icons/ri/loader-4-line';
+  import type { FormEventHandler } from 'svelte/elements';
 
   export let data: PageData;
 
@@ -23,23 +24,18 @@
 
   $form.contributor = browser ? window.localStorage.getItem('contributor') ?? '' : '';
 
-  const handleDescriptionKeyDown = (event: KeyboardEvent) => {
-    // Prevent newlines
-    if (event.key === 'Enter') {
-      event.preventDefault();
-    }
+  const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    $form.description = e.currentTarget.value;
+    // Replace any newlines with spaces and trim
+    $form.description = $form.description.replace(/\r?\n|\r/g, ' ').trim();
 
-    // Prevent leading spaces
-    if ($form.description.length === 0 && event.key === ' ') {
-      event.preventDefault();
-    }
+    $form.description = $form.description;
   };
 
-  const handleContributorKeyDown = (event: KeyboardEvent) => {
-    // Prevent leading spaces
-    if ($form.contributor.length === 0 && event.key === ' ') {
-      event.preventDefault();
-    }
+  const handleContributorInput: FormEventHandler<HTMLInputElement> = (e) => {
+    $form.contributor = e.currentTarget.value;
+    // Trim spaces
+    $form.contributor = $form.contributor.trim();
   };
 
   const handleSubmit = () => {
@@ -79,7 +75,7 @@
           Description <span class="optional">optional</span>
         </div>
         <textarea
-          on:keydown={handleDescriptionKeyDown}
+          on:input={handleDescriptionInput}
           bind:value={$form.description}
           use:autosize
           name="description"
@@ -100,7 +96,7 @@
           Your first name <span class="optional">optional</span>
         </div>
         <input
-          on:keydown={handleContributorKeyDown}
+          on:input={handleContributorInput}
           bind:value={$form.contributor}
           name="contributor"
           type="text"
