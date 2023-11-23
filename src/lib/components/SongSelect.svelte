@@ -13,16 +13,6 @@
   let discoveredEarlierRelease: Promise<Track | null> | null;
   let searchResults: Track[] | undefined = undefined;
 
-  $: sortedResults =
-    // Sort by release date ascending if original; otherwise use the default sorting
-    name === 'original'
-      ? searchResults?.sort((a, b) =>
-          parseInt(a.album.release_date.slice(0, 4)) > parseInt(b.album.release_date.slice(0, 4))
-            ? 1
-            : -1
-        )
-      : searchResults;
-
   const {
     elements: { menu, input, option, label },
     states: { open, inputValue, touchedInput, selected },
@@ -126,9 +116,9 @@
           aria-invalid={errors ? 'true' : undefined}
         />
       </label>
-      {#if $open && sortedResults}
+      {#if $open && searchResults}
         <ul use:melt={$menu} class="searchResults">
-          {#each sortedResults as track}
+          {#each searchResults as track}
             <li
               use:melt={$option({
                 value: track,
