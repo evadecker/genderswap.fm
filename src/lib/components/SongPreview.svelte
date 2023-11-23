@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { smartquotes } from '$lib/helpers';
+  import { getYearsEarlierText, smartquotes } from '$lib/helpers';
   import type { Track } from '@spotify/web-api-ts-sdk';
-  import { fade, slide } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
   import CloseCircleIcon from '~icons/ri/close-circle-line';
   import HistoryIcon from '~icons/ri/history-line';
   import CheckIcon from '~icons/ri/check-line';
@@ -13,13 +13,6 @@
   export let onClearSelection: () => void;
 
   let useEarlierReleaseClicked = false;
-
-  const getYearsBefore = (selectedReleaseDate: string, earliestReleaseDate: string) => {
-    const yearsDiff =
-      parseInt(selectedReleaseDate.slice(0, 4)) - parseInt(earliestReleaseDate.slice(0, 4));
-
-    return `${yearsDiff} year${yearsDiff === 1 ? '' : 's'} earlier`;
-  };
 
   const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
     onUseEarlierRelease(e);
@@ -61,7 +54,7 @@
                 A version of {earlier.artists[0].name}’s
                 <strong>{earlier.name}</strong>
                 was released in <strong>{earlier.album.release_date.slice(0, 4)}</strong> on
-                <strong>{earlier.album.name}</strong>—{getYearsBefore(
+                <strong>{earlier.album.name}</strong>—{getYearsEarlierText(
                   song.album.release_date,
                   earlier.album.release_date
                 )}.

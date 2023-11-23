@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export const getMaxCharacterHelpText = (input: string, maxLength: number) => {
   if (input.length === 0) {
     return `${maxLength} characters max`;
@@ -68,4 +70,14 @@ export const smartquotes = (str: string) => {
     .replace(/"/g, '\u201d') // closing doubles
     .replace(/--/g, '\u2014') // em-dashes
     .replace(/\.\.\./g, '\u2026'); // ellipses
+};
+
+export const getYearsEarlierText = (selectedReleaseDate: string, earlierReleaseDate: string) => {
+  const afterDate = dayjs(selectedReleaseDate);
+  const beforeDate = dayjs(earlierReleaseDate);
+  const yearsDiff = afterDate.diff(beforeDate, 'year');
+
+  return yearsDiff === 0
+    ? 'earlier that year'
+    : `${yearsDiff} year${yearsDiff === 1 ? '' : 's'} earlier`;
 };
