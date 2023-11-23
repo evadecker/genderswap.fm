@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   getMaxCharacterHelpText,
   getReadableTitle,
+  getYearsEarlierText,
   removeSongExtraText,
   slugify,
   slugifyCover,
@@ -155,5 +156,23 @@ describe('smartquotes', () => {
 
   it('should convert three dots to an ellipsis', () => {
     expect(smartquotes('...Baby One More Time')).toBe('…Baby One More Time');
+  });
+});
+
+describe('getYearsEarlierText', () => {
+  it('should handle comparing two dates', () => {
+    expect(getYearsEarlierText('2000', '1960')).toBe('40 years earlier');
+  });
+
+  it('should handle one year difference', () => {
+    expect(getYearsEarlierText('2000', '1999')).toBe('1 year earlier');
+  });
+
+  it('should handle when dates are formatted differently', () => {
+    expect(getYearsEarlierText('2000', '1990-08-03')).toBe('9 years earlier');
+  });
+
+  it('should handle when less than one year', () => {
+    expect(getYearsEarlierText('2000-12-01', '2000-01-01')).toBe('earlier that year');
   });
 });
