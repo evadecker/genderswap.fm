@@ -12,11 +12,11 @@
   export let onUseEarlierRelease: (e) => void;
   export let onClearSelection: () => void;
 
-  let useEarlierReleaseClicked = false;
+  let wasEarlierReleaseClicked = false;
 
   const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
     onUseEarlierRelease(e);
-    useEarlierReleaseClicked = true;
+    wasEarlierReleaseClicked = true;
   };
 </script>
 
@@ -38,7 +38,7 @@
   {#await earlierRelease then earlier}
     {#if earlier}
       <div class="earlierReleaseBanner" transition:slide>
-        {#if earlier.id === song.id || useEarlierReleaseClicked}
+        {#if earlier.id === song.id || wasEarlierReleaseClicked}
           <div class="bannerContents">
             <CheckIcon />
             <div class="bannerLabel">
