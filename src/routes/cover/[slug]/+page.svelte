@@ -16,7 +16,7 @@
   onMount(async () => {
     const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
       // https://www.flagcolorcodes.com/transgender
-      const colors = ['#ffffff', '#5BCEFA', '#F5A9B8'];
+      const colors = ['#ffffff', '#5BCEFA', '#00a4b8', '#007290', '#F5A9B8', '#fc5cdb', '#eb29da'];
       const center = 90;
 
       const sharedProps = {
@@ -79,7 +79,7 @@
 
     if (isNew) {
       setTimeout(() => fireConfetti('left'), 1000);
-      setTimeout(() => fireConfetti('right'), 1600);
+      setTimeout(() => fireConfetti('right'), 1400);
       setTimeout(() => fireConfetti('bottom'), 2800);
     }
   });
