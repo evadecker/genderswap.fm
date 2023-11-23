@@ -5,6 +5,7 @@
   import ErrorMessage from './ErrorMessage.svelte';
   import SearchIcon from '~icons/ri/search-line';
   import type { MouseEventHandler } from 'svelte/elements';
+  import { scale } from 'svelte/transition';
 
   export let name: string;
   export let value: Track | undefined;
@@ -21,7 +22,7 @@
     preventScroll: false,
     onSelectedChange: ({ next }) => {
       if (next) {
-        checkEarliestRelease(next.value.id);
+        checkForEarlierRelease(next.value.id);
         value = next.value;
       }
       return next;
@@ -36,7 +37,7 @@
     debounceTimer = setTimeout(callback, 250);
   };
 
-  const checkEarliestRelease = async (id: string) => {
+  const checkForEarlierRelease = async (id: string) => {
     try {
       const response = await fetch(`/api/getEarliestRelease?id=${id}`, {
         method: 'GET'
@@ -117,7 +118,7 @@
         />
       </label>
       {#if $open && searchResults}
-        <ul use:melt={$menu} class="searchResults">
+        <ul use:melt={$menu} class="searchResults" transition:scale={{ duration: 200, start: 0.9 }}>
           {#each searchResults as track}
             <li
               use:melt={$option({
