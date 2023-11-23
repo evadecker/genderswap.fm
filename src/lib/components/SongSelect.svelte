@@ -4,20 +4,34 @@
   import { createCombobox, melt } from '@melt-ui/svelte';
   import ErrorMessage from './ErrorMessage.svelte';
   import SearchIcon from '~icons/ri/search-line';
+  import type { MouseEventHandler } from 'svelte/elements';
 
   export let name: string;
   export let value: Track | undefined;
   export let errors: string[] | undefined = undefined;
 
+  let discoveredEarlierRelease: Promise<Track | null> | null;
   let searchResults: Track[] | undefined = undefined;
+
+  $: sortedResults =
+    // Sort by release date ascending if original; otherwise use the default sorting
+    name === 'original'
+      ? searchResults?.sort((a, b) =>
+          parseInt(a.album.release_date.slice(0, 4)) > parseInt(b.album.release_date.slice(0, 4))
+            ? 1
+            : -1
+        )
+      : searchResults;
 
   const {
     elements: { menu, input, option, label },
     states: { open, inputValue, touchedInput, selected },
     helpers: { isSelected, isHighlighted }
   } = createCombobox<Track>({
+    preventScroll: false,
     onSelectedChange: ({ next }) => {
       if (next) {
+        checkEarliestRelease(next.value.id);
         value = next.value;
       }
       return next;
@@ -30,6 +44,19 @@
   const debounce = (callback: () => void) => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(callback, 250);
+  };
+
+  const checkEarliestRelease = async (id: string) => {
+    try {
+      const response = await fetch(`/api/getEarliestRelease?id=${id}`, {
+        method: 'GET'
+      });
+      discoveredEarlierRelease = await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
   };
 
   const search = async (query: string | undefined) => {
@@ -57,8 +84,15 @@
   };
 
   const handleClearSelection = () => {
+    discoveredEarlierRelease = null;
     inputValue.set('');
     value = undefined;
+  };
+
+  const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    const earlierRelease = await discoveredEarlierRelease;
+    if (earlierRelease) value = earlierRelease;
   };
 
   $: {
@@ -72,7 +106,12 @@
 
 <fieldset {name}>
   {#if value}
-    <SongPreview song={value} onClearSelection={handleClearSelection} />
+    <SongPreview
+      song={value}
+      earlierRelease={discoveredEarlierRelease}
+      onUseEarlierRelease={handleUseEarlierRelease}
+      onClearSelection={handleClearSelection}
+    />
   {:else}
     <div class="searchWrapper" class:hidden={!!value}>
       <label use:melt={$label} aria-label="Search" class="inputWrapper">
@@ -87,9 +126,9 @@
           aria-invalid={errors ? 'true' : undefined}
         />
       </label>
-      {#if $open && searchResults}
+      {#if $open && sortedResults}
         <ul use:melt={$menu} class="searchResults">
-          {#each searchResults as track}
+          {#each sortedResults as track}
             <li
               use:melt={$option({
                 value: track,
@@ -183,15 +222,16 @@
     box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
       0px 10px 20px -15px rgba(22, 23, 24, 0.2);
     width: var(--radix-select-trigger-width);
-    padding: var(--space-xs);
+    padding: var(--space-2xs);
+    margin-block: var(--space-xs);
     z-index: 10;
-    max-height: 40vh;
+    max-height: 45vh;
   }
 
   .result {
     color: var(--mauve-12);
-    border-radius: var(--radius-s);
-    padding: var(--space-xs);
+    border-radius: var(--radius-xs);
+    padding: var(--space-2xs);
     position: relative;
     display: flex;
     align-items: center;
@@ -215,19 +255,18 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    gap: var(--space-s);
   }
 
   .resultAlbum {
-    width: var(--space-3xl);
-    height: var(--space-3xl);
+    width: var(--space-2xl);
+    height: var(--space-2xl);
     background: var(--mauve-3);
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-2xs);
   }
 
   .resultName {
+    font-size: var(--step--1);
     font-weight: var(--font-weight-bold);
-    margin-block-end: calc(var(--space-xs) * -1);
   }
 
   .resultName,
@@ -239,5 +278,6 @@
 
   .resultLabelDetails {
     font-size: var(--step--1);
+    color: var(--mauve-11);
   }
 </style>
