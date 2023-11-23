@@ -7,7 +7,7 @@ type GridItem = {
   slug: string;
 };
 
-const PAGE_SIZE = 40;
+const PAGE_SIZE = 48;
 
 export async function load({ url }) {
   const page = Number(url.searchParams.get('page') ?? 1);
