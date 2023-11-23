@@ -4,7 +4,6 @@
   import { createCombobox, melt } from '@melt-ui/svelte';
   import ErrorMessage from './ErrorMessage.svelte';
   import SearchIcon from '~icons/ri/search-line';
-  import type { MouseEventHandler } from 'svelte/elements';
   import { scale } from 'svelte/transition';
 
   export let name: string;
