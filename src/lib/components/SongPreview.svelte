@@ -42,7 +42,7 @@
           <div class="bannerContents">
             <CheckIcon />
             <div class="bannerLabel">
-              <strong class="bannerTitle">This is the earliest release.</strong>
+              <strong class="bannerTitle">This is the earliest release we could find.</strong>
             </div>
           </div>
         {:else}
