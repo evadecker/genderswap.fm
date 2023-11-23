@@ -64,8 +64,8 @@
 @font-face {
   font-family: 'Labil Grotesk fallback';
   font-style: normal;
-  font-weight: 700;
-  src: local('Arial');
+  font-weight: bold;
+  src: local('Arial Bold');
   ascent-override: 102%;
   descent-override: 23%;
   line-gap-override: normal;
