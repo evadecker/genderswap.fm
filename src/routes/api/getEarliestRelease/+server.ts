@@ -9,15 +9,11 @@ const spotify = SpotifyApi.withClientCredentials(SPOTIFY_CLIENT_ID, SPOTIFY_CLIE
 
 // Given a Spotify track ID, returns a new Track object with the earliest release of that song
 export async function GET({ url }) {
-  const id = url.searchParams.get('id');
+  const track = url.searchParams.get('track');
+  const artist = url.searchParams.get('artist');
+  const year = url.searchParams.get('year');
 
-  if (!id) return Response.json({});
-
-  const track = await spotify.tracks.get(id);
-
-  const query = `track:${track.name} artist:${
-    track.artists[0].name
-  } year:1900-${track.album.release_date.slice(0, 4)}`;
+  const query = `track:${track} artist:${artist} year:1900-${year}`;
 
   const results = (await spotify.search(query, ['track'], undefined, 5)).tracks.items;
 

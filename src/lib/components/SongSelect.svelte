@@ -22,7 +22,7 @@
     preventScroll: false,
     onSelectedChange: ({ next }) => {
       if (next) {
-        checkForEarlierRelease(next.value.id);
+        checkForEarlierRelease(next.value);
         value = next.value;
       }
       return next;
@@ -37,16 +37,22 @@
     debounceTimer = setTimeout(callback, 250);
   };
 
-  const checkForEarlierRelease = async (id: string) => {
+  const checkForEarlierRelease = async (track: Track) => {
     try {
-      const response = await fetch(`/api/getEarliestRelease?id=${id}`, {
-        method: 'GET'
-      });
+      const response = await fetch(
+        `/api/getEarliestRelease?track=${track.name}&artist=${
+          track.artists[0].name
+        }&year=${track.album.release_date.slice(0, 4)}`,
+        {
+          method: 'GET'
+        }
+      );
       discoveredEarlierRelease = await response.json();
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       }
+      return;
     }
   };
 
