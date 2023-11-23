@@ -12,6 +12,7 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import LoaderIcon from '~icons/ri/loader-4-line';
+  import type { FormEventHandler } from 'svelte/elements';
 
   export let data: PageData;
 
@@ -23,16 +24,12 @@
 
   $form.contributor = browser ? window.localStorage.getItem('contributor') ?? '' : '';
 
-  const handleDescriptionKeyDown = (event: KeyboardEvent) => {
-    // Prevent newlines
-    if (event.key === 'Enter') {
-      event.preventDefault();
-    }
-
-    // Prevent leading spaces
-    if ($form.description.length === 0 && event.key === ' ') {
-      event.preventDefault();
-    }
+  const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    $form.description = e.currentTarget.value;
+    // Replace any newlines in form.description with a space
+    $form.description = $form.description.replace(/\r?\n|\r/g, ' ');
+    // Trim spaces
+    $form.description = $form.description.trim();
   };
 
   const handleContributorKeyDown = (event: KeyboardEvent) => {
@@ -79,7 +76,7 @@
           Description <span class="optional">optional</span>
         </div>
         <textarea
-          on:keydown={handleDescriptionKeyDown}
+          on:input={handleDescriptionInput}
           bind:value={$form.description}
           use:autosize
           name="description"
