@@ -20,5 +20,7 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm i
+      - name: Typecheck
+        run: pnpm check
       - name: Run Playwright tests
         run: pnpm test:integration
