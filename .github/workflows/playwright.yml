@@ -24,3 +24,5 @@ jobs:
         run: pnpm check
       - name: Run Playwright tests
         run: pnpm test:integration
+        env:
+          CI: true
