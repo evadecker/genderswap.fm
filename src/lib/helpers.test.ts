@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   getMaxCharacterHelpText,
   getReadableTitle,
+  getSortedTags,
   getYearsEarlierText,
   removeSongExtraText,
   slugify,
@@ -174,5 +175,42 @@ describe('getYearsEarlierText', () => {
 
   it('should handle when less than one year', () => {
     expect(getYearsEarlierText('2000-12-01', '2000-01-01')).toBe('earlier that year');
+  });
+});
+
+describe('getSortedTags', () => {
+  it('should correctly order tags', () => {
+    expect(
+      getSortedTags([
+        'acousticness_up',
+        'danceability_down',
+        'duration_down',
+        'energy_down',
+        'instrumentalness_up',
+        'key_change',
+        'tempo_up',
+        'time_signature_change',
+        'transition_mtf',
+        // Two transition_ tags would never appear together,
+        // But MTM and FTF should always appear at the end
+        // So we need to test both
+        'transition_mtm',
+        'valence_down',
+        'years_apart_10'
+      ])
+    ).toEqual([
+      'transition_mtf', // MTF and FTM first
+      'valence_down', // Valence second
+      'tempo_up', // Tempo third
+      'duration_down', // Duration fourth
+      'key_change', // Key change fifth
+      'time_signature_change', // Time signature change sixth
+      'energy_down', // Energy seventh
+      'acousticness_up', // Acousticness eighth
+      'danceability_down', // Danceability ninth
+      'instrumentalness_up', // Instrumentalness tenth
+      'years_apart_10', // Years apart eleventh
+      'transition_mtm' // MTM and FTF last
+    ]);
   });
 });

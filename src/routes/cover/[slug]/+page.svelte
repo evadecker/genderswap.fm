@@ -7,8 +7,10 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import confetti from 'canvas-confetti';
+  import { getSortedTags } from '$lib/helpers.js';
 
   export let data;
+
   const isNew = $page.url.searchParams.get('new') === 'true' ? true : false;
 
   const formattedDate = dayjs(data.created_at).format('MMMM D, YYYY');
@@ -107,7 +109,7 @@
   {/if}
   {#if data.tags}
     <TagCloud>
-      {#each data.tags as tag}
+      {#each getSortedTags(data.tags) as tag}
         <Tag text={TAGS[tag].label} url={`/?tag=${tag}`} />
       {/each}
     </TagCloud>
