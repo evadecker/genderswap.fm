@@ -1,18 +1,17 @@
-name: Playwright
+name: Test
 on:
   push:
     branches: main
   pull_request:
     branches: main
+env:
+  PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+  PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+  SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+  SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
 jobs:
-  playwright:
-    timeout-minutes: 60
+  install:
     runs-on: ubuntu-latest
-    env:
-      PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-      PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
-      SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-      SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -25,11 +24,23 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm i
+  typecheck:
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
       - name: Typecheck
         run: pnpm check
+  vitest:
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Vitest tests
+        run: pnpm test:unit
+  playwright:
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
       - name: Install Playwright browsers
         run: pnpm playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm test:integration
-        env:
-          CI: true
