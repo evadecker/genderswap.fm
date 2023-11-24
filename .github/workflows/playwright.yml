@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: main
 jobs:
-  test:
+  playwright:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
@@ -25,10 +25,10 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm i
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps
       - name: Typecheck
         run: pnpm check
+      - name: Install Playwright browsers
+        run: pnpm playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm test:integration
         env:
