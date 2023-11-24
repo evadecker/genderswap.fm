@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { ORDERED_TAG_GROUPS } from './constants';
+import type { Enums } from './types/types';
 
 export const getMaxCharacterHelpText = (input: string, maxLength: number) => {
   if (input.length === 0) {
@@ -80,4 +82,10 @@ export const getYearsEarlierText = (selectedReleaseDate: string, earlierReleaseD
   return yearsDiff === 0
     ? 'earlier that year'
     : `${yearsDiff} year${yearsDiff === 1 ? '' : 's'} earlier`;
+};
+
+export const getSortedTags = (tags: Enums<'tags'>[]) => {
+  return tags.sort(
+    (a, b) => ORDERED_TAG_GROUPS.flat().indexOf(a) - ORDERED_TAG_GROUPS.flat().indexOf(b)
+  );
 };

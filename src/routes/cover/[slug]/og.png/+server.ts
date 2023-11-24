@@ -1,7 +1,7 @@
 import satori from 'satori';
 import sharp from 'sharp';
 import { supabase } from '$lib/supabase';
-import { getReadableTitle } from '$lib/helpers';
+import { getReadableTitle, getSortedTags } from '$lib/helpers';
 import type { Cover } from '../+page.server';
 import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants';
 
@@ -38,10 +38,9 @@ export async function GET({ params, url }) {
         })
       : 'A cover on Genderswap.fm';
 
-  const orderedTags = tags.sort(
-    (a, b) => ORDERED_TAG_GROUPS.flat().indexOf(a) - ORDERED_TAG_GROUPS.flat().indexOf(b)
-  );
-  const displayTags = orderedTags.slice(0, 4).map((tag) => TAGS[tag].label);
+  const displayTags = getSortedTags(tags)
+    .slice(0, 4)
+    .map((tag) => TAGS[tag].label);
   tags.length > 4 ? displayTags.push(`+${tags.length - 4}`) : null;
 
   const albumBoxShadow =
