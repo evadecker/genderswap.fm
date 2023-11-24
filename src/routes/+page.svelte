@@ -117,7 +117,7 @@
     {#if currentTag}
       <button class="tag active" on:click={() => handleTagClick(null)}
         >{TAGS[currentTag].label}
-        <span class="close">
+        <span class="clear">
           <CloseCircleIcon />
         </span>
       </button>
@@ -318,7 +318,7 @@
       background: var(--mauve-4);
       cursor: pointer;
 
-      .close {
+      .clear {
         color: var(--mauve-1);
       }
     }
@@ -332,7 +332,7 @@
       color: var(--mauve-1);
     }
 
-    .close {
+    .clear {
       color: var(--mauve-9);
       font-size: 0.8em;
     }
