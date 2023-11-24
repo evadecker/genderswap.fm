@@ -10,37 +10,29 @@ env:
   SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
   SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
 jobs:
-  install:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
       - name: Install dependencies
         run: pnpm i
-  typecheck:
-    needs: [install]
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Typecheck
         run: pnpm check
-  vitest:
-    needs: [install]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Vitest tests
+
+      - name: Run vitest
         run: pnpm test:unit
-  playwright:
-    needs: [install]
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Install Playwright browsers
         run: pnpm playwright install --with-deps
+
       - name: Run Playwright tests
         run: pnpm test:integration
