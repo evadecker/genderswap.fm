@@ -5,13 +5,20 @@
   import ErrorMessage from './ErrorMessage.svelte';
   import SearchIcon from '~icons/ri/search-line';
   import { scale } from 'svelte/transition';
+  import { encodeSearchQuery } from '$lib/helpers';
 
   export let name: string;
   export let value: Track | undefined;
   export let errors: string[] | undefined = undefined;
 
-  let discoveredEarlierRelease: Promise<Track | null> | null;
+  let discoveredEarlierRelease: Track | null;
   let searchResults: Track[] | undefined = undefined;
+
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  const debounce = (callback: () => void) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(callback, 250);
+  };
 
   const {
     elements: { menu, input, option, label },
@@ -21,7 +28,7 @@
     preventScroll: false,
     onSelectedChange: ({ next }) => {
       if (next) {
-        checkForEarlierRelease(next.value);
+        debounce(() => checkForEarlierRelease(next.value));
         value = next.value;
       }
       return next;
@@ -30,28 +37,17 @@
 
   $: selected.set(value ? { value } : undefined);
 
-  let debounceTimer: ReturnType<typeof setTimeout>;
-  const debounce = (callback: () => void) => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(callback, 250);
-  };
-
   const checkForEarlierRelease = async (track: Track) => {
     try {
-      const response = await fetch(
-        `/api/getEarliestRelease?track=${track.name}&artist=${
-          track.artists[0].name
-        }&year=${track.album.release_date.slice(0, 4)}`,
-        {
-          method: 'GET'
-        }
-      );
-      discoveredEarlierRelease = await response.json();
+      const response = await fetch(`/api/getEarliestRelease?id=${track.id}`, {
+        method: 'GET'
+      });
+
+      if (response.ok) discoveredEarlierRelease = await response.json();
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       }
-      return;
     }
   };
 
@@ -62,11 +58,7 @@
     }
 
     try {
-      const encoded = encodeURIComponent(
-        query
-          .replace(/\//g, '-') // Replace all forward slashes with dashes
-          .replace(/\?/g, '') // Remove question marks
-      );
+      const encoded = encodeSearchQuery(query);
       const response = await fetch(`/api/getSpotifyResults?q=${encoded}`, {
         method: 'GET'
       });
