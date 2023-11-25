@@ -21,8 +21,19 @@
     const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
       const center = 90;
 
+      const minWidth = 400;
+      const maxWidth = 1600;
+
+      const interpolate = (minValue: number, maxValue: number) =>
+        ((window.innerWidth - minWidth) / (maxWidth - minWidth)) * (maxValue - minValue) + minValue;
+
+      const scalar = interpolate(1.4, 1.8);
+      const velocity = interpolate(60, 100);
+      const angle = interpolate(20, 45);
+      const count = interpolate(30, 60);
+
       const sharedProps: Partial<IConfettiOptions> = {
-        scalar: 1.8,
+        scalar: scalar,
         colors: ['#ff69b4'],
         shapes: ['square'],
         gravity: 2,
@@ -32,29 +43,26 @@
 
       const directionalProps: Record<'left' | 'right' | 'bottom', Partial<IConfettiOptions>> = {
         left: {
-          count: 40,
-          startVelocity: 80,
-          angle: center - 40,
-          origin: { x: 0, y: 1 },
-          drift: 0.5
+          count,
+          startVelocity: velocity - 10,
+          angle: center - angle,
+          origin: { x: 0, y: 1 }
         },
         right: {
-          count: 40,
-          startVelocity: 80,
-          angle: center + 40,
-          origin: { x: 1, y: 1 },
-          drift: -0.5
+          count,
+          startVelocity: velocity - 10,
+          angle: center + angle,
+          origin: { x: 1, y: 1 }
         },
         bottom: {
-          count: 100,
-          startVelocity: 100,
+          count: count * 2,
+          startVelocity: velocity,
           angle: center,
           origin: { x: 0.5, y: 1 },
           drift: 0
         }
       };
 
-      // The strongest blast of confetti, centered on the baseAngle
       confetti({
         ...sharedProps,
         ...directionalProps[placement],
