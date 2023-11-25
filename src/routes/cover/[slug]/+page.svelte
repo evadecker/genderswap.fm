@@ -28,9 +28,10 @@
         ((window.innerWidth - minWidth) / (maxWidth - minWidth)) * (maxValue - minValue) + minValue;
 
       const scalar = interpolate(1.4, 1.8);
-      const velocity = interpolate(60, 100);
+      const velocity = interpolate(85, 120);
       const angle = interpolate(20, 45);
-      const count = interpolate(30, 60);
+      const count = interpolate(40, 80);
+      const spread = interpolate(8, 20);
 
       const sharedProps: Partial<IConfettiOptions> = {
         scalar: scalar,
@@ -46,27 +47,28 @@
           count,
           startVelocity: velocity - 10,
           angle: center - angle,
-          origin: { x: 0, y: 1 }
+          origin: { x: 0, y: 1 },
+          spread
         },
         right: {
           count,
           startVelocity: velocity - 10,
           angle: center + angle,
-          origin: { x: 1, y: 1 }
+          origin: { x: 1, y: 1 },
+          spread
         },
         bottom: {
           count: count * 2,
           startVelocity: velocity,
           angle: center,
           origin: { x: 0.5, y: 1 },
-          drift: 0
+          spread: spread * 2.5
         }
       };
 
       confetti({
         ...sharedProps,
-        ...directionalProps[placement],
-        spread: placement === 'bottom' ? 30 : 10
+        ...directionalProps[placement]
       });
     };
 
