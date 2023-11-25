@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getYearsEarlierText, smartquotes } from '$lib/helpers';
+  import { getYearsEarlierText, removeSongExtraText, smartquotes } from '$lib/helpers';
   import type { Track } from '@spotify/web-api-ts-sdk';
   import { slide } from 'svelte/transition';
   import CloseCircleIcon from '~icons/ri/close-circle-line';
@@ -31,7 +31,7 @@
   <div class="selectedSongContents">
     <img class="selectedAlbum" src={song.album.images[0].url} alt={song.name} />
     <div class="selectedLabel">
-      <div class="selectedName">{smartquotes(song.name)}</div>
+      <div class="selectedName">{smartquotes(removeSongExtraText(song.name))}</div>
       <div>{song.artists.map((artist) => artist.name).join(', ')}</div>
       <div class="selectedAlbumNameAndYear">
         <em>{smartquotes(song.album.name)}</em> &middot;{' '}
