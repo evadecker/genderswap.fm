@@ -89,3 +89,11 @@ export const getSortedTags = (tags: Enums<'tags'>[]) => {
     (a, b) => ORDERED_TAG_GROUPS.flat().indexOf(a) - ORDERED_TAG_GROUPS.flat().indexOf(b)
   );
 };
+
+export const encodeSearchQuery = (query: string) => {
+  return encodeURIComponent(
+    query
+      .replace(/\//g, '-') // Replace all forward slashes with dashes
+      .replace(/\?/g, '') // Remove question marks
+  ).replace(/'/g, '%27'); // Replace all single quotes with %27;
+};

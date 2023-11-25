@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  encodeSearchQuery,
   getMaxCharacterHelpText,
   getReadableTitle,
   getSortedTags,
@@ -212,5 +213,17 @@ describe('getSortedTags', () => {
       'years_apart_10', // Years apart eleventh
       'transition_mtm' // MTM and FTF last
     ]);
+  });
+});
+
+describe('encodeSearchQuery', () => {
+  it('should encode forward slashes', () => {
+    expect(encodeSearchQuery('trying/failing')).toBe('trying-failing');
+  });
+
+  it('should remove question marks', () => {
+    expect(encodeSearchQuery("why'd you only call me when you're high?")).toBe(
+      'why%27d%20you%20only%20call%20me%20when%20you%27re%20high'
+    );
   });
 });

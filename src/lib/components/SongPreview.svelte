@@ -8,7 +8,7 @@
   import type { MouseEventHandler } from 'svelte/elements';
 
   export let song: Track;
-  export let earlierRelease: Promise<Track | null> | null = null;
+  export let earlierRelease: Track | null;
   export let onUseEarlierRelease: () => void;
   export let onClearSelection: () => void;
 
@@ -42,40 +42,39 @@
       <CloseCircleIcon />
     </button>
   </div>
-  {#await earlierRelease then earlier}
-    {#if earlier && !wasKeepThisReleaseClicked}
-      <div class="earlierReleaseBanner" transition:slide>
-        {#if earlier.id === song.id || wasEarlierReleaseClicked}
-          <div class="bannerContents">
-            <CheckIcon />
-            <div class="bannerLabel">
-              <strong class="bannerTitle">Earliest release available on Spotify</strong>
-            </div>
+
+  {#if earlierRelease && !wasKeepThisReleaseClicked}
+    <div class="earlierReleaseBanner" transition:slide>
+      {#if earlierRelease.id === song.id || wasEarlierReleaseClicked}
+        <div class="bannerContents">
+          <CheckIcon />
+          <div class="bannerLabel">
+            <strong class="bannerTitle">Earliest release available on Spotify</strong>
           </div>
-        {:else}
-          <div class="bannerContents">
-            <HistoryIcon />
-            <div class="bannerLabel">
-              <strong class="bannerTitle">There’s an earlier release!</strong>
-              <p>
-                A version of {earlier.artists[0].name}’s
-                <strong>{earlier.name}</strong>
-                was released {getYearsEarlierText(
-                  song.album.release_date,
-                  earlier.album.release_date
-                )} in <strong>{earlier.album.release_date.slice(0, 4)}</strong> on the album
-                <strong>{earlier.album.name}</strong>.
-              </p>
-            </div>
+        </div>
+      {:else if earlierRelease.id !== song.id}
+        <div class="bannerContents">
+          <HistoryIcon />
+          <div class="bannerLabel">
+            <strong class="bannerTitle">There’s an earlier release!</strong>
+            <p>
+              A version of {earlierRelease.artists[0].name}’s
+              <strong>{earlierRelease.name}</strong>
+              was released {getYearsEarlierText(
+                song.album.release_date,
+                earlierRelease.album.release_date
+              )} in <strong>{earlierRelease.album.release_date.slice(0, 4)}</strong> on the album
+              <strong>{earlierRelease.album.name}</strong>.
+            </p>
           </div>
-          <div class="bannerActions">
-            <button on:click={handleKeepThisRelease} class="secondary">Keep newer release</button>
-            <button on:click={handleUseEarlierRelease} class="primary">Use earlier release</button>
-          </div>
-        {/if}
-      </div>
-    {/if}
-  {/await}
+        </div>
+        <div class="bannerActions">
+          <button on:click={handleKeepThisRelease} class="secondary">Keep this release</button>
+          <button on:click={handleUseEarlierRelease} class="primary">Use earlier release</button>
+        </div>
+      {/if}
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
