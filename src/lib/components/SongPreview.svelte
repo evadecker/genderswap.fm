@@ -179,7 +179,7 @@
         color: var(--mauve-1);
 
         &:hover {
-          background: var(--violet-9);
+          background: var(--pink-9);
           color: var(--mauve-12);
         }
       }

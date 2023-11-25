@@ -99,13 +99,13 @@
     }
 
     &[data-state='on'] {
-      background-color: var(--violet-9);
-      border-color: var(--violet-9);
+      background-color: var(--pink-9);
+      border-color: var(--pink-9);
       color: white;
     }
 
     &:focus {
-      outline: 3px solid var(--violet-a9);
+      outline: 3px solid var(--pink-a9);
       outline-offset: 3px;
     }
   }

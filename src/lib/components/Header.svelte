@@ -49,16 +49,17 @@
     border-radius: var(--radius-full);
     pointer-events: auto;
     font-feature-settings: var(--font-unstable);
+    transform: rotate(3deg);
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background: var(--violet-9);
+        background: var(--pink-9);
         color: white;
       }
     }
 
     &:focus {
-      outline: 3px solid var(--violet-a9);
+      outline: 3px solid var(--pink-a9);
       outline-offset: 3px;
     }
   }
