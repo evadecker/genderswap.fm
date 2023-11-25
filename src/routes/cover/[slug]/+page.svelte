@@ -9,6 +9,7 @@
   import { confetti } from 'tsparticles-confetti';
   import { getSortedTags } from '$lib/helpers.js';
   import Sparkle from '$lib/components/Sparkle.svelte';
+  import type { IConfettiOptions } from 'tsparticles-confetti/types/IConfettiOptions.js';
 
   export let data;
 
@@ -20,7 +21,7 @@
     const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
       const center = 90;
 
-      const sharedProps = {
+      const sharedProps: Partial<IConfettiOptions> = {
         scalar: 1.8,
         colors: ['#ff69b4'],
         shapes: ['square'],
@@ -29,7 +30,7 @@
         disableForReducedMotion: true
       };
 
-      const directionalProps = {
+      const directionalProps: Record<'left' | 'right' | 'bottom', Partial<IConfettiOptions>> = {
         left: {
           count: 40,
           startVelocity: 80,
