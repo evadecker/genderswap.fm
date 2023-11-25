@@ -68,13 +68,15 @@
     width: var(--sparkle-size);
     height: var(--sparkle-size);
     pointer-events: none;
-    animation: 1s grow-and-shrink ease-in-out forwards;
+    animation: 1s grow-and-shrink ease-in-out both;
+    animation-delay: 0.4s;
     color: hotpink;
   }
 
   .sparkle-lines {
     position: absolute;
     animation: 1s spin cubic-bezier(0.21, 0.87, 0.85, 0.1) both;
+    animation-delay: 0.4s;
   }
 
   svg {
@@ -86,9 +88,11 @@
 
   .vertical {
     animation: 1s scaleY ease-in-out both;
+    animation-delay: 0.4s;
   }
 
   .horizontal {
     animation: 1s scaleX ease-in-out both;
+    animation-delay: 0.4s;
   }
 </style>

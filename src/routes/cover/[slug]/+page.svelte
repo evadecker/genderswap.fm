@@ -6,9 +6,10 @@
   import { TAGS } from '$lib/constants';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import confetti from 'canvas-confetti';
+  import { confetti } from 'tsparticles-confetti';
   import { getSortedTags } from '$lib/helpers.js';
   import Sparkle from '$lib/components/Sparkle.svelte';
+  import type { IConfettiOptions } from 'tsparticles-confetti/types/IConfettiOptions.js';
 
   export let data;
 
@@ -18,40 +19,35 @@
 
   onMount(async () => {
     const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
-      // @ts-ignore
-      const confettiShape = confetti.shapeFromPath({
-        path: 'M0 2.51004C1.39 1.80004 2.85 1.22004 4.35 0.760044C5.88 0.430044 7.43 0.230044 9 0.170044C10.55 0.230044 12.11 0.430044 13.63 0.760044C15.13 1.21004 16.6 1.80004 18 2.51004C18 5.17004 18 7.83004 18 10.49C16.58 9.77004 15.14 9.20004 13.64 8.74004C12.11 8.41004 10.55 8.21004 8.98 8.15004C7.42 8.21004 5.88 8.42004 4.35 8.75004C2.84 9.21004 1.39 9.79004 0 10.51C0 7.83004 0 5.17004 0 2.51004Z'
-      });
-      // https://www.flagcolorcodes.com/transgender
-      const colors = ['#ffffff', '#5BCEFA', '#00a4b8', '#007290', '#F5A9B8', '#fc5cdb', '#eb29da'];
       const center = 90;
 
-      const sharedProps = {
-        ticks: 300,
-        shapes: [confettiShape],
-        colors,
-        disableForReducedMotion: true,
-        zIndex: 999
+      const sharedProps: Partial<IConfettiOptions> = {
+        scalar: 1.8,
+        colors: ['#ff69b4'],
+        shapes: ['square'],
+        gravity: 2,
+        ticks: 30,
+        disableForReducedMotion: true
       };
 
-      const directionalProps = {
+      const directionalProps: Record<'left' | 'right' | 'bottom', Partial<IConfettiOptions>> = {
         left: {
-          particleCount: 20,
-          startVelocity: 45,
-          angle: center - 15,
+          count: 40,
+          startVelocity: 80,
+          angle: center - 40,
           origin: { x: 0, y: 1 },
           drift: 0.5
         },
         right: {
-          particleCount: 20,
-          startVelocity: 45,
-          angle: center + 15,
+          count: 40,
+          startVelocity: 80,
+          angle: center + 40,
           origin: { x: 1, y: 1 },
           drift: -0.5
         },
         bottom: {
-          particleCount: 80,
-          startVelocity: 80,
+          count: 100,
+          startVelocity: 100,
           angle: center,
           origin: { x: 0.5, y: 1 },
           drift: 0
@@ -62,32 +58,14 @@
       confetti({
         ...sharedProps,
         ...directionalProps[placement],
-        spread: placement === 'bottom' ? 30 : 20,
-        decay: 0.92
-      });
-
-      // A weaker last of confetti with a larger spread
-      confetti({
-        ...sharedProps,
-        ...directionalProps[placement],
-        spread: placement === 'bottom' ? 50 : 40,
-        decay: 0.9
-      });
-
-      // The weakest blast of confetti
-      confetti({
-        ...sharedProps,
-        ...directionalProps[placement],
-        spread: placement === 'bottom' ? 90 : 80,
-        decay: 0.89,
-        startVelocity: 30
+        spread: placement === 'bottom' ? 30 : 10
       });
     };
 
     if (isNew) {
       setTimeout(() => fireConfetti('left'), 1000);
-      setTimeout(() => fireConfetti('right'), 1400);
-      setTimeout(() => fireConfetti('bottom'), 2800);
+      setTimeout(() => fireConfetti('right'), 1600);
+      setTimeout(() => fireConfetti('bottom'), 3000);
     }
   });
 </script>
