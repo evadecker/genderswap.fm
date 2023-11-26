@@ -39,8 +39,6 @@ export async function GET({ url }) {
     // Exclude singles
     .filter((result) => result.album.album_type === 'album');
 
-  console.log(filteredResults);
-
   const earliestRelease = filteredResults.sort((a, b) =>
     dayjs(a.album.release_date).isSameOrBefore(dayjs(b.album.release_date)) ? -1 : 1
   )[0];
