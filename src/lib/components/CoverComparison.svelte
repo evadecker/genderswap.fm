@@ -159,7 +159,6 @@
       inset: 0;
       border-radius: var(--radius-album);
       box-shadow: var(--shadow-album-inset-l);
-      mix-blend-mode: multiply;
     }
   }
 
