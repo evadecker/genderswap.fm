@@ -84,9 +84,8 @@
   }
 
   .album {
-    background-color: var(--mauve-4);
+    background: var(--mauve-3);
     border-radius: var(--radius-album);
-    overflow: hidden;
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;
     position: relative;
@@ -100,7 +99,6 @@
         inset: 0;
         border-radius: var(--radius-album);
         box-shadow: var(--shadow-album-inset-s);
-        mix-blend-mode: luminosity;
       }
     }
 
@@ -108,6 +106,7 @@
       width: 100%;
       height: 100%;
       aspect-ratio: 1;
+      border-radius: var(--radius-album);
       object-fit: cover;
     }
 
