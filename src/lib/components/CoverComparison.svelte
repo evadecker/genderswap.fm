@@ -144,14 +144,21 @@
     border-radius: var(--radius-album);
     position: relative;
     z-index: 1;
-    box-shadow: 0px 1.7px 2.2px rgba(0, 0, 0, 0.02), 0px 4px 5.3px rgba(0, 0, 0, 0.028),
-      0px 7.5px 10px rgba(0, 0, 0, 0.035), 0px 13.4px 17.9px rgba(0, 0, 0, 0.042),
-      0px 25.1px 33.4px rgba(0, 0, 0, 0.05), 0px 60px 80px rgba(0, 0, 0, 0.07);
+    box-shadow: var(--shadow-album-l);
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-album);
+      box-shadow: var(--shadow-album-inset-l);
+      mix-blend-mode: luminosity;
     }
   }
 

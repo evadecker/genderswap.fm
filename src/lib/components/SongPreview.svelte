@@ -29,7 +29,9 @@
 
 <div class="selectedSong">
   <div class="selectedSongContents">
-    <img class="selectedAlbum" src={song.album.images[0].url} alt={song.name} />
+    <div class="selectedAlbum">
+      <img src={song.album.images[0].url} alt={song.name} />
+    </div>
     <div class="selectedLabel">
       <div class="selectedName">{smartquotes(removeSongExtraText(song.name))}</div>
       <div>{song.artists.map((artist) => artist.name).join(', ')}</div>
@@ -99,6 +101,17 @@
     height: calc(var(--space-3xl) * 2);
     flex-shrink: 0;
     min-width: none;
+    box-shadow: var(--shadow-album-s);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-album);
+      box-shadow: var(--shadow-album-inset-s);
+    }
   }
 
   .selectedLabel {
@@ -179,7 +192,7 @@
 
         &:hover {
           background: var(--pink-9);
-          color: var(--mauve-12);
+          color: white;
         }
       }
 

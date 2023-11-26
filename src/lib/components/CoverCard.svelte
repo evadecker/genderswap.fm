@@ -89,11 +89,19 @@
     overflow: hidden;
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;
+    position: relative;
 
     &:not(:empty) {
-      // https://shadows.brumm.af/
-      box-shadow: 0px 1.8px 3.6px rgba(0, 0, 0, 0.024), 0px 5px 10px rgba(0, 0, 0, 0.035),
-        0px 12.1px 24.1px rgba(0, 0, 0, 0.046), 0px 40px 80px rgba(0, 0, 0, 0.07);
+      box-shadow: var(--shadow-album-s);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-album);
+        box-shadow: var(--shadow-album-inset-s);
+        mix-blend-mode: luminosity;
+      }
     }
 
     img {
