@@ -57,16 +57,34 @@
       return;
     }
 
-    try {
-      const encoded = encodeSearchQuery(query);
-      const response = await fetch(`/api/getSpotifyResults?q=${encoded}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      searchResults = data;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
+    if (query.trim().startsWith('https://open.spotify.com')) {
+      const trackId = query.split('/track/')[1].split('?')[0];
+
+      try {
+        const response = await fetch(`/api/getSpotifyTrack?id=${trackId}`, {
+          method: 'GET'
+        });
+        const data = await response.json();
+
+        // Skip dropdown/user selection since there's only one result
+        selected.set({ value: data });
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+      }
+    } else {
+      try {
+        const encoded = encodeSearchQuery(query);
+        const response = await fetch(`/api/getSpotifyResults?q=${encoded}`, {
+          method: 'GET'
+        });
+        const data = await response.json();
+        searchResults = data;
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     }
   };
@@ -109,7 +127,7 @@
           use:melt={$input}
           class="searchInput"
           type="search"
-          placeholder={name === 'original' ? 'abba angeleyes' : 'the czars angeleyes'}
+          placeholder="Search or enter Spotify song URL"
           aria-invalid={errors ? 'true' : undefined}
         />
       </label>

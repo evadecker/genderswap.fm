@@ -82,7 +82,7 @@
           class="input"
           minRows={2}
           maxRows={4}
-          placeholder="Classic ABBA pop melts into acoustic-led gay heartbreak."
+          placeholder="What’s different about this cover?"
         />
         <div
           class="helpText"
