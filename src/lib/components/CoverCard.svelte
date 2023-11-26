@@ -92,9 +92,7 @@
     position: relative;
 
     &:not(:empty) {
-      // https://shadows.brumm.af/
-      box-shadow: 0.2px 0.2px 0.4px rgba(0, 0, 0, 0.028), 0.5px 0.5px 1px rgba(0, 0, 0, 0.04),
-        1.2px 1.2px 2.4px rgba(0, 0, 0, 0.052), 4px 4px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-album-s);
     }
 
     img {

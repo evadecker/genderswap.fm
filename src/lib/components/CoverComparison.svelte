@@ -144,8 +144,7 @@
     border-radius: var(--radius-album);
     position: relative;
     z-index: 1;
-    box-shadow: 0.1px 0.4px 0.5px rgba(0, 0, 0, 0.028), 0.3px 1px 1.3px rgba(0, 0, 0, 0.04),
-      0.6px 2.4px 3px rgba(0, 0, 0, 0.052), 2px 8px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-album-l);
 
     img {
       width: 100%;

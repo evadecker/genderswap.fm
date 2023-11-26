@@ -116,13 +116,18 @@
   --radius-m: var(--space-m);
   --radius-l: var(--space-l);
   --radius-full: 9999px;
-  --radius-album: max(3px, 2%);
+  --radius-album: max(4px, 2%);
 
   /* Font weights */
   --font-weight-normal: 400;
   --font-weight-bold: 600;
 
   /* Shadows */
+  /* https://shadows.brumm.af/ */
+  --shadow-album-s: 0.2px 0.2px 0.4px rgba(0, 0, 0, 0.028), 0.5px 0.5px 1px rgba(0, 0, 0, 0.04),
+    1.2px 1.2px 2.4px rgba(0, 0, 0, 0.052), 4px 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-album-l: 0.1px 0.4px 0.5px rgba(0, 0, 0, 0.028), 0.3px 1px 1.3px rgba(0, 0, 0, 0.04),
+    0.6px 2.4px 3px rgba(0, 0, 0, 0.052), 2px 8px 10px rgba(0, 0, 0, 0.08);
   --shadow-album-inset-s: inset 1px -1px 2px rgba(0, 0, 0, 0.2),
     inset -1px -1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 4px -1px rgba(255, 255, 255, 0.3);
   --shadow-album-inset-l: inset 2px -2px 4px rgba(0, 0, 0, 0.2),
