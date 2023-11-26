@@ -116,9 +116,15 @@
   --radius-m: var(--space-m);
   --radius-l: var(--space-l);
   --radius-full: 9999px;
-  --radius-album: max(3px, 1%);
+  --radius-album: max(3px, 2%);
 
   /* Font weights */
   --font-weight-normal: 400;
   --font-weight-bold: 600;
+
+  /* Shadows */
+  --shadow-album-inset-s: inset 1px -1px 2px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 4px -1px rgba(255, 255, 255, 0.3);
+  --shadow-album-inset-l: inset 2px -2px 4px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2), inset 0 2px 8px -2px rgba(255, 255, 255, 0.3);
 }

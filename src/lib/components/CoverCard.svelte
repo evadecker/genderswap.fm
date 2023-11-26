@@ -1,5 +1,6 @@
 <script lang="ts">
   import { smartquotes } from '$lib/helpers';
+  import { spring } from 'svelte/motion';
 
   type Album = {
     name: string;
@@ -13,7 +14,6 @@
   export let lazy: boolean = false;
 
   let isSkeleton = false;
-  if (!original && !cover && !slug) isSkeleton = true;
 </script>
 
 <div class="coverCard" class:placeholder={isSkeleton} aria-hidden={isSkeleton || undefined}>
@@ -89,11 +89,12 @@
     overflow: hidden;
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;
+    position: relative;
 
     &:not(:empty) {
       // https://shadows.brumm.af/
-      box-shadow: 0px 1.8px 3.6px rgba(0, 0, 0, 0.024), 0px 5px 10px rgba(0, 0, 0, 0.035),
-        0px 12.1px 24.1px rgba(0, 0, 0, 0.046), 0px 40px 80px rgba(0, 0, 0, 0.07);
+      box-shadow: 0.2px 0.2px 0.4px rgba(0, 0, 0, 0.028), 0.5px 0.5px 1px rgba(0, 0, 0, 0.04),
+        1.2px 1.2px 2.4px rgba(0, 0, 0, 0.052), 4px 4px 8px rgba(0, 0, 0, 0.08);
     }
 
     img {
@@ -113,6 +114,15 @@
       width: 60%;
       transform: rotate(6deg) translateX(-6%);
       transform-origin: 0 0;
+    }
+
+    &:not(:empty):after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-album);
+      box-shadow: var(--shadow-album-inset-s);
+      mix-blend-mode: luminosity;
     }
   }
 
