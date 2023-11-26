@@ -152,7 +152,7 @@
       object-fit: cover;
     }
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
       inset: 0;

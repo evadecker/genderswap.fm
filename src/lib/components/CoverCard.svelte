@@ -93,6 +93,15 @@
 
     &:not(:empty) {
       box-shadow: var(--shadow-album-s);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-album);
+        box-shadow: var(--shadow-album-inset-s);
+        mix-blend-mode: luminosity;
+      }
     }
 
     img {
@@ -112,15 +121,6 @@
       width: 60%;
       transform: rotate(6deg) translateX(-6%);
       transform-origin: 0 0;
-    }
-
-    &:not(:empty):after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-album);
-      box-shadow: var(--shadow-album-inset-s);
-      mix-blend-mode: luminosity;
     }
   }
 
