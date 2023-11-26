@@ -1,6 +1,5 @@
 <script lang="ts">
   import { smartquotes } from '$lib/helpers';
-  import { spring } from 'svelte/motion';
 
   type Album = {
     name: string;
@@ -14,6 +13,7 @@
   export let lazy: boolean = false;
 
   let isSkeleton = false;
+  if (!original && !cover && !slug) isSkeleton = true;
 </script>
 
 <div class="coverCard" class:placeholder={isSkeleton} aria-hidden={isSkeleton || undefined}>
