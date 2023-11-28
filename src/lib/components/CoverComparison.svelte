@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slugify, smartquotes } from '$lib/helpers';
+  import { getArtistLink, slugify, smartquotes } from '$lib/helpers';
   import type { Cover } from '../../routes/cover/[slug]/+page.server';
   import SpotifyIcon from '~icons/ri/spotify-fill';
 
@@ -29,12 +29,21 @@
       />
     </div>
     <div class="details">
-      <a href={originalSong.url} itemprop="url" aria-label="Open in Spotify" class="song-link">
+      <a
+        href={originalSong.url}
+        target="_blank"
+        itemprop="url"
+        aria-label="Open in Spotify"
+        class="song-link"
+      >
         <SpotifyIcon />
         Listen to original
       </a>
       <h2 class="artist" itemprop="byArtist">
-        {smartquotes(originalSong.artists.join(', ')) ?? 'Loading...'}
+        {#each originalSong.artists as artist, i}
+          <a href={getArtistLink(artist)}>{smartquotes(artist)}</a
+          >{#if i < originalSong.artists.length - 1}{`, `}{/if}
+        {/each}
       </h2>
       <time class="album-year" itemprop="datePublished">
         {originalSong.album_year}
@@ -52,12 +61,21 @@
       />
     </div>
     <div class="details">
-      <a href={coverSong.url} itemprop="url" aria-label="Open in Spotify" class="song-link">
+      <a
+        href={coverSong.url}
+        target="_blank"
+        itemprop="url"
+        aria-label="Open in Spotify"
+        class="song-link"
+      >
         <SpotifyIcon />
         Listen to cover
       </a>
       <h2 class="artist" itemprop="byArtist">
-        {smartquotes(coverSong.artists.join(', ')) ?? 'Loading...'}
+        {#each coverSong.artists as artist, i}
+          <a href={getArtistLink(artist)}>{smartquotes(artist)}</a
+          >{#if i < coverSong.artists.length - 1}{`, `}{/if}
+        {/each}
       </h2>
       <time class="album-year" itemprop="datePublished">
         {coverSong.album_year}
@@ -194,6 +212,11 @@
 
   .artist {
     font-size: var(--step-3);
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--mauve-9);
+    }
   }
 
   .album-year,

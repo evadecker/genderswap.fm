@@ -97,3 +97,7 @@ export const encodeSearchQuery = (query: string) => {
       .replace(/\?/g, '') // Remove question marks
   ).replace(/'/g, '%27'); // Replace all single quotes with %27;
 };
+
+export const getArtistLink = (artist: string) => {
+  return `/?q=${encodeURIComponent(artist)}`;
+};
