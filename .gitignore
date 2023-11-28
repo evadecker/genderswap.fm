@@ -7,5 +7,6 @@ node_modules
 .env
 .env.*
 !.env.example
+coverage
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
