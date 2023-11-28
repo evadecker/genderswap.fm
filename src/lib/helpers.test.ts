@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   encodeSearchQuery,
+  getArtistLink,
   getMaxCharacterHelpText,
   getReadableTitle,
   getSortedTags,
@@ -225,5 +226,11 @@ describe('encodeSearchQuery', () => {
     expect(encodeSearchQuery("why'd you only call me when you're high?")).toBe(
       'why%27d%20you%20only%20call%20me%20when%20you%27re%20high'
     );
+  });
+});
+
+describe('getArtistLink', () => {
+  it('should return a filtered query to the homepage', () => {
+    expect(getArtistLink('Phoebe Bridgers')).toBe('/?q=Phoebe%20Bridgers');
   });
 });

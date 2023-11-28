@@ -7,7 +7,7 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import { confetti } from 'tsparticles-confetti';
-  import { getSortedTags } from '$lib/helpers.js';
+  import { getArtistLink, getSortedTags } from '$lib/helpers.js';
   import Sparkle from '$lib/components/Sparkle.svelte';
   import type { IConfettiOptions } from 'tsparticles-confetti/types/IConfettiOptions.js';
 
@@ -96,8 +96,9 @@
     {data.pageTitle}{#if isNew}<Sparkle />{/if}
   </h1>
   <div class="subtitle">
-    <strong>{data.cover.artists[0]}</strong> covering{' '}
-    <strong>{data.original.artists[0]}</strong>
+    <a class="artist" href={getArtistLink(data.cover.artists[0])}>{data.cover.artists[0]}</a>
+    covering{' '}
+    <a class="artist" href={getArtistLink(data.original.artists[0])}>{data.original.artists[0]}</a>
   </div>
   {#if data.description}
     <p class="description">{data.description}</p>
@@ -145,6 +146,15 @@
     margin-block-start: var(--space-m);
     margin-block-end: var(--space-l);
     text-wrap: balance;
+  }
+
+  .artist {
+    font-weight: var(--font-weight-bold);
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--mauve-9);
+    }
   }
 
   .description {
