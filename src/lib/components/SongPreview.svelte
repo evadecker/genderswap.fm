@@ -15,6 +15,7 @@
   import type { ExistingCover } from '../../routes/api/getCover/+server';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
+  import AudioPreview from './AudioPreview.svelte';
 
   export let song: Track;
   export let existingCover: ExistingCover | null;
@@ -52,6 +53,9 @@
         {song.album.release_date.slice(0, 4)}
       </div>
     </div>
+    {#if song.preview_url}
+      <AudioPreview src={song.preview_url} />
+    {/if}
     <button class="clearSelection" on:click={onClearSelection} aria-label="Remove selection">
       <CloseCircleIcon />
     </button>
@@ -115,13 +119,13 @@
   .selectedSong {
     background: var(--mauve-3);
     border-radius: var(--radius-l);
-    overflow: hidden;
+    position: relative;
   }
 
   .selectedSongContents {
     padding: var(--space-m);
     display: grid;
-    grid-template: 'album content clear';
+    grid-template: 'album content preview';
     grid-template-columns: auto 1fr var(--space-2xl);
     align-items: center;
     gap: var(--space-m);
@@ -143,6 +147,12 @@
       inset: 0;
       border-radius: var(--radius-album);
       box-shadow: var(--shadow-album-inset-s);
+    }
+
+    img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
   }
 
@@ -167,16 +177,24 @@
     justify-content: center;
     flex-shrink: 0;
     background: transparent;
-    width: var(--space-2xl);
-    height: var(--space-2xl);
+    width: var(--space-xl);
+    height: var(--space-xl);
     border-radius: var(--radius-full);
     cursor: pointer;
     line-height: 0;
-    color: var(--mauve-11);
+    color: var(--mauve-10);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--mauve-1);
+    box-shadow: 0 0 0 3px var(--mauve-1);
+    transform: translate(50%, -50%);
+    font-size: 20px;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background: var(--mauve-4);
+        color: var(--red-9);
+        background: var(--red-4);
       }
     }
   }

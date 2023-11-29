@@ -48,14 +48,12 @@
   $: selected.set(value ? { value } : undefined);
 
   const checkForExistingCover = async (track: Track) => {
-    console.log('checking');
     try {
       const response = await fetch(`/api/getCover?id=${track.id}`, {
         method: 'GET'
       });
 
       if (response.ok) discoveredExistingCover = await response.json();
-      console.log(discoveredExistingCover);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
