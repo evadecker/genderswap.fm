@@ -23,8 +23,7 @@ export async function load({ params: { slug } }) {
     created_at,
     description,
     contributor,
-    tags
-  `
+    tags`
     )
     .eq('slug', slug!!)
     .returns<Cover>()

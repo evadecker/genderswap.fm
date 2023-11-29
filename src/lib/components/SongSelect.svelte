@@ -6,12 +6,14 @@
   import SearchIcon from '~icons/ri/search-line';
   import { scale } from 'svelte/transition';
   import { encodeSearchQuery } from '$lib/helpers';
+  import type { ExistingCover } from '../../routes/api/getCover/+server';
 
   export let name: string;
   export let value: Track | undefined;
   export let errors: string[] | undefined = undefined;
 
   let discoveredEarlierRelease: Track | null;
+  let discoveredExistingCover: ExistingCover | null;
   let searchResults: Track[] | undefined = undefined;
 
   let debounceTimer: ReturnType<typeof setTimeout>;
@@ -26,9 +28,17 @@
     helpers: { isSelected, isHighlighted }
   } = createCombobox<Track>({
     preventScroll: false,
+    positioning: {
+      placement: 'bottom',
+      flip: false,
+      sameWidth: true
+    },
     onSelectedChange: ({ next }) => {
       if (next) {
-        debounce(() => checkForEarlierRelease(next.value));
+        debounce(() => {
+          checkForEarlierRelease(next.value);
+          checkForExistingCover(next.value);
+        });
         value = next.value;
       }
       return next;
@@ -36,6 +46,22 @@
   });
 
   $: selected.set(value ? { value } : undefined);
+
+  const checkForExistingCover = async (track: Track) => {
+    console.log('checking');
+    try {
+      const response = await fetch(`/api/getCover?id=${track.id}`, {
+        method: 'GET'
+      });
+
+      if (response.ok) discoveredExistingCover = await response.json();
+      console.log(discoveredExistingCover);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  };
 
   const checkForEarlierRelease = async (track: Track) => {
     try {
@@ -90,6 +116,7 @@
   };
 
   const handleClearSelection = () => {
+    discoveredExistingCover = null;
     discoveredEarlierRelease = null;
     inputValue.set('');
     value = undefined;
@@ -113,6 +140,7 @@
   {#if value}
     <SongPreview
       song={value}
+      existingCover={discoveredExistingCover}
       earlierRelease={discoveredEarlierRelease}
       onUseEarlierRelease={handleUseEarlierRelease}
       onClearSelection={handleClearSelection}
@@ -127,7 +155,7 @@
           use:melt={$input}
           class="searchInput"
           type="search"
-          placeholder="Search or enter Spotify song URL"
+          placeholder="Search songs or paste Spotify URL"
           aria-invalid={errors ? 'true' : undefined}
         />
       </label>

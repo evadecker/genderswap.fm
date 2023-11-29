@@ -1,16 +1,28 @@
 <script lang="ts">
-  import { getYearsEarlierText, removeSongExtraText, smartquotes } from '$lib/helpers';
+  import {
+    getReadableTitle,
+    getYearsEarlierText,
+    removeSongExtraText,
+    smartquotes
+  } from '$lib/helpers';
   import type { Track } from '@spotify/web-api-ts-sdk';
   import { slide } from 'svelte/transition';
   import CloseCircleIcon from '~icons/ri/close-circle-line';
   import HistoryIcon from '~icons/ri/history-line';
   import CheckIcon from '~icons/ri/check-line';
+  import AlertIcon from '~icons/ri/alert-line';
   import type { MouseEventHandler } from 'svelte/elements';
+  import type { ExistingCover } from '../../routes/api/getCover/+server';
+  import dayjs from 'dayjs';
+  import relativeTime from 'dayjs/plugin/relativeTime';
 
   export let song: Track;
+  export let existingCover: ExistingCover | null;
   export let earlierRelease: Track | null;
   export let onUseEarlierRelease: () => void;
   export let onClearSelection: () => void;
+
+  dayjs.extend(relativeTime);
 
   let wasKeepThisReleaseClicked = false;
   let wasEarlierReleaseClicked = false;
@@ -45,8 +57,28 @@
     </button>
   </div>
 
-  {#if earlierRelease && !wasKeepThisReleaseClicked}
-    <div class="earlierReleaseBanner" transition:slide>
+  {#if existingCover}
+    <div class="banner" transition:slide>
+      <div class="bannerContents">
+        <AlertIcon />
+        <div class="bannerLabel">
+          <strong class="bannerTitle"
+            >This cover was already submitted {dayjs(existingCover.created_at).fromNow()}</strong
+          >
+          <p>
+            <a href={`/cover/${existingCover.slug}`}
+              >{getReadableTitle({
+                originalName: existingCover.original.name,
+                originalArtists: existingCover.original.artists,
+                coverArtists: existingCover.cover.artists
+              })}</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  {:else if earlierRelease && !wasKeepThisReleaseClicked}
+    <div class="banner" transition:slide>
       {#if earlierRelease.id === song.id || wasEarlierReleaseClicked}
         <div class="bannerContents">
           <CheckIcon />
@@ -149,7 +181,7 @@
     }
   }
 
-  .earlierReleaseBanner {
+  .banner {
     border-top: 1px solid var(--mauve-6);
     padding: var(--space-m);
     display: flex;
@@ -166,6 +198,10 @@
 
     p {
       font-size: var(--step--1);
+
+      a {
+        text-decoration: underline;
+      }
     }
   }
 
