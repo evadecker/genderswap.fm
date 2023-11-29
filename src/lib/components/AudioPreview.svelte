@@ -2,6 +2,7 @@
   import type { MouseEventHandler } from 'svelte/elements';
 
   export let src: string;
+  export let title: string;
 
   let state = 'paused';
   let audio: HTMLAudioElement;
@@ -43,7 +44,7 @@
     ? `background: conic-gradient(var(--pink-9) ${percent.toFixed(2)}%, transparent 0)`
     : undefined}
 >
-  <audio bind:this={audio} bind:currentTime={time} bind:duration>
+  <audio bind:this={audio} bind:currentTime={time} bind:duration {title}>
     <source {src} type="audio/mpeg" />
   </audio>
   <button

@@ -54,7 +54,7 @@
       </div>
     </div>
     {#if song.preview_url}
-      <AudioPreview src={song.preview_url} />
+      <AudioPreview src={song.preview_url} title={smartquotes(removeSongExtraText(song.name))} />
     {/if}
     <button class="clearSelection" on:click={onClearSelection} aria-label="Remove selection">
       <CloseCircleIcon />
