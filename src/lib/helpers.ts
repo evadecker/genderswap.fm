@@ -39,7 +39,10 @@ export const removeSongExtraText = (song: string) => {
     .trim()
     // Remove everything after a ' - ' in the song name
     // "Can't Get You out of My Head - Live at KEXP" -> "Can't Get You out of My Head"
-    .split(' - ')[0];
+    .split(' - ')[0]
+    // Remove bracketed text
+    // "What Was I Made For? [From The Motion Picture "Barbie"]" -> "What Was I Made For?"
+    .replace(/\s\[[^\]]*\]/g, '');
 
   return songNoExtras;
 };
