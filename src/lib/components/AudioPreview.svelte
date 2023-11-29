@@ -55,8 +55,8 @@
     {#if state === 'paused'}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="1em"
+        height="1em"
         viewBox="0 0 24 24"
         fill="currentColor"
         stroke="currentColor"
@@ -69,8 +69,8 @@
     {:else}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="1em"
+        height="1em"
         viewBox="0 0 24 24"
         fill="currentColor"
         stroke="currentColor"
@@ -103,19 +103,20 @@
     all: unset;
     cursor: pointer;
     border-radius: var(--radius-full);
-    width: 32px;
-    height: 32px;
+    width: var(--space-xl);
+    height: var(--space-xl);
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2.5px solid var(--mauve-12);
     color: var(--mauve-12);
     transition: all 0.2s ease-in-out;
+    font-size: var(--step--1);
 
     &.playing {
       background: var(--mauve-12);
       color: var(--mauve-1);
-      border-color: var(--mauve-1);
+      border-color: var(--mauve-3);
     }
   }
 </style>
