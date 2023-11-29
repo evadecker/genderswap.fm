@@ -25,10 +25,10 @@
 </script>
 
 <fieldset use:melt={$root} class="genderSelect" {name}>
-  <legend class="label" aria-invalid={errors ? 'true' : undefined}>
+  <div class="label" aria-invalid={errors ? 'true' : undefined}>
     Vocals include{' '}
     <span class="instructions">select all that apply</span>
-  </legend>
+  </div>
   <div class="toggleWrapper">
     <div class="toggleGroup">
       <button use:melt={$item('male')} aria-label={`Select men`}>
