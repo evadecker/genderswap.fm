@@ -28,6 +28,11 @@
     helpers: { isSelected, isHighlighted }
   } = createCombobox<Track>({
     preventScroll: false,
+    positioning: {
+      placement: 'bottom',
+      flip: false,
+      sameWidth: true
+    },
     onSelectedChange: ({ next }) => {
       if (next) {
         debounce(() => {
@@ -150,7 +155,7 @@
           use:melt={$input}
           class="searchInput"
           type="search"
-          placeholder={`Search or enter Spotify song URL`}
+          placeholder="Search songs or paste Spotify URL"
           aria-invalid={errors ? 'true' : undefined}
         />
       </label>
