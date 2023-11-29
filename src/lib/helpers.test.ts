@@ -88,6 +88,12 @@ describe('removeSongExtraText', () => {
       "Can't Get You out of My Head"
     );
   });
+
+  it('should remove bracketed text', () => {
+    expect(removeSongExtraText('What Was I Made For? [From The Motion Picture "Barbie"]')).toBe(
+      'What Was I Made For?'
+    );
+  });
 });
 
 describe('slugify', () => {
