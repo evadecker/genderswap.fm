@@ -137,17 +137,16 @@
   }
 
   .gender-bg {
-    fill: var(--mauve-12);
-    mix-blend-mode: exclusion;
+    fill: var(--red-9);
   }
 
   .swap-bg {
-    fill: var(--mauve-12);
-    mix-blend-mode: exclusion;
+    fill: var(--green-9);
+    mix-blend-mode: multiply;
   }
 
   .gender-letter,
   .swap-letter {
-    fill: var(--mauve-1);
+    fill: white;
   }
 </style>

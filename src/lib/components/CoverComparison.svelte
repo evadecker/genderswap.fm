@@ -232,8 +232,8 @@
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--pink-3);
-        color: var(--pink-12);
+        background-color: var(--green-3);
+        color: var(--green-12);
       }
     }
 

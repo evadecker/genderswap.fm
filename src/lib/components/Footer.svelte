@@ -114,8 +114,8 @@
 
       &[data-theme-toggle-dark].active,
       &[data-theme-toggle-dark]:hover {
-        background: var(--pink-3);
-        color: var(--pink-11);
+        background: var(--purple-3);
+        color: var(--purple-11);
       }
     }
   }

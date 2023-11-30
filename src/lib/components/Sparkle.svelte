@@ -70,7 +70,7 @@
     pointer-events: none;
     animation: 1s grow-and-shrink ease-in-out both;
     animation-delay: 0.4s;
-    color: hotpink;
+    color: var(--green-9);
   }
 
   .sparkle-lines {
