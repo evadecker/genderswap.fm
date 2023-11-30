@@ -41,7 +41,7 @@
   aria-valuemin="0"
   aria-valuemax="100"
   style={state === 'playing'
-    ? `background: conic-gradient(var(--pink-9) ${percent.toFixed(2)}%, transparent 0)`
+    ? `background: conic-gradient(var(--green-9) ${percent.toFixed(2)}%, transparent 0)`
     : undefined}
 >
   <audio bind:this={audio} bind:currentTime={time} bind:duration {title}>

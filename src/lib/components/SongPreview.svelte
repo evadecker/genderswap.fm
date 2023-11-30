@@ -245,7 +245,7 @@
         color: var(--mauve-1);
 
         &:hover {
-          background: var(--pink-9);
+          background: var(--green-9);
           color: white;
         }
       }
