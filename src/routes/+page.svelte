@@ -4,6 +4,8 @@
   import { goto } from '$app/navigation';
   import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants.js';
   import type { Enums } from '$lib/types/types.js';
+  import ArrowRightIcon from '~icons/ri/arrow-right-line';
+  import ArrowLeftIcon from '~icons/ri/arrow-left-line';
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
   import { scale } from 'svelte/transition';
@@ -192,8 +194,12 @@
       {/if}
       {#if !(data.isFirst && data.isLast)}
         <div class="buttons">
-          <button type="button" disabled={data.isFirst} on:click={handleBack}> Back </button>
-          <button type="button" disabled={data.isLast} on:click={handleNext}> Next </button>
+          <button type="button" disabled={data.isFirst} on:click={handleBack}
+            ><ArrowLeftIcon />Back</button
+          >
+          <button type="button" disabled={data.isLast} on:click={handleNext}
+            >Next<ArrowRightIcon /></button
+          >
         </div>
       {/if}
     </div>
@@ -416,12 +422,23 @@
       color: var(--mauve-1);
       border: none;
       cursor: pointer;
+      display: inline-flex;
+      gap: var(--space-s);
+      align-items: center;
       border-radius: var(--radius-full);
       padding-block: var(--space-s);
-      padding-inline: var(--space-xl);
+      padding-inline: var(--space-l);
       font-size: var(--step-1);
       font-weight: var(--font-weight-bold);
       font-feature-settings: var(--font-unstable);
+
+      &:first-child {
+        padding-inline-start: var(--space-m);
+      }
+
+      &:last-child {
+        padding-inline-end: var(--space-m);
+      }
 
       @media (hover: hover) and (pointer: fine) {
         &:not([disabled]):hover {
@@ -431,7 +448,8 @@
       }
 
       &[disabled] {
-        opacity: 0.3;
+        background-color: var(--mauve-4);
+        color: var(--mauve-8);
         cursor: default;
       }
 

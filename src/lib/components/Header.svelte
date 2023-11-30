@@ -1,13 +1,13 @@
 <script lang="ts">
   import Logo from './Logo.svelte';
-  import AddIcon from '~icons/ri/add-line';
+  import NewCoverIcon from './NewCoverIcon.svelte';
 </script>
 
 <header>
   <Logo />
   <nav>
     <a href="/new" class="button">
-      <AddIcon />
+      <NewCoverIcon />
       Add a cover
     </a>
   </nav>
