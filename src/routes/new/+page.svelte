@@ -13,6 +13,7 @@
   import { page } from '$app/stores';
   import LoaderIcon from '~icons/ri/loader-4-line';
   import type { FormEventHandler } from 'svelte/elements';
+  import NewCoverIcon from '$lib/components/NewCoverIcon.svelte';
 
   export let data: PageData;
 
@@ -119,13 +120,7 @@
         <LoaderIcon />
       </div>
     {:else}
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="currentColor">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M52.2714 2.22862C47.9497 1.31 43.7016 4.06877 42.783 8.3905L32.4014 57.2319L7.97922 62.423C3.65749 63.3416 0.898719 67.5898 1.81733 71.9115L11.7971 118.863C12.7157 123.184 16.9638 125.943 21.2856 125.024L68.2366 115.045C72.5584 114.126 75.3171 109.878 74.3985 105.556L72.0159 94.3467L102.861 100.903C107.183 101.822 111.431 99.063 112.35 94.7412L126.904 26.2709C127.822 21.9492 125.063 17.701 120.742 16.7824L52.2714 2.22862ZM72.0159 94.3467L64.4188 58.6051C63.5002 54.2834 59.252 51.5246 54.9303 52.4432L32.4014 57.2319L28.2291 76.8608C27.3105 81.1826 30.0693 85.4307 34.391 86.3493L72.0159 94.3467Z"
-        />
-      </svg>
+      <NewCoverIcon />
     {/if}
     Submit
   </button>
@@ -151,7 +146,7 @@
   .submitButton {
     display: flex;
     align-items: center;
-    gap: var(--space-m);
+    gap: var(--space-s);
     background: var(--mauve-12);
     color: var(--mauve-1);
     border: none;
