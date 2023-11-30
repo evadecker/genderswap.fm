@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getArtistLink, slugify, smartquotes } from '$lib/helpers';
+  import { currentId } from '$lib/stores/playing';
   import type { Cover } from '../../routes/cover/[slug]/+page.server';
   import SpotifyIcon from '~icons/ri/spotify-fill';
 
@@ -11,6 +12,10 @@
   if (slugify(originalSong.name) !== slugify(coverSong.name)) {
     coveredAs = coverSong.name;
   }
+
+  const handleButtonClick = (id: string) => {
+    currentId.set(id);
+  };
 </script>
 
 <div class="compare">
@@ -29,16 +34,10 @@
       />
     </div>
     <div class="details">
-      <a
-        href={originalSong.url}
-        target="_blank"
-        itemprop="url"
-        aria-label="Open in Spotify"
-        class="song-link"
-      >
+      <button on:click={() => handleButtonClick(originalSong.id)} class="song-link">
         <SpotifyIcon />
         Listen to original
-      </a>
+      </button>
       <h2 class="artist" itemprop="byArtist">
         {#each originalSong.artists as artist, i}
           <a href={getArtistLink(artist)}>{smartquotes(artist)}</a
@@ -61,16 +60,10 @@
       />
     </div>
     <div class="details">
-      <a
-        href={coverSong.url}
-        target="_blank"
-        itemprop="url"
-        aria-label="Open in Spotify"
-        class="song-link"
-      >
+      <button on:click={() => handleButtonClick(coverSong.id)} class="song-link">
         <SpotifyIcon />
         Listen to cover
-      </a>
+      </button>
       <h2 class="artist" itemprop="byArtist">
         {#each coverSong.artists as artist, i}
           <a href={getArtistLink(artist)}>{smartquotes(artist)}</a
@@ -225,6 +218,7 @@
   }
 
   .song-link {
+    all: unset;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -234,6 +228,7 @@
     background-color: var(--mauve-3);
     border-radius: var(--radius-full);
     font-weight: var(--font-weight-bold);
+    cursor: pointer;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
