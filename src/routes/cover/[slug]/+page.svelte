@@ -35,7 +35,7 @@
 
       const sharedProps: Partial<IConfettiOptions> = {
         scalar: scalar,
-        colors: ['#30A46C', '#E5484D'], // ['#ff69b4'],
+        colors: ['#ff69b4'],
         shapes: ['square'],
         gravity: 2,
         ticks: 30,

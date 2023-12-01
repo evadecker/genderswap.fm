@@ -161,7 +161,7 @@
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background: var(--green-9);
+        background: var(--pink-9);
         color: white;
       }
     }
@@ -172,7 +172,7 @@
     }
 
     &:focus {
-      outline: 3px solid var(--green-a9);
+      outline: 3px solid var(--pink-a9);
       outline-offset: 3px;
     }
 
@@ -216,7 +216,7 @@
     }
 
     &:focus {
-      outline: 3px solid var(--green-a9);
+      outline: 3px solid var(--pink-a9);
       outline-offset: 3px;
     }
   }

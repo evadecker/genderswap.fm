@@ -84,14 +84,14 @@
 
   .prose a:hover,
   .prose a:focus {
-    color: var(--green-12);
+    color: var(--pink-12);
   }
 
   .prose p a:hover,
   .prose p a:focus,
   .prose li a:hover,
   .prose li a:focus {
-    text-decoration-color: var(--green-9);
+    text-decoration-color: var(--pink-9);
   }
 
   .prose h2 {
