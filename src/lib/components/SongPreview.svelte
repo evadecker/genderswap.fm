@@ -168,6 +168,7 @@
     font-weight: var(--font-weight-bold);
     line-height: 1;
     margin-block-end: var(--space-xs);
+    overflow-wrap: anywhere;
   }
 
   .clearSelection {
