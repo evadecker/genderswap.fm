@@ -35,7 +35,7 @@
   font-family: 'Labil Grotesk';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: fallback;
   src: url('/fonts/LabilGrotesk-Regular.woff2') format('woff2'),
     url('/fonts/LabilGrotesk-Regular.woff') format('woff');
 }
@@ -44,7 +44,7 @@
   font-family: 'Labil Grotesk';
   font-style: italic;
   font-weight: 400;
-  font-display: swap;
+  font-display: fallback;
   src: url('/fonts/LabilGrotesk-RegularItalic.woff2') format('woff2'),
     url('/fonts/LabilGrotesk-RegularItalic.woff') format('woff');
 }
@@ -53,7 +53,7 @@
   font-family: 'Labil Grotesk';
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: fallback;
   src: url('/fonts/LabilGrotesk-Bold.woff2') format('woff2'),
     url('/fonts/LabilGrotesk-Bold.woff') format('woff');
 }
