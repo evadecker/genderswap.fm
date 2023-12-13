@@ -22,6 +22,7 @@
     "@spotify/web-api-ts-sdk": "^1.1.2",
     "@supabase/supabase-js": "^2.38.4",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.1",
     "dayjs": "^1.11.10",
     "satori": "^0.10.9",
     "sharp": "^0.32.6",
