@@ -30,7 +30,7 @@ export async function load({ params: { slug } }) {
     .single();
 
   if (!data) {
-    throw error(404, {
+    return error(404, {
       message: `Cover not found`
     });
   }
