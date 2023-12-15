@@ -29,11 +29,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
+      - name: Install dependencies
+        run: pnpm i
+
       - name: Typecheck
         run: pnpm check
 
   unit:
-    name: Unit Tests (Vitest)
+    name: Unit
     runs-on: ubuntu-latest
 
     permissions:
@@ -72,7 +75,7 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
 
   e2e:
-    name: End-to-End Tests (Playwright)
+    name: End-to-End
     runs-on: ubuntu-latest
 
     steps:
