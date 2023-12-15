@@ -50,6 +50,7 @@
     pointer-events: auto;
     font-feature-settings: var(--font-unstable);
     transform: rotate(3deg);
+    cursor: pointer;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {

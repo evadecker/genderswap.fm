@@ -9,11 +9,7 @@
   import SearchIcon from '~icons/ri/search-line';
   import CloseCircleIcon from '~icons/ri/close-circle-fill';
   import { scale } from 'svelte/transition';
-  import type {
-    FocusEventHandler,
-    FormEventHandler,
-    KeyboardEventHandler
-  } from 'svelte/elements.js';
+  import type { FocusEventHandler, FormEventHandler, KeyboardEventHandler } from 'svelte/elements';
 
   export let data;
 

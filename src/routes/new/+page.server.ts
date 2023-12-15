@@ -132,7 +132,7 @@ export const actions = {
 
       // Success! Redirect :)
       if (data) {
-        throw redirect(302, `/cover/${data.slug}?new=true`);
+        redirect(302, `/cover/${data.slug}?new=true`);
       }
     }
 
