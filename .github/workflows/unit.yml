@@ -1,4 +1,4 @@
-name: Test
+name: Unit Tests
 on:
   push:
     branches: main
@@ -50,9 +50,3 @@ jobs:
         # Also generate the report if tests are failing
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
-
-      - name: Install Playwright browsers
-        run: pnpm playwright install --with-deps
-
-      - name: Run Playwright tests
-        run: pnpm test:integration
