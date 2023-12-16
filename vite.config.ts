@@ -10,6 +10,11 @@ export default defineConfig({
     })
   ],
   test: {
-    include: ['src/**/*.{test,spec}.{js,ts}']
+    globals: true,
+    environment: 'jsdom',
+    include: ['src/**/*.test.{js,ts}'],
+    coverage: {
+      reporter: ['text', 'json-summary', 'json']
+    }
   }
 });
