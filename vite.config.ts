@@ -10,6 +10,19 @@ export default defineConfig({
     })
   ],
   test: {
-    include: ['src/**/*.{test,spec}.{js,ts}']
+    globals: true,
+    environment: 'jsdom',
+    include: ['src/**/*.test.{js,ts}'],
+    coverage: {
+      include: ['src/**/*.{js,ts,svelte}'],
+      exclude: [
+        'src/lib/stores/**',
+        'src/lib/types/**',
+        'src/routes/**',
+        'src/lib/schemas.ts',
+        'src/lib/supabase.ts'
+      ],
+      reporter: ['text', 'json-summary', 'json']
+    }
   }
 });
