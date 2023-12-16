@@ -14,6 +14,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{js,ts}'],
     coverage: {
+      include: ['src/**/*.{js,ts,svelte}'],
       reporter: ['text', 'json-summary', 'json']
     }
   }
