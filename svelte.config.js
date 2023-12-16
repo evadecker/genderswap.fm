@@ -24,10 +24,7 @@ const config = {
     adapter: adapter({
       runtime: 'nodejs20.x',
       platform: 'node'
-    }),
-    alias: {
-      $lib: 'src/lib'
-    }
+    })
   }
 };
 
