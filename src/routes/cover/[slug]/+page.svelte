@@ -6,10 +6,9 @@
   import { TAGS } from '$lib/constants';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import { confetti } from 'tsparticles-confetti';
+  import { confetti, type ConfettiOptions } from '@tsparticles/confetti';
   import { getArtistLink, getSortedTags } from '$lib/helpers.js';
   import Sparkle from '$lib/components/Sparkle.svelte';
-  import type { IConfettiOptions } from 'tsparticles-confetti/types/IConfettiOptions.js';
 
   export let data;
 
@@ -33,7 +32,7 @@
       const count = interpolate(40, 80);
       const spread = interpolate(8, 20);
 
-      const sharedProps: Partial<IConfettiOptions> = {
+      const sharedProps: Partial<ConfettiOptions> = {
         scalar: scalar,
         colors: ['#ff69b4'],
         shapes: ['square'],
@@ -42,7 +41,7 @@
         disableForReducedMotion: true
       };
 
-      const directionalProps: Record<'left' | 'right' | 'bottom', Partial<IConfettiOptions>> = {
+      const directionalProps: Record<'left' | 'right' | 'bottom', Partial<ConfettiOptions>> = {
         left: {
           count,
           startVelocity: velocity - 10,

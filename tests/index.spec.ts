@@ -169,7 +169,7 @@ test.describe('should navigate to other pages successfully', () => {
   test('should navigate to /new on button click', async ({ page }) => {
     const addCoverButton = page.locator('a[href="/new"]');
     await addCoverButton.click();
-    await expect(page).toHaveURL(/\/new/);
+    await expect(page).toHaveURL('/new');
 
     const title = await page.title();
     expect(title).toBe('Add a cover');
@@ -178,7 +178,7 @@ test.describe('should navigate to other pages successfully', () => {
   test('should navigate to /about on link click', async ({ page }) => {
     const aboutLink = page.locator('a[href="/about"]');
     await aboutLink.click();
-    await expect(page).toHaveURL(/\/about/);
+    await expect(page).toHaveURL('/about');
 
     const title = await page.title();
     expect(title).toBe('About Genderswap.fm');
@@ -192,6 +192,6 @@ test.describe('should navigate to other pages successfully', () => {
   test('should navigate to the next page on click', async ({ page }) => {
     const nextButton = page.locator('button').filter({ hasText: 'Next' });
     await nextButton.click();
-    await expect(page).toHaveURL(/\/\?page=2/);
+    await expect(page).toHaveURL('/?page=2');
   });
 });
