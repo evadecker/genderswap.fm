@@ -13,7 +13,7 @@ Occasionally, people make music, and then wildly different people cover that mus
 
 I was first inspired by Andrea Lawlor's [_Paul Takes the Form of a Mortal Girl_](https://bookshop.org/a/97627/9780525566182):
 
-> Some covers deliver the age-old simple pleasures of drag—knowledge, the opportunity to investigate the simulacra and make comparisons, that obscure little frisson of dissonance. Take Joan Baez singing "Virgil Kane is my name... like my father before me, I’m a working man" (which, of course, is originally from The Band’s "[The Night They Drove Old Dixie Down](cover/the-night-they-drove-old-dixie-down-joan-baez)) or Cait O’Riordan from the Pogues crooning, "My name is Jock Stewart, I’m a canny gun man" (from the traditional "[I’m a Man You Don’t Meet Every Day](cover/im-a-man-you-dont-meet-every-day-the-pogues)"). Joan Baez’s contralto can, if you squint your ears, pass as a farm-boy tenor; Cait O’Riordan’s chalky delivery might be that of a rich ponce.
+> Some covers deliver the age-old simple pleasures of drag—knowledge, the opportunity to investigate the simulacra and make comparisons, that obscure little frisson of dissonance. Take Joan Baez singing "Virgil Kane is my name... like my father before me, I’m a working man" (which, of course, is originally from The Band’s “[The Night They Drove Old Dixie Down](cover/the-night-they-drove-old-dixie-down-joan-baez))” or Cait O’Riordan from the Pogues crooning, "My name is Jock Stewart, I’m a canny gun man" (from the traditional “[I’m a Man You Don’t Meet Every Day](cover/im-a-man-you-dont-meet-every-day-the-pogues)”). Joan Baez’s contralto can, if you squint your ears, pass as a farm-boy tenor; Cait O’Riordan’s chalky delivery might be that of a rich ponce.
 
 After finishing the book, I made a [big Spotify playlist](https://open.spotify.com/playlist/5YQ4AyxQ6DeDxKJgSryAU2?si=e56f2c3d59fc4a00) for covers. Over time, the playlist got too unwieldy to manage, so I made this site. It's much nicer.
 
@@ -39,4 +39,4 @@ Unfortunately, no. Because I rely on the Spotify API to search tracks and store 
 
 ## Can I give you money?
 
-Please! I do pay out of my own pocket for hosting, database storage, fonts, and more. If you enjoy this resource and want to chip in toward my costs, you can [send me some dollars via Kofi](https://ko-fi.com/evadecker).
+If you'd like! I do pay out of my own pocket for hosting, database storage, fonts, and more. If you enjoy this resource and want to chip in toward my costs, you can [send me some dollars via Kofi](https://ko-fi.com/evadecker).
