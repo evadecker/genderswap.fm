@@ -12,7 +12,7 @@ const config = {
       typescript: true,
       scss: true
     }),
-    // @ts-ignore - no idea why this is failing
+    // @ts-ignore - no idea why this is failing, compiles fine
     mdsvex({
       extensions: ['.md'],
       layout: 'src/lib/components/ProseLayout.svelte'
