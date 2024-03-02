@@ -1,6 +1,7 @@
 <script lang="ts">
   import CoverComparison from '$lib/components/CoverComparison.svelte';
   import dayjs from 'dayjs';
+  import relativeTime from 'dayjs/plugin/relativeTime';
   import TagCloud from '$lib/components/TagCloud.svelte';
   import Tag from '$lib/components/Tag.svelte';
   import { TAGS } from '$lib/constants';
@@ -14,7 +15,8 @@
 
   const isNew = $page.url.searchParams.get('new') === 'true' ? true : false;
 
-  const formattedDate = dayjs(data.created_at).format('MMMM D, YYYY');
+  dayjs.extend(relativeTime);
+  const formattedDate = dayjs(data.created_at).fromNow();
 
   onMount(async () => {
     const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
@@ -99,9 +101,6 @@
     covering{' '}
     <a class="artist" href={getArtistLink(data.original.artists[0])}>{data.original.artists[0]}</a>
   </div>
-  {#if data.description}
-    <p class="description">{data.description}</p>
-  {/if}
   {#if data.tags}
     <TagCloud>
       {#each getSortedTags(data.tags) as tag}
@@ -112,8 +111,11 @@
 </header>
 <CoverComparison cover={data} />
 <footer class="footer">
+  {#if data.description}
+    <p class="description">{data.description}</p>
+  {/if}
   <span
-    >Added {data.contributor && `by ${data.contributor} on `}
+    >Added {data.contributor ? `by ${data.contributor}` : 'anonymously'}
     <time datetime={data.created_at}>{formattedDate}</time></span
   >
 </footer>
@@ -157,14 +159,18 @@
   }
 
   .description {
-    font-size: var(--step-1);
-    text-wrap: balance;
-    margin-block-end: var(--space-l);
+    background-color: var(--mauve-3);
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius-l);
+    font-size: var(--step-0);
+    margin-block-end: var(--space-s);
     max-width: 40ch;
   }
 
   .footer {
     padding-block: var(--space-2xl);
+    padding-inline: var(--space-m);
+    font-size: var(--step--1);
     display: flex;
     flex-direction: column;
     align-items: center;
