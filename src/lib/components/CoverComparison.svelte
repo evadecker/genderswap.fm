@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getArtistLink, slugify, smartquotes } from '$lib/helpers';
-  import { currentId } from '$lib/stores/playing';
   import type { Cover } from '../../routes/cover/[slug]/+page.server';
   import SpotifyIcon from '~icons/ri/spotify-fill';
 
@@ -12,10 +11,6 @@
   if (slugify(originalSong.name) !== slugify(coverSong.name)) {
     coveredAs = coverSong.name;
   }
-
-  const handleButtonClick = (id: string) => {
-    currentId.set(id);
-  };
 </script>
 
 <div class="compare">
@@ -34,10 +29,10 @@
       />
     </div>
     <div class="details">
-      <button on:click={() => handleButtonClick(originalSong.id)} class="song-link">
+      <a href={`https://open.spotify.com/track/${originalSong.id}`} class="song-link">
         <SpotifyIcon />
         Listen to original
-      </button>
+      </a>
       <h2 class="artist" itemprop="byArtist">
         {#each originalSong.artists as artist, i}
           <a href={getArtistLink(artist)}>{smartquotes(artist)}</a
@@ -60,10 +55,10 @@
       />
     </div>
     <div class="details">
-      <button on:click={() => handleButtonClick(coverSong.id)} class="song-link">
+      <a href={`https://open.spotify.com/track/${coverSong.id}`} class="song-link">
         <SpotifyIcon />
         Listen to cover
-      </button>
+      </a>
       <h2 class="artist" itemprop="byArtist">
         {#each coverSong.artists as artist, i}
           <a href={getArtistLink(artist)}>{smartquotes(artist)}</a

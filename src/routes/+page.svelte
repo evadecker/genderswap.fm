@@ -300,12 +300,13 @@
     gap: var(--space-2xs);
     background: var(--mauve-3);
     color: var(--mauve-11);
-    padding-block: var(--space-2xs);
+    padding-block: var(--space-xs);
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
     position: relative;
     flex-shrink: 0;
     min-width: 0;
+    line-height: 1;
 
     &:not(.selected):not(:hover) + :not(.selected):not(:hover)::before {
       content: '';

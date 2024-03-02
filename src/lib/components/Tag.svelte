@@ -29,12 +29,13 @@
     align-items: baseline;
     background: var(--mauve-3);
     color: var(--mauve-11);
-    padding-block: var(--space-2xs);
+    padding-block: var(--space-xs) var(--space-xs);
     padding-inline: var(--space-s);
     border-radius: var(--radius-s);
     font-size: var(--step-0);
     flex-shrink: 0;
     text-wrap: nowrap;
+    line-height: 1;
 
     &.active {
       background: var(--mauve-12);

@@ -12,18 +12,16 @@ const config = {
       typescript: true,
       scss: true
     }),
+    // @ts-ignore - no idea why this is failing, compiles fine
     mdsvex({
       extensions: ['.md'],
-      layout: {
-        _: 'src/lib/components/ProseLayout.svelte'
-      }
+      layout: 'src/lib/components/ProseLayout.svelte'
     }),
     preprocessMeltUI()
   ]),
   kit: {
     adapter: adapter({
-      runtime: 'nodejs20.x',
-      platform: 'node'
+      runtime: 'nodejs20.x'
     })
   }
 };
