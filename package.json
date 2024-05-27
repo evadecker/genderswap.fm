@@ -35,7 +35,7 @@
     "@iconify-json/ri": "^1.1.20",
     "@melt-ui/pp": "^0.1.4",
     "@melt-ui/svelte": "^0.70.0",
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.44.1",
     "@sveltejs/adapter-auto": "^3.1.1",
     "@sveltejs/adapter-vercel": "^5.1.0",
     "@sveltejs/kit": "^2.5.2",
