@@ -1,0 +1,47 @@
+name: Vitest
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Required to checkout the code
+      contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Run Vitest
+        run: pnpm test:unit
+
+      - name: Run Vitest Coverage
+        run: pnpm test:unit-coverage
+
+      - name: 'Report Coverage'
+        # Also generate the report if tests are failing
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
