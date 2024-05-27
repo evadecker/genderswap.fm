@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.2.2
     version: 1.2.2
   '@vercel/speed-insights':
-    specifier: ^1.0.10
-    version: 1.0.10(@sveltejs/kit@2.5.2)(svelte@4.2.12)
+    specifier: ^1.0.11
+    version: 1.0.11(@sveltejs/kit@2.5.2)(svelte@4.2.12)
   dayjs:
     specifier: ^1.11.11
     version: 1.11.11
@@ -107,8 +107,8 @@ devDependencies:
     specifier: ^4.2.12
     version: 4.2.12
   svelte-check:
-    specifier: ^3.6.6
-    version: 3.6.6(postcss@8.4.35)(sass@1.71.1)(svelte@4.2.12)
+    specifier: ^3.7.1
+    version: 3.7.1(postcss@8.4.35)(sass@1.71.1)(svelte@4.2.12)
   svelte-sequential-preprocessor:
     specifier: ^2.0.1
     version: 2.0.1
@@ -122,8 +122,8 @@ devDependencies:
     specifier: ^5.3.3
     version: 5.3.3
   unplugin-icons:
-    specifier: ^0.17.4
-    version: 0.17.4
+    specifier: ^0.19.0
+    version: 0.19.0
   vite:
     specifier: ^5.1.7
     version: 5.1.7(sass@1.71.1)
@@ -153,6 +153,12 @@ packages:
     dependencies:
       execa: 5.1.1
       find-up: 5.0.0
+    dev: true
+
+  /@antfu/install-pkg@0.3.3:
+    resolution: {integrity: sha512-nHHsk3NXQ6xkCfiRRC8Nfrg8pU5kkr3P3Y9s9dKqiuRmBD0Yap7fymNDjGFKeWhZQHqqbCS5CfeMy9wtExM24w==}
+    dependencies:
+      '@jsdevtools/ez-spawn': 3.0.4
     dev: true
 
   /@antfu/utils@0.7.7:
@@ -490,8 +496,8 @@ packages:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: true
 
-  /@iconify/utils@2.1.22:
-    resolution: {integrity: sha512-6UHVzTVXmvO8uS6xFF+L/QTSpTzA/JZxtgU+KYGFyDYMEObZ1bu/b5l+zNJjHy+0leWjHI+C0pXlzGvv3oXZMA==}
+  /@iconify/utils@2.1.23:
+    resolution: {integrity: sha512-YGNbHKM5tyDvdWZ92y2mIkrfvm5Fvhe6WJSkWu7vvOFhMtYDP0casZpoRz0XEHZCrYsR4stdGT3cZ52yp5qZdQ==}
     dependencies:
       '@antfu/install-pkg': 0.1.1
       '@antfu/utils': 0.7.7
@@ -546,6 +552,16 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  /@jsdevtools/ez-spawn@3.0.4:
+    resolution: {integrity: sha512-f5DRIOZf7wxogefH03RjMPMdBF7ADTWUMoOs9kaJo06EfwF+aFhMZMDZxHg/Xe12hptN9xoZjGso2fdjapBRIA==}
+    engines: {node: '>=10'}
+    dependencies:
+      call-me-maybe: 1.0.2
+      cross-spawn: 7.0.3
+      string-argv: 0.3.2
+      type-detect: 4.0.8
+    dev: true
 
   /@mapbox/node-pre-gyp@1.0.11:
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
@@ -1287,8 +1303,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vercel/speed-insights@1.0.10(@sveltejs/kit@2.5.2)(svelte@4.2.12):
-    resolution: {integrity: sha512-4uzdKB0RW6Ff2FkzshzjZ+RlJfLPxgm/00i0XXgxfMPhwnnsk92YgtqsxT9OcPLdJUyVU1DqFlSWWjIQMPkh0g==}
+  /@vercel/speed-insights@1.0.11(@sveltejs/kit@2.5.2)(svelte@4.2.12):
+    resolution: {integrity: sha512-l9hzSNmJvb2Yqpgd/BzpiT0J0aQDdtqxOf3Xm+iW4PICxVvhY1ef7Otdx4GXI+88dVkws57qMzXiShz19gXzSQ==}
     requiresBuild: true
     peerDependencies:
       '@sveltejs/kit': ^1 || ^2
@@ -1656,6 +1672,10 @@ packages:
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
       set-function-length: 1.2.1
+    dev: true
+
+  /call-me-maybe@1.0.2:
+    resolution: {integrity: sha512-HpX65o1Hnr9HH25ojC1YGs7HCQLq0GCOibSaWER0eNpgJ/Z1MZv2mTc7+xh6WOPxbRVcmgbv4hGU+uSQ/2xFZQ==}
     dev: true
 
   /callsites@3.1.0:
@@ -3970,6 +3990,11 @@ packages:
       bare-events: 2.2.1
     dev: false
 
+  /string-argv@0.3.2:
+    resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
+    engines: {node: '>=0.6.19'}
+    dev: true
+
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -4061,8 +4086,8 @@ packages:
       autosize: 6.0.1
     dev: false
 
-  /svelte-check@3.6.6(postcss@8.4.35)(sass@1.71.1)(svelte@4.2.12):
-    resolution: {integrity: sha512-b9q9rOHOMYF3U8XllK7LmXTq1LeWQ98waGfEJzrFutViadkNl1tgdEtxIQ8yuPx+VQ4l7YrknYol+0lfZocaZw==}
+  /svelte-check@3.7.1(postcss@8.4.35)(sass@1.71.1)(svelte@4.2.12):
+    resolution: {integrity: sha512-U4uJoLCzmz2o2U33c7mPDJNhRYX/DNFV11XTUDlFxaKLsO7P+40gvJHMPpoRfa24jqZfST4/G9fGNcUGMO8NAQ==}
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
@@ -4399,8 +4424,8 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /unplugin-icons@0.17.4:
-    resolution: {integrity: sha512-PHLxjBx3ZV8RUBvfMafFl8uWH88jHeZgOijcRpkwgne7y2Ovx7WI0Ltzzw3fjZQ7dGaDhB8udyKVdm9N2S6BIw==}
+  /unplugin-icons@0.19.0:
+    resolution: {integrity: sha512-u5g/gIZPZEj1wUGEQxe9nzftOSqmblhusc+sL3cawIRoIt/xWpE6XYcPOfAeFTYNjSbRrX/3QiX89PFiazgU1w==}
     peerDependencies:
       '@svgr/core': '>=7.0.0'
       '@svgx/core': ^1.0.1
@@ -4419,19 +4444,20 @@ packages:
       vue-template-es2015-compiler:
         optional: true
     dependencies:
-      '@antfu/install-pkg': 0.1.1
+      '@antfu/install-pkg': 0.3.3
       '@antfu/utils': 0.7.7
-      '@iconify/utils': 2.1.22
+      '@iconify/utils': 2.1.23
       debug: 4.3.4
       kolorist: 1.8.0
       local-pkg: 0.5.0
-      unplugin: 1.7.1
+      unplugin: 1.10.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /unplugin@1.7.1:
-    resolution: {integrity: sha512-JqzORDAPxxs8ErLV4x+LL7bk5pk3YlcWqpSNsIkAZj972KzFZLClc/ekppahKkOczGkwIG6ElFgdOgOlK4tXZw==}
+  /unplugin@1.10.1:
+    resolution: {integrity: sha512-d6Mhq8RJeGA8UfKCu54Um4lFA0eSaRa3XxdAJg8tIdxbu1ubW0hBCZUL7yI2uGyYCRndvbK8FLHzqy2XKfeMsg==}
+    engines: {node: '>=14.0.0'}
     dependencies:
       acorn: 8.11.3
       chokidar: 3.6.0
