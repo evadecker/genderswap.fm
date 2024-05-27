@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.2.2
     version: 1.2.2
   '@vercel/speed-insights':
-    specifier: ^1.0.10
-    version: 1.0.10(@sveltejs/kit@2.5.2)(svelte@4.2.12)
+    specifier: ^1.0.11
+    version: 1.0.11(@sveltejs/kit@2.5.2)(svelte@4.2.12)
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -1287,8 +1287,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vercel/speed-insights@1.0.10(@sveltejs/kit@2.5.2)(svelte@4.2.12):
-    resolution: {integrity: sha512-4uzdKB0RW6Ff2FkzshzjZ+RlJfLPxgm/00i0XXgxfMPhwnnsk92YgtqsxT9OcPLdJUyVU1DqFlSWWjIQMPkh0g==}
+  /@vercel/speed-insights@1.0.11(@sveltejs/kit@2.5.2)(svelte@4.2.12):
+    resolution: {integrity: sha512-l9hzSNmJvb2Yqpgd/BzpiT0J0aQDdtqxOf3Xm+iW4PICxVvhY1ef7Otdx4GXI+88dVkws57qMzXiShz19gXzSQ==}
     requiresBuild: true
     peerDependencies:
       '@sveltejs/kit': ^1 || ^2
