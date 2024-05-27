@@ -1,0 +1,33 @@
+name: Typecheck
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Typecheck
+        run: pnpm check
