@@ -22,7 +22,7 @@
     "@radix-ui/colors": "^3.0.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "@supabase/supabase-js": "^2.43.4",
-    "@tsparticles/confetti": "^3.3.0",
+    "@tsparticles/confetti": "^3.4.0",
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.11",
     "dayjs": "^1.11.11",
