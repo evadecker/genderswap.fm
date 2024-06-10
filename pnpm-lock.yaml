@@ -114,7 +114,7 @@ devDependencies:
     version: 2.0.1
   sveltekit-superforms:
     specifier: ^1.13.4
-    version: 1.13.4(@sveltejs/kit@2.5.10)(svelte@4.2.17)(zod@3.22.4)
+    version: 1.13.4(@sveltejs/kit@2.5.10)(svelte@4.2.17)(zod@3.23.8)
   tslib:
     specifier: ^2.6.2
     version: 2.6.2
@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^1.6.0
     version: 1.6.0(jsdom@23.2.0)(sass@1.77.2)
   zod:
-    specifier: ^3.22.4
-    version: 3.22.4
+    specifier: ^3.23.8
+    version: 3.23.8
 
 packages:
 
@@ -4625,7 +4625,7 @@ packages:
       magic-string: 0.30.10
       periscopic: 3.1.0
 
-  /sveltekit-superforms@1.13.4(@sveltejs/kit@2.5.10)(svelte@4.2.17)(zod@3.22.4):
+  /sveltekit-superforms@1.13.4(@sveltejs/kit@2.5.10)(svelte@4.2.17)(zod@3.23.8):
     resolution: {integrity: sha512-rM2+Ictaw7OAIorCLmvg82orci/mtO9ZouI4emtx8SyYngx9aED+eNZlHPLufgB6D7geL2a+hMSFtM3zmMQixQ==}
     peerDependencies:
       '@sveltejs/kit': 1.x || 2.x
@@ -4636,7 +4636,7 @@ packages:
       devalue: 4.3.2
       klona: 2.0.6
       svelte: 4.2.17
-      zod: 3.22.4
+      zod: 3.23.8
     dev: true
 
   /symbol-tree@3.2.4:
@@ -5219,6 +5219,6 @@ packages:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
     dev: false
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
     dev: true
