@@ -41,8 +41,8 @@ dependencies:
 
 devDependencies:
   '@iconify-json/ri':
-    specifier: ^1.1.20
-    version: 1.1.20
+    specifier: ^1.1.21
+    version: 1.1.21
   '@melt-ui/pp':
     specifier: ^0.1.4
     version: 0.1.4(@melt-ui/svelte@0.81.0)(svelte@4.2.17)
@@ -693,8 +693,8 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
-  /@iconify-json/ri@1.1.20:
-    resolution: {integrity: sha512-yScIGjLFBCJKWKskQTWRjNI2Awoq+VRDkRxEsCQvSfdz41n+xkRtFG2K6J1OVI90ClRHfjFC8VJ2+WzxxyFjTQ==}
+  /@iconify-json/ri@1.1.21:
+    resolution: {integrity: sha512-ssU2CRaB4T83Q3cncCZtITholhYkH6gEL5XLmdMII6Xzn8bTCpDCkt+HdX4URc24uUMD0PGIaNLJUIAgdfLMjQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
