@@ -170,7 +170,7 @@
     color: var(--mauve-10);
     line-height: 1.3;
 
-    .name {
+    > .name {
       color: var(--mauve-12);
     }
 
