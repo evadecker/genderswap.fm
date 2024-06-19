@@ -86,4 +86,27 @@ describe('CoverCard', () => {
     const coverArtistElement = getByText('Cover Artist');
     expect(coverArtistElement).toBeDefined();
   });
+
+  it('should render multiple artist names correctly', async ({ expect }) => {
+    const original = {
+      name: 'Original Name',
+      artists: ['Original Artist', 'Original Artist 2'],
+      album_img: ['test.jpg']
+    };
+    const cover = {
+      name: 'Cover Name',
+      artists: ['Cover Artist', 'Cover Artist 2'],
+      album_img: ['test-cover.jpg']
+    };
+
+    const { getByText } = render(CoverCard, {
+      props: { original, cover, slug: 'test-slug' }
+    });
+
+    const originalArtistElement = getByText('Original Artist, Original Artist 2');
+    expect(originalArtistElement).toBeDefined();
+
+    const coverArtistElement = getByText('Cover Artist, Cover Artist 2');
+    expect(coverArtistElement).toBeDefined();
+  });
 });

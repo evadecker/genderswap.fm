@@ -346,12 +346,11 @@
     grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 4), 1fr));
     grid-template-rows: max-content;
     align-items: center;
-    gap: var(--space-xl);
-    row-gap: var(--space-2xl);
-    padding-block: var(--space-2xl);
+    row-gap: var(--space-l);
+    padding-block: var(--space-xl);
     @supports (padding: max(0px)) {
-      padding-inline-start: max(var(--space-l), env(safe-area-inset-left));
-      padding-inline-end: max(var(--space-l), env(safe-area-inset-right));
+      padding-inline-start: max(var(--space-s), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-s), env(safe-area-inset-right));
     }
     @media (max-width: 1100px) {
       grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 3.5), 1fr));
