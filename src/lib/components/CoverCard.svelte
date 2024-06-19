@@ -49,7 +49,7 @@
         <span class="name">{cover.artists.join(", ")}</span>
       {/if}
       {#if original}
-        <span class="covering">covering {original.artists.join(", ")}</span>
+        <span class="covering">covering <span class="name">{original.artists.join(", ")}</span></span>
       {/if}
     </div>
     {#if !isSkeleton}
