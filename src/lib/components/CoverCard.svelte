@@ -1,5 +1,6 @@
 <script lang="ts">
   import { smartquotes } from '$lib/helpers';
+  import ArrowLeftRightLine from '~icons/ri/arrow-left-right-line';
 
   type Album = {
     name: string;
@@ -44,9 +45,11 @@
       {/if}
     </h2>
     <div class="artist">
-      {#if cover && original}
-        <strong>{cover.artists[0]}</strong> covering{' '}
-        <strong>{original.artists[0]}</strong>
+      {#if cover}
+        <span class="name">{cover.artists.join(", ")}</span>
+      {/if}
+      {#if original}
+        <span class="covering">covering {original.artists.join(", ")}</span>
       {/if}
     </div>
     {#if !isSkeleton}
@@ -58,34 +61,33 @@
 <style lang="scss">
   .coverCard {
     position: relative;
-    border-radius: var(--radius-m);
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     align-self: flex-start;
-    gap: var(--space-xl);
-    text-align: center;
+    gap: var(--space-m);
+    padding: var(--space-m);
+    border-radius: var(--radius-m);
 
-    @media (hover: hover) and (pointer: fine) {
-      &:not(.placeholder):hover {
-        .album {
-          transform: rotate(0) translateX(0);
-        }
+    @media (hover: hover) {
+      &:hover {
+        background: var(--mauve-3);
       }
     }
   }
 
   .albums {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: var(--space-xs);
-    width: 100%;
   }
 
   .album {
     background: var(--mauve-3);
     border-radius: var(--radius-album);
+    width: 50%;
     aspect-ratio: 1;
     transition: transform 0.2s ease-in-out;
     position: relative;
@@ -108,18 +110,6 @@
       aspect-ratio: 1;
       border-radius: var(--radius-album);
       object-fit: cover;
-    }
-
-    &:first-child {
-      width: 40%;
-      transform: rotate(-10deg) translateX(6%);
-      transform-origin: 100% 0;
-    }
-
-    &:last-child {
-      width: 60%;
-      transform: rotate(6deg) translateX(-6%);
-      transform-origin: 0 0;
     }
   }
 
@@ -148,14 +138,13 @@
   .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--space-xs);
+    flex: 1;
     width: 100%;
   }
 
   .title,
   .artist {
-    text-wrap: balance;
     transition: color 0.2s ease;
     width: 100%;
   }
@@ -178,8 +167,12 @@
   }
 
   .artist {
-    color: var(--mauve-11);
+    color: var(--mauve-10);
     line-height: 1.3;
+
+    .name {
+      color: var(--mauve-12);
+    }
 
     &:empty {
       width: 90%;

@@ -150,11 +150,13 @@
   }
 
   .artist {
-    font-weight: var(--font-weight-bold);
+    color: var(--mauve-12);
 
-    &:hover {
-      text-decoration: underline;
-      text-decoration-color: var(--mauve-9);
+    @media (hover: hover) {   
+      &:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--mauve-9);
+      }
     }
   }
 

@@ -71,7 +71,7 @@
       <em class="album-name">{smartquotes(coverSong.album_name)}</em>
       {#if coveredAs}
         <div class="covered-as" itemprop="name">
-          Covered as <strong>{smartquotes(coveredAs)}</strong>
+          Covered as {smartquotes(coveredAs)}
         </div>
       {/if}
     </div>
