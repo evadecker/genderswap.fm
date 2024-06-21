@@ -33,6 +33,10 @@ export async function load({ url }) {
     covers.overlaps('tags', [tag]);
   }
 
+  if (!tag && !searchQuery) {
+    covers.not('tags', 'cs', '{"transition_mtm"}').not('tags', 'cs', '{"transition_ftf"}');
+  }
+
   if (searchQuery) {
     covers.textSearch('fts', searchQuery, {
       config: 'english',
