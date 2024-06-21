@@ -12,6 +12,7 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import LoaderIcon from '~icons/ri/loader-4-line';
+  import AlertIcon from '~icons/ri/alert-line';
   import type { FormEventHandler } from 'svelte/elements';
   import NewCoverIcon from '$lib/components/NewCoverIcon.svelte';
 
@@ -69,6 +70,19 @@
         bind:value={$form.coverGenders}
         errors={$errors.coverGenders?._errors}
       />
+      {#if $form.originalGenders.length === 1 && $form.coverGenders.length === 1}
+        {#if JSON.stringify($form.originalGenders) === JSON.stringify($form.coverGenders)}
+          <div class="banner">
+            <div class="icon">
+              <AlertIcon />
+            </div>
+            <div class="text">
+              <strong class="title">Genderswap.fm is for gender-swapped covers.</strong> Same-gender
+              covers will be hidden by default.
+            </div>
+          </div>
+        {/if}
+      {/if}
     </Step>
     <Step title="Add thoughts">
       <label>
@@ -229,6 +243,23 @@
     &.warning {
       color: var(--red-9);
       font-weight: var(--font-weight-bold);
+    }
+  }
+
+  .banner {
+    display: flex;
+    gap: var(--space-s);
+    align-items: flex-start;
+    background: var(--orange-3);
+    color: var(--orange-12);
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius-s);
+
+    .icon {
+      flex-shrink: 0;
+      height: 1.5em;
+      display: flex;
+      align-items: center;
     }
   }
 </style>
