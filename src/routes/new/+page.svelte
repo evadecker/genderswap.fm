@@ -1,5 +1,6 @@
 <script lang="ts">
   import { superForm } from 'sveltekit-superforms/client';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import Steps from '$lib/components/Steps.svelte';
   import Step from '$lib/components/Step.svelte';
   import SongSelect from '$lib/components/SongSelect.svelte';
@@ -15,12 +16,13 @@
   import AlertIcon from '~icons/ri/alert-line';
   import type { FormEventHandler } from 'svelte/elements';
   import NewCoverIcon from '$lib/components/NewCoverIcon.svelte';
+  import { newCoverSchema } from '$lib/schemas';
 
   export let data: PageData;
 
   const { form, errors, enhance, submitting, delayed } = superForm(data.form, {
     dataType: 'json',
-    defaultValidator: 'clear',
+    validators: zodClient(newCoverSchema),
     scrollToError: 'smooth'
   });
 
