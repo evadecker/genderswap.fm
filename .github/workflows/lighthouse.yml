@@ -41,7 +41,10 @@ jobs:
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         with:
+          runs: 3
           configPath: './lighthouserc.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
