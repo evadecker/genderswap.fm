@@ -36,11 +36,12 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
-      - name: Build and start the project
+      - name: Build
         run: pnpm build
 
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
+          configPath: './lighthouserc.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
