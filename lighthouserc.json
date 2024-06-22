@@ -1,8 +1,15 @@
 {
   "ci": {
+    "assert": {
+      "preset": "lighthouse:recommended"
+    },
     "collect": {
+      "startServerCommand": "pnpm build && pnpm preview --port 3000",
       "url": ["http://localhost:3000/"],
-      "startServerCommand": "pnpm preview --port 3000"
+      "numberOfRuns": 3
+    },
+    "upload": {
+      "target": "temporary-public-storage"
     }
   }
 }

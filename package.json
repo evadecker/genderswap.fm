@@ -16,9 +16,12 @@
     "test:integration": "playwright test",
     "test:unit": "vitest",
     "test:unit-coverage": "vitest --coverage",
-    "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts"
+    "dbtypegen": "supabase gen types typescript --project-id qbmycnemttkukygnvmbu > src/types/db-generated.types.ts",
+    "lhci:mobile": "lhci autorun",
+    "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
   },
   "dependencies": {
+    "@lhci/cli": "^0.14.0",
     "@radix-ui/colors": "^3.0.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "@supabase/supabase-js": "^2.43.5",

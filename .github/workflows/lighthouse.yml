@@ -36,15 +36,12 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
-      - name: Build
-        run: pnpm build
-
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v12
+      - name: Lighthouse Mobile Audit
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        with:
-          runs: 3
-          configPath: './lighthouserc.json'
-          uploadArtifacts: true
-          temporaryPublicStorage: true
+        run: pnpm lhci:mobile
+
+      - name: Lighthouse Desktop Audit
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: pnpm lhci:desktop

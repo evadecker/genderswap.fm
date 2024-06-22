@@ -1,0 +1,70 @@
+[
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 37,
+    "values": [
+      37,
+      71,
+      71
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "modern-image-formats",
+    "level": "warn",
+    "url": "http://localhost:3000/",
+    "auditTitle": "Serve images in next-gen formats",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 3,
+    "values": [
+      3,
+      3,
+      3
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "uses-long-cache-ttl",
+    "level": "warn",
+    "url": "http://localhost:3000/",
+    "auditTitle": "Serve static assets with an efficient cache policy",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 24,
+    "values": [
+      24,
+      46,
+      46
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "uses-optimized-images",
+    "level": "error",
+    "url": "http://localhost:3000/",
+    "auditTitle": "Efficiently encode images",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/"
+  },
+  {
+    "name": "maxLength",
+    "expected": 0,
+    "actual": 40,
+    "values": [
+      40,
+      76,
+      76
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditId": "uses-responsive-images",
+    "level": "error",
+    "url": "http://localhost:3000/",
+    "auditTitle": "Properly size images",
+    "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/"
+  }
+]
