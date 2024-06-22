@@ -3,9 +3,10 @@
     "assert": {
       "preset": "lighthouse:recommended",
       "assertions": {
+        "modern-image-formats": "off",
+        "total-byte-weight": ["warn", { "minScore": 0.9 }],
         "uses-optimized-images": "off",
         "uses-responsive-images": "off",
-        "modern-image-formats": "off",
         "uses-long-cache-ttl": ["warn", { "minScore": 0 }]
       }
     },
