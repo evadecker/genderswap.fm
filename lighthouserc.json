@@ -7,11 +7,12 @@
         "total-byte-weight": ["warn", { "minScore": 0.9 }],
         "uses-optimized-images": "off",
         "uses-responsive-images": "off",
-        "uses-long-cache-ttl": ["warn", { "minScore": 0 }]
+        "uses-long-cache-ttl": ["warn", { "maxLength": 0 }]
       }
     },
     "collect": {
       "startServerCommand": "pnpm build && pnpm preview --port 3000",
+      "startServerReadyPattern": "transformed",
       "url": ["http://localhost:3000/"],
       "numberOfRuns": 3
     },
