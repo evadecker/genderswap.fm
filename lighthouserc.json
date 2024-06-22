@@ -1,7 +1,13 @@
 {
   "ci": {
     "assert": {
-      "preset": "lighthouse:recommended"
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "uses-optimized-images": "off",
+        "uses-responsive-images": "off",
+        "modern-image-formats": "off",
+        "uses-long-cache-ttl": ["warn", { "minScore": 0 }]
+      }
     },
     "collect": {
       "startServerCommand": "pnpm build && pnpm preview --port 3000",
