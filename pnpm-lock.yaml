@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^3.1.1
     version: 3.1.1(svelte@4.2.18)(vite@5.3.1)
   '@testing-library/svelte':
-    specifier: ^4.2.3
-    version: 4.2.3(svelte@4.2.18)
+    specifier: ^5.1.0
+    version: 5.1.0(svelte@4.2.18)(vite@5.3.1)(vitest@1.6.0)
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.13.1
     version: 7.13.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.5.2)
@@ -1638,14 +1638,23 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/svelte@4.2.3(svelte@4.2.18):
-    resolution: {integrity: sha512-8vM2+JSPc6wZWkO9ICPmHvzacjy8jBw+iVjmNs+0VsPV3AO3v4P8qCLWTaQ9nYW/e+IR1BCy3MM3Uqg21dlBkw==}
+  /@testing-library/svelte@5.1.0(svelte@4.2.18)(vite@5.3.1)(vitest@1.6.0):
+    resolution: {integrity: sha512-8GW+rBR72U7Qql0Glxl4CtVTr6GPotYf/MB7MamIH6ZpV45i7IJIOm3oHWH4Wr6ZULdUs37F9recegQygLbC0g==}
     engines: {node: '>= 10'}
     peerDependencies:
       svelte: ^3 || ^4 || ^5
+      vite: '*'
+      vitest: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+      vitest:
+        optional: true
     dependencies:
       '@testing-library/dom': 9.3.4
       svelte: 4.2.18
+      vite: 5.3.1(sass@1.77.6)
+      vitest: 1.6.0(jsdom@24.1.0)(sass@1.77.6)
     dev: true
 
   /@tootallnate/quickjs-emscripten@0.23.0:
