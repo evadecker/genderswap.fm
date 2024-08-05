@@ -1,99 +1,104 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import CoverCard from '$lib/components/CoverCard.svelte';
-  import { goto } from '$app/navigation';
-  import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants.js';
-  import type { Enums } from '$lib/types/types.js';
-  import ArrowRightIcon from '~icons/ri/arrow-right-line';
-  import ArrowLeftIcon from '~icons/ri/arrow-left-line';
-  import SearchIcon from '~icons/ri/search-line';
-  import CloseCircleIcon from '~icons/ri/close-circle-fill';
-  import { scale } from 'svelte/transition';
-  import type { FocusEventHandler, FormEventHandler, KeyboardEventHandler } from 'svelte/elements';
+import { goto } from "$app/navigation";
+import { page } from "$app/stores";
+import CoverCard from "$lib/components/CoverCard.svelte";
+import { ORDERED_TAG_GROUPS, TAGS } from "$lib/constants.js";
+import type { Enums } from "$lib/types/types.js";
+import type {
+  FocusEventHandler,
+  FormEventHandler,
+  KeyboardEventHandler,
+} from "svelte/elements";
+import { scale } from "svelte/transition";
+import ArrowLeftIcon from "~icons/ri/arrow-left-line";
+import ArrowRightIcon from "~icons/ri/arrow-right-line";
+import CloseCircleIcon from "~icons/ri/close-circle-fill";
+import SearchIcon from "~icons/ri/search-line";
 
-  export let data;
+// biome-ignore lint/suspicious/noImplicitAnyLet: TODO: Fix Supabase typings
+export let data;
 
-  let isFocused = false;
-  let currentQuery = '';
+let isFocused = false;
+let currentQuery = "";
 
-  $: if (!isFocused) {
-    currentQuery = $page.url.searchParams.get('q') || '';
+$: if (!isFocused) {
+  currentQuery = $page.url.searchParams.get("q") || "";
+}
+$: currentPage = Number($page.url.searchParams.get("page")) || 1;
+$: currentTag = $page.url.searchParams.get("tag") as Enums<"tags"> | null;
+
+let debounceTimer: ReturnType<typeof setTimeout>;
+const debounce = (callback: () => void) => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(callback, 250);
+};
+
+const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
+  currentQuery = e.currentTarget.value;
+  const newURL = new URL($page.url);
+  newURL.searchParams.delete("page");
+
+  if (currentQuery) {
+    newURL.searchParams.set("q", currentQuery);
+  } else {
+    newURL.searchParams.delete("q");
   }
-  $: currentPage = Number($page.url.searchParams.get('page')) || 1;
-  $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
 
-  let debounceTimer: ReturnType<typeof setTimeout>;
-  const debounce = (callback: () => void) => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(callback, 250);
-  };
+  debounce(() => goto(newURL, { keepFocus: true, replaceState: true }));
+};
 
-  const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
-    currentQuery = e.currentTarget.value;
+const handleClearSearch = () => {
+  const newURL = new URL($page.url);
+  newURL.searchParams.delete("tag");
+  newURL.searchParams.delete("q");
+  goto(newURL, { keepFocus: true, replaceState: true });
+};
+
+const handleKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+  if (e.key === "Backspace" && currentQuery === "") {
+    handleClearSearch();
+  }
+};
+
+const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
+  isFocused = true;
+};
+
+const handleBlur: FocusEventHandler<HTMLInputElement> = () => {
+  isFocused = false;
+};
+
+const handleTagClick = (tag: Enums<"tags"> | null) => {
+  const newURL = new URL($page.url);
+  newURL.searchParams.delete("page");
+
+  if (currentTag === tag || tag === null) {
+    newURL.searchParams.delete("tag");
+  } else {
+    newURL.searchParams.set("tag", tag);
+  }
+
+  goto(newURL);
+};
+
+const handleBack = () => {
+  if (currentPage > 1) {
     const newURL = new URL($page.url);
-    newURL.searchParams.delete('page');
+    const newPage = currentPage - 1;
 
-    if (currentQuery) {
-      newURL.searchParams.set('q', currentQuery);
-    } else {
-      newURL.searchParams.delete('q');
-    }
-
-    debounce(() => goto(newURL, { keepFocus: true, replaceState: true }));
-  };
-
-  const handleClearSearch = () => {
-    const newURL = new URL($page.url);
-    newURL.searchParams.delete('tag');
-    newURL.searchParams.delete('q');
-    goto(newURL, { keepFocus: true, replaceState: true });
-  };
-
-  const handleKeydown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === 'Backspace' && currentQuery === '') {
-      handleClearSearch();
-    }
-  };
-
-  const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
-    isFocused = true;
-  };
-
-  const handleBlur: FocusEventHandler<HTMLInputElement> = () => {
-    isFocused = false;
-  };
-
-  const handleTagClick = (tag: Enums<'tags'> | null) => {
-    const newURL = new URL($page.url);
-    newURL.searchParams.delete('page');
-
-    if (currentTag === tag || tag === null) {
-      newURL.searchParams.delete('tag');
-    } else {
-      newURL.searchParams.set('tag', tag);
-    }
+    newPage === 1
+      ? newURL.searchParams.delete("page")
+      : newURL.searchParams.set("page", newPage.toString());
 
     goto(newURL);
-  };
+  }
+};
 
-  const handleBack = () => {
-    if (currentPage > 1) {
-      const newURL = new URL($page.url);
-      const newPage = currentPage - 1;
-
-      newPage === 1
-        ? newURL.searchParams.delete('page')
-        : newURL.searchParams.set('page', newPage.toString());
-
-      goto(newURL);
-    }
-  };
-
-  const handleNext = () => {
-    const newURL = new URL($page.url);
-    newURL.searchParams.set('page', (currentPage + 1).toString());
-    goto(newURL);
-  };
+const handleNext = () => {
+  const newURL = new URL($page.url);
+  newURL.searchParams.set("page", (currentPage + 1).toString());
+  goto(newURL);
+};
 </script>
 
 <svelte:head>
@@ -184,7 +189,7 @@
     <div class="pagination">
       {#if data.totalCount}
         <div class="viewingCount">
-          Viewing {data.from + 1}–{Math.min(data.to + 1, data.totalCount)} of{' '}
+          Viewing {data.from + 1}–{Math.min(data.to + 1, data.totalCount)} of{" "}
           {data.totalCount} covers
         </div>
       {/if}
@@ -309,7 +314,7 @@
     line-height: 1;
 
     &:not(.selected):not(:hover) + :not(.selected):not(:hover)::before {
-      content: '';
+      content: "";
       height: 50%;
       width: 1px;
       background: var(--mauve-6);
@@ -343,7 +348,10 @@
 
   .coversGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 4), 1fr));
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(var(--space-3xl) * 4), 1fr)
+    );
     grid-template-rows: max-content;
     align-items: center;
     row-gap: var(--space-l);
@@ -353,10 +361,16 @@
       padding-inline-end: max(var(--space-s), env(safe-area-inset-right));
     }
     @media (max-width: 1100px) {
-      grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 3.5), 1fr));
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(calc(var(--space-3xl) * 3.5), 1fr)
+      );
     }
     @media (max-width: 580px) {
-      grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 3), 1fr));
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(calc(var(--space-3xl) * 3), 1fr)
+      );
     }
   }
 

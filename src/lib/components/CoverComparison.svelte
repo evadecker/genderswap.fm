@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { getArtistLink, slugify, smartquotes } from '$lib/helpers';
-  import type { Cover } from '../../routes/cover/[slug]/+page.server';
-  import SpotifyIcon from '~icons/ri/spotify-fill';
+import { getArtistLink, slugify, smartquotes } from "$lib/helpers";
+import SpotifyIcon from "~icons/ri/spotify-fill";
+import type { Cover } from "../../routes/cover/[slug]/+page.server";
 
-  export let cover: Cover;
+export let cover: Cover;
 
-  const { original: originalSong, cover: coverSong } = cover;
+const { original: originalSong, cover: coverSong } = cover;
 
-  let coveredAs: string;
-  if (slugify(originalSong.name) !== slugify(coverSong.name)) {
-    coveredAs = coverSong.name;
-  }
+let coveredAs: string;
+if (slugify(originalSong.name) !== slugify(coverSong.name)) {
+  coveredAs = coverSong.name;
+}
 </script>
 
 <div class="compare">

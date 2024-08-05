@@ -1,56 +1,59 @@
 <script lang="ts">
-  import { superForm } from 'sveltekit-superforms/client';
-  import { zodClient } from 'sveltekit-superforms/adapters';
-  import Steps from '$lib/components/Steps.svelte';
-  import Step from '$lib/components/Step.svelte';
-  import SongSelect from '$lib/components/SongSelect.svelte';
-  import GenderSelect from '$lib/components/GenderSelect.svelte';
-  import autosize from 'svelte-autosize';
-  import { getMaxCharacterHelpText } from '$lib/helpers';
-  import type { PageData } from './$types';
-  import { MAX_CONTRIBUTOR_CHARS, MAX_DESCRIPTION_CHARS } from '$lib/constants';
-  import ErrorMessage from '$lib/components/ErrorMessage.svelte';
-  import { browser } from '$app/environment';
-  import { page } from '$app/stores';
-  import LoaderIcon from '~icons/ri/loader-4-line';
-  import AlertIcon from '~icons/ri/alert-line';
-  import type { FormEventHandler } from 'svelte/elements';
-  import NewCoverIcon from '$lib/components/NewCoverIcon.svelte';
-  import { newCoverSchema } from '$lib/schemas';
+import { browser } from "$app/environment";
+import { page } from "$app/stores";
+import ErrorMessage from "$lib/components/ErrorMessage.svelte";
+import GenderSelect from "$lib/components/GenderSelect.svelte";
+import NewCoverIcon from "$lib/components/NewCoverIcon.svelte";
+import SongSelect from "$lib/components/SongSelect.svelte";
+import Step from "$lib/components/Step.svelte";
+import Steps from "$lib/components/Steps.svelte";
+import { MAX_CONTRIBUTOR_CHARS, MAX_DESCRIPTION_CHARS } from "$lib/constants";
+import { getMaxCharacterHelpText } from "$lib/helpers";
+import { newCoverSchema } from "$lib/schemas";
+import autosize from "svelte-autosize";
+import type { FormEventHandler } from "svelte/elements";
+import { zodClient } from "sveltekit-superforms/adapters";
+import { superForm } from "sveltekit-superforms/client";
+import AlertIcon from "~icons/ri/alert-line";
+import LoaderIcon from "~icons/ri/loader-4-line";
+import type { PageData } from "./$types";
 
-  export let data: PageData;
+export let data: PageData;
 
-  const { form, errors, enhance, submitting, delayed } = superForm(data.form, {
-    dataType: 'json',
-    validators: zodClient(newCoverSchema),
-    scrollToError: 'smooth'
-  });
+const { form, errors, enhance, submitting, delayed } = superForm(data.form, {
+  dataType: "json",
+  validators: zodClient(newCoverSchema),
+  scrollToError: "smooth",
+});
 
-  $form.contributor = browser ? window.localStorage.getItem('contributor') ?? '' : '';
+$form.contributor = browser
+  ? window.localStorage.getItem("contributor") ?? ""
+  : "";
 
-  const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
-    $form.description = e.currentTarget.value;
-    // Replace any newlines with spaces and trim
-    $form.description = $form.description.replace(/\r?\n|\r/g, ' ').trimStart();
+const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+  $form.description = e.currentTarget.value;
+  // Replace any newlines with spaces and trim
+  $form.description = $form.description.replace(/\r?\n|\r/g, " ").trimStart();
+};
 
-    $form.description = $form.description;
-  };
+const handleContributorInput: FormEventHandler<HTMLInputElement> = (e) => {
+  $form.contributor = e.currentTarget.value;
+  // Trim spaces
+  $form.contributor = $form.contributor.trimStart();
+};
 
-  const handleContributorInput: FormEventHandler<HTMLInputElement> = (e) => {
-    $form.contributor = e.currentTarget.value;
-    // Trim spaces
-    $form.contributor = $form.contributor.trimStart();
-  };
-
-  const handleSubmit = () => {
-    // Save name to local storage for reuse
-    if (browser) window.localStorage.setItem('contributor', $form.contributor);
-  };
+const handleSubmit = () => {
+  // Save name to local storage for reuse
+  if (browser) window.localStorage.setItem("contributor", $form.contributor);
+};
 </script>
 
 <svelte:head>
   <title>Add a cover</title>
-  <meta name="description" content="Upload a fresh gender-swapped cover to the catalogue." />
+  <meta
+    name="description"
+    content="Upload a fresh gender-swapped cover to the catalogue."
+  />
   <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
 </svelte:head>
 
@@ -58,7 +61,11 @@
   <h1 class="header">Add a cover</h1>
   <Steps>
     <Step title="Select the original">
-      <SongSelect name="original" bind:value={$form.original} errors={$errors.original} />
+      <SongSelect
+        name="original"
+        bind:value={$form.original}
+        errors={$errors.original}
+      />
       <GenderSelect
         name="originalGenders"
         bind:value={$form.originalGenders}
@@ -66,7 +73,11 @@
       />
     </Step>
     <Step title="Select the cover">
-      <SongSelect name="cover" bind:value={$form.cover} errors={$errors.cover} />
+      <SongSelect
+        name="cover"
+        bind:value={$form.cover}
+        errors={$errors.cover}
+      />
       <GenderSelect
         name="coverGenders"
         bind:value={$form.coverGenders}
@@ -79,8 +90,9 @@
               <AlertIcon />
             </div>
             <div class="text">
-              <strong class="title">Genderswap.fm is for gender-swapped covers.</strong> Same-gender
-              covers will be hidden by default.
+              <strong class="title"
+                >Genderswap.fm is for gender-swapped covers.</strong
+              > Same-gender covers will be hidden by default.
             </div>
           </div>
         {/if}
@@ -103,9 +115,13 @@
         />
         <div
           class="helpText"
-          class:warning={$form.description && $form.description.length > MAX_DESCRIPTION_CHARS}
+          class:warning={$form.description &&
+            $form.description.length > MAX_DESCRIPTION_CHARS}
         >
-          {getMaxCharacterHelpText($form.description ?? '', MAX_DESCRIPTION_CHARS)}
+          {getMaxCharacterHelpText(
+            $form.description ?? "",
+            MAX_DESCRIPTION_CHARS
+          )}
         </div>
       </label>
       <label>
@@ -130,7 +146,12 @@
     </Step>
   </Steps>
 
-  <button disabled={$submitting} class="submitButton" type="submit" on:click={handleSubmit}>
+  <button
+    disabled={$submitting}
+    class="submitButton"
+    type="submit"
+    on:click={handleSubmit}
+  >
     {#if $delayed}
       <div class="spinner">
         <LoaderIcon />

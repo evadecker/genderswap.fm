@@ -1,91 +1,98 @@
 <script lang="ts">
-  import CoverComparison from '$lib/components/CoverComparison.svelte';
-  import dayjs from 'dayjs';
-  import relativeTime from 'dayjs/plugin/relativeTime';
-  import TagCloud from '$lib/components/TagCloud.svelte';
-  import Tag from '$lib/components/Tag.svelte';
-  import { TAGS } from '$lib/constants';
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { confetti, type ConfettiOptions } from '@tsparticles/confetti';
-  import { getArtistLink, getSortedTags } from '$lib/helpers.js';
-  import Sparkle from '$lib/components/Sparkle.svelte';
+import { page } from "$app/stores";
+import CoverComparison from "$lib/components/CoverComparison.svelte";
+import Sparkle from "$lib/components/Sparkle.svelte";
+import Tag from "$lib/components/Tag.svelte";
+import TagCloud from "$lib/components/TagCloud.svelte";
+import { TAGS } from "$lib/constants";
+import { getArtistLink, getSortedTags } from "$lib/helpers.js";
+import { type ConfettiOptions, confetti } from "@tsparticles/confetti";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { onMount } from "svelte";
 
-  export let data;
+// biome-ignore lint/suspicious/noImplicitAnyLet: TODO: Fix Supabase typings
+export let data;
 
-  const isNew = $page.url.searchParams.get('new') === 'true' ? true : false;
+const isNew = $page.url.searchParams.get("new") === "true";
 
-  dayjs.extend(relativeTime);
-  const formattedDate = dayjs(data.created_at).fromNow();
+dayjs.extend(relativeTime);
+const formattedDate = dayjs(data.created_at).fromNow();
 
-  onMount(async () => {
-    const fireConfetti = (placement: 'left' | 'right' | 'bottom') => {
-      const center = 90;
+onMount(async () => {
+  const fireConfetti = (placement: "left" | "right" | "bottom") => {
+    const center = 90;
 
-      const minWidth = 400;
-      const maxWidth = 1600;
+    const minWidth = 400;
+    const maxWidth = 1600;
 
-      const interpolate = (minValue: number, maxValue: number) =>
-        ((window.innerWidth - minWidth) / (maxWidth - minWidth)) * (maxValue - minValue) + minValue;
+    const interpolate = (minValue: number, maxValue: number) =>
+      ((window.innerWidth - minWidth) / (maxWidth - minWidth)) *
+        (maxValue - minValue) +
+      minValue;
 
-      const scalar = interpolate(1.4, 1.8);
-      const velocity = interpolate(85, 120);
-      const angle = interpolate(20, 45);
-      const count = interpolate(40, 80);
-      const spread = interpolate(8, 20);
+    const scalar = interpolate(1.4, 1.8);
+    const velocity = interpolate(85, 120);
+    const angle = interpolate(20, 45);
+    const count = interpolate(40, 80);
+    const spread = interpolate(8, 20);
 
-      const sharedProps: Partial<ConfettiOptions> = {
-        scalar: scalar,
-        colors: ['#ff69b4'],
-        shapes: ['square'],
-        gravity: 2,
-        ticks: 30,
-        disableForReducedMotion: true
-      };
-
-      const directionalProps: Record<'left' | 'right' | 'bottom', Partial<ConfettiOptions>> = {
-        left: {
-          count,
-          startVelocity: velocity - 10,
-          angle: center - angle,
-          origin: { x: 0, y: 1 },
-          spread
-        },
-        right: {
-          count,
-          startVelocity: velocity - 10,
-          angle: center + angle,
-          origin: { x: 1, y: 1 },
-          spread
-        },
-        bottom: {
-          count: count * 2,
-          startVelocity: velocity,
-          angle: center,
-          origin: { x: 0.5, y: 1 },
-          spread: spread * 2.5
-        }
-      };
-
-      confetti({
-        ...sharedProps,
-        ...directionalProps[placement]
-      });
+    const sharedProps: Partial<ConfettiOptions> = {
+      scalar: scalar,
+      colors: ["#ff69b4"],
+      shapes: ["square"],
+      gravity: 2,
+      ticks: 30,
+      disableForReducedMotion: true,
     };
 
-    if (isNew) {
-      setTimeout(() => fireConfetti('left'), 1000);
-      setTimeout(() => fireConfetti('right'), 1600);
-      setTimeout(() => fireConfetti('bottom'), 3000);
-    }
-  });
+    const directionalProps: Record<
+      "left" | "right" | "bottom",
+      Partial<ConfettiOptions>
+    > = {
+      left: {
+        count,
+        startVelocity: velocity - 10,
+        angle: center - angle,
+        origin: { x: 0, y: 1 },
+        spread,
+      },
+      right: {
+        count,
+        startVelocity: velocity - 10,
+        angle: center + angle,
+        origin: { x: 1, y: 1 },
+        spread,
+      },
+      bottom: {
+        count: count * 2,
+        startVelocity: velocity,
+        angle: center,
+        origin: { x: 0.5, y: 1 },
+        spread: spread * 2.5,
+      },
+    };
+
+    confetti({
+      ...sharedProps,
+      ...directionalProps[placement],
+    });
+  };
+
+  if (isNew) {
+    setTimeout(() => fireConfetti("left"), 1000);
+    setTimeout(() => fireConfetti("right"), 1600);
+    setTimeout(() => fireConfetti("bottom"), 3000);
+  }
+});
 </script>
 
 <svelte:head>
   <title>{data.title}</title>
   <meta
     name="description"
-    content={data.description ?? 'Some covers deliver the age-old simple pleasures of drag.'}
+    content={data.description ??
+      "Some covers deliver the age-old simple pleasures of drag."}
   />
   <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
   <meta property="og:image" content={`${$page.url.pathname}/og.png`} />
@@ -97,9 +104,13 @@
     {data.pageTitle}{#if isNew}<Sparkle />{/if}
   </h1>
   <div class="subtitle">
-    <a class="artist" href={getArtistLink(data.cover.artists[0])}>{data.cover.artists[0]}</a>
-    covering{' '}
-    <a class="artist" href={getArtistLink(data.original.artists[0])}>{data.original.artists[0]}</a>
+    <a class="artist" href={getArtistLink(data.cover.artists[0])}
+      >{data.cover.artists[0]}</a
+    >
+    covering{" "}
+    <a class="artist" href={getArtistLink(data.original.artists[0])}
+      >{data.original.artists[0]}</a
+    >
   </div>
   {#if data.tags}
     <TagCloud>
@@ -115,7 +126,7 @@
     <p class="description">{data.description}</p>
   {/if}
   <span
-    >Added {data.contributor ? `by ${data.contributor}` : 'anonymously'}
+    >Added {data.contributor ? `by ${data.contributor}` : "anonymously"}
     <time datetime={data.created_at}>{formattedDate}</time></span
   >
 </footer>
@@ -152,7 +163,7 @@
   .artist {
     color: var(--mauve-12);
 
-    @media (hover: hover) {   
+    @media (hover: hover) {
       &:hover {
         text-decoration: underline;
         text-decoration-color: var(--mauve-9);

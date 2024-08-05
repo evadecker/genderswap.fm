@@ -1,8 +1,8 @@
 <script lang="ts">
-  import ErrorIcon from '~icons/ri/error-warning-line';
+import ErrorIcon from "~icons/ri/error-warning-line";
 
-  export let error: string;
-  export let banner: boolean = false;
+export let error: string;
+export const banner: boolean = false;
 </script>
 
 <div class="error" class:banner>

@@ -1,14 +1,14 @@
 <script>
-  import { page } from '$app/stores';
-  import dayjs from 'dayjs';
+import { page } from "$app/stores";
+import dayjs from "dayjs";
 
-  export let title;
-  export let description;
-  export let datePublished;
-  export let dateModified;
+export let title;
+export let description;
+export let datePublished;
+export let dateModified;
 
-  const formattedPublishDate = dayjs(datePublished).format('MMMM D, YYYY');
-  const formattedModifiedDate = dayjs(dateModified).format('MMMM D, YYYY');
+const formattedPublishDate = dayjs(datePublished).format("MMMM D, YYYY");
+const formattedModifiedDate = dayjs(dateModified).format("MMMM D, YYYY");
 </script>
 
 <svelte:head>

@@ -1,8 +1,8 @@
 <script lang="ts">
-  export let text: string;
-  export let count: number | null = 0;
-  export let url: string;
-  export let isActive: boolean = false;
+export let text: string;
+export const count: number | null = 0;
+export let url: string;
+export const isActive = false;
 </script>
 
 {#if url}

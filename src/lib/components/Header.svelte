@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Logo from './Logo.svelte';
-  import NewCoverIcon from './NewCoverIcon.svelte';
+import Logo from "./Logo.svelte";
+import NewCoverIcon from "./NewCoverIcon.svelte";
 </script>
 
 <header>

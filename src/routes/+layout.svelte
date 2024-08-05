@@ -1,11 +1,11 @@
 <script lang="ts">
-  import '$lib/styles/reset.css';
-  import '$lib/styles/theme.css';
-  import '$lib/styles/base.css';
+import "$lib/styles/reset.css";
+import "$lib/styles/theme.css";
+import "$lib/styles/base.css";
 
-  import { dev } from '$app/environment';
-  import Header from '$lib/components/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
+import { dev } from "$app/environment";
+import Footer from "$lib/components/Footer.svelte";
+import Header from "$lib/components/Header.svelte";
 </script>
 
 <Header />

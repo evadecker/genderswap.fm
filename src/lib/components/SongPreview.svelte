@@ -1,43 +1,43 @@
 <script lang="ts">
-  import {
-    getReadableTitle,
-    getYearsEarlierText,
-    removeSongExtraText,
-    smartquotes
-  } from '$lib/helpers';
-  import type { Track } from '@spotify/web-api-ts-sdk';
-  import { slide } from 'svelte/transition';
-  import CloseCircleIcon from '~icons/ri/close-circle-line';
-  import HistoryIcon from '~icons/ri/history-line';
-  import CheckIcon from '~icons/ri/check-line';
-  import AlertIcon from '~icons/ri/alert-line';
-  import type { MouseEventHandler } from 'svelte/elements';
-  import type { ExistingCover } from '../../routes/api/getCover/+server';
-  import dayjs from 'dayjs';
-  import relativeTime from 'dayjs/plugin/relativeTime';
-  import AudioPreview from './AudioPreview.svelte';
+import {
+  getReadableTitle,
+  getYearsEarlierText,
+  removeSongExtraText,
+  smartquotes,
+} from "$lib/helpers";
+import type { Track } from "@spotify/web-api-ts-sdk";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import type { MouseEventHandler } from "svelte/elements";
+import { slide } from "svelte/transition";
+import AlertIcon from "~icons/ri/alert-line";
+import CheckIcon from "~icons/ri/check-line";
+import CloseCircleIcon from "~icons/ri/close-circle-line";
+import HistoryIcon from "~icons/ri/history-line";
+import type { ExistingCover } from "../../routes/api/getCover/+server";
+import AudioPreview from "./AudioPreview.svelte";
 
-  export let song: Track;
-  export let existingCover: ExistingCover | null;
-  export let earlierRelease: Track | null;
-  export let onUseEarlierRelease: () => void;
-  export let onClearSelection: () => void;
+export let song: Track;
+export let existingCover: ExistingCover | null;
+export let earlierRelease: Track | null;
+export let onUseEarlierRelease: () => void;
+export let onClearSelection: () => void;
 
-  dayjs.extend(relativeTime);
+dayjs.extend(relativeTime);
 
-  let wasKeepThisReleaseClicked = false;
-  let wasEarlierReleaseClicked = false;
+let wasKeepThisReleaseClicked = false;
+let wasEarlierReleaseClicked = false;
 
-  const handleKeepThisRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    wasKeepThisReleaseClicked = true;
-  };
+const handleKeepThisRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
+  e.preventDefault();
+  wasKeepThisReleaseClicked = true;
+};
 
-  const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    onUseEarlierRelease();
-    wasEarlierReleaseClicked = true;
-  };
+const handleUseEarlierRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
+  e.preventDefault();
+  onUseEarlierRelease();
+  wasEarlierReleaseClicked = true;
+};
 </script>
 
 <div class="selectedSong">

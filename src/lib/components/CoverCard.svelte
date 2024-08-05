@@ -1,30 +1,33 @@
 <script lang="ts">
-  import { smartquotes } from '$lib/helpers';
-  import ArrowLeftRightLine from '~icons/ri/arrow-left-right-line';
+import { smartquotes } from "$lib/helpers";
 
-  type Album = {
-    name: string;
-    artists: string[];
-    album_img: string[];
-  };
+type Album = {
+  name: string;
+  artists: string[];
+  album_img: string[];
+};
 
-  export let original: Album | null = null;
-  export let cover: Album | null = null;
-  export let slug: string | null = null;
-  export let lazy: boolean = false;
+export const original: Album | null = null;
+export const cover: Album | null = null;
+export const slug: string | null = null;
+export const lazy: boolean = false;
 
-  let isSkeleton = false;
-  if (!original && !cover && !slug) isSkeleton = true;
+let isSkeleton = false;
+if (!original && !cover && !slug) isSkeleton = true;
 </script>
 
-<div class="coverCard" class:placeholder={isSkeleton} aria-hidden={isSkeleton || undefined}>
+<div
+  class="coverCard"
+  class:placeholder={isSkeleton}
+  aria-hidden={isSkeleton || undefined}
+>
   <div class="albums">
     <div class="album">
       {#if original?.album_img}
         <img
           src={original.album_img[1]}
           alt={`${original.name} album art`}
-          loading={lazy ? 'lazy' : 'eager'}
+          loading={lazy ? "lazy" : "eager"}
         />
       {/if}
     </div>
@@ -33,7 +36,7 @@
         <img
           src={cover.album_img[1]}
           alt={`${cover.name} album art`}
-          loading={lazy ? 'lazy' : 'eager'}
+          loading={lazy ? "lazy" : "eager"}
         />
       {/if}
     </div>
@@ -49,11 +52,18 @@
         <span class="name">{cover.artists.join(", ")}</span>
       {/if}
       {#if original}
-        <span class="covering">covering <span class="name">{original.artists.join(", ")}</span></span>
+        <span class="covering"
+          >covering <span class="name">{original.artists.join(", ")}</span
+          ></span
+        >
       {/if}
     </div>
     {#if !isSkeleton}
-      <a class="link" href={`/cover/${slug}`} aria-label={`More about ${original?.name}`} />
+      <a
+        class="link"
+        href={`/cover/${slug}`}
+        aria-label={`More about ${original?.name}`}
+      />
     {/if}
   </div>
 </div>
@@ -96,7 +106,7 @@
       box-shadow: var(--shadow-album-s);
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         border-radius: var(--radius-album);

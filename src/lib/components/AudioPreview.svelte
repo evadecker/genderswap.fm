@@ -1,37 +1,37 @@
 <script lang="ts">
-  import type { MouseEventHandler } from 'svelte/elements';
+import type { MouseEventHandler } from "svelte/elements";
 
-  export let src: string;
-  export let title: string;
+export let src: string;
+export let title: string;
 
-  let state = 'paused';
-  let audio: HTMLAudioElement;
-  let time = 0;
-  let duration: number;
+let state = "paused";
+let audio: HTMLAudioElement;
+const time = 0;
+let duration: number;
 
-  const play = () => {
-    audio.play();
-    state = 'playing';
-  };
+const play = () => {
+  audio.play();
+  state = "playing";
+};
 
-  const pauseAndReset = () => {
-    audio.pause();
-    audio.currentTime = 0;
-    state = 'paused';
-  };
+const pauseAndReset = () => {
+  audio.pause();
+  audio.currentTime = 0;
+  state = "paused";
+};
 
-  const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
+const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  e.preventDefault();
 
-    if (state === 'paused') {
-      play();
-    } else {
-      pauseAndReset();
-    }
-  };
+  if (state === "paused") {
+    play();
+  } else {
+    pauseAndReset();
+  }
+};
 
-  $: percent = (time / duration) * 100;
-  $: if (percent > 99.5) pauseAndReset();
+$: percent = (time / duration) * 100;
+$: if (percent > 99.5) pauseAndReset();
 </script>
 
 <div
