@@ -1,6 +1,6 @@
 import { preprocessMeltUI } from '@melt-ui/pp';
 import sequence from 'svelte-sequential-preprocessor';
-import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-netlify';
 import { mdsvex } from 'mdsvex';
 import preprocess from 'svelte-preprocess';
 
