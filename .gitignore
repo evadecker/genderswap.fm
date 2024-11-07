@@ -4,6 +4,7 @@ node_modules
 /test-results
 /.svelte-kit
 /.vercel
+/.netlify
 /.lighthouseci
 /package
 .env
