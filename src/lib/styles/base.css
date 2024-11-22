@@ -6,6 +6,7 @@ html {
 body.dark {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
 }
 
 body {
@@ -22,6 +23,7 @@ body {
   text-rendering: optimizelegibility;
   font-synthesis: none;
   font-feature-settings: var(--font-stable);
+  color-scheme: light;
 }
 
 ::selection {
