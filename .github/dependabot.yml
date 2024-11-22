@@ -1,18 +1,18 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     groups:
       actions-deps:
         patterns:
-          - "*"
+          - '*'
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     groups:
       patch-minor:
-        update-types: ["patch", "minor"]
+        update-types: ['patch', 'minor']

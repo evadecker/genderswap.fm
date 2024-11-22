@@ -94,16 +94,17 @@
     max-width: 100%;
     margin-inline: auto;
     padding-inline: var(--space-xl);
-    @supports (padding: max(0px)) {
-      padding-inline-start: max(var(--space-xl), env(safe-area-inset-left));
-      padding-inline-end: max(var(--space-xl), env(safe-area-inset-right));
-    }
     scroll-padding-inline: var(--space-xl);
     gap: var(--space-l);
     grid-template:
       'originalAlbum coverAlbum'
       'originalContent coverContent';
     grid-template-columns: 1fr 1fr;
+
+    @supports (padding: max(0px)) {
+      padding-inline-start: max(var(--space-xl), env(safe-area-inset-left));
+      padding-inline-end: max(var(--space-xl), env(safe-area-inset-right));
+    }
 
     @media (max-width: 480px) {
       overflow-x: scroll;
@@ -125,6 +126,7 @@
 
   .track:first-child {
     scroll-snap-align: start;
+
     @supports (animation-timeline: scroll()) {
       animation: dim linear both;
       animation-direction: normal;
@@ -134,6 +136,7 @@
 
   .track:last-child {
     scroll-snap-align: end;
+
     @supports (animation-timeline: scroll()) {
       animation: dim linear both;
       animation-direction: reverse;
