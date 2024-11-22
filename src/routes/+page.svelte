@@ -269,19 +269,16 @@
     display: flex;
     align-items: flex-start;
     gap: var(--space-2xs);
-    overflow-x: scroll;
+    overflow-x: auto;
     margin-inline: calc(var(--space-m) * -1);
     padding-inline: var(--space-m);
+    padding-block-end: var(--space-m);
+    margin-block-end: calc(var(--space-m) * -1);
+    scrollbar-width: thin;
     @supports (padding: max(0px)) {
       padding-inline: max(var(--space-m), env(safe-area-inset-right));
       margin-inline: calc(max(var(--space-m), env(safe-area-inset-right)) * -1);
     }
-    // Hide scrollbars on Chrome, Safari
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none; // Edge
-    scrollbar-width: none; // Firefox
   }
 
   .tag-group {
