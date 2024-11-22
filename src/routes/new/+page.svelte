@@ -97,8 +97,6 @@
           use:autosize
           name="description"
           class="input"
-          minRows={2}
-          maxRows={4}
           placeholder="What’s different about this cover?"
         />
         <div
