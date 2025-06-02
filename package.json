@@ -24,10 +24,10 @@
     "@lhci/cli": "^0.14.0",
     "@radix-ui/colors": "^3.0.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
-    "@supabase/supabase-js": "^2.49.4",
+    "@supabase/supabase-js": "^2.49.9",
     "@tsparticles/confetti": "^3.8.1",
     "dayjs": "^1.11.13",
-    "satori": "^0.12.2",
+    "satori": "^0.13.2",
     "sharp": "^0.34.1",
     "svelte-autosize": "^1.1.5",
     "svelte-preprocess": "^6.0.3"
