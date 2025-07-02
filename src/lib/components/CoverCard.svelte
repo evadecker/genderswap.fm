@@ -55,7 +55,7 @@
       {/if}
     </div>
     {#if !isSkeleton}
-      <a class="link" href={`/cover/${slug}`} aria-label={`More about ${original?.name}`} />
+      <a class="link" href={`/cover/${slug}`} aria-label={`More about ${original?.name}`} ></a>
     {/if}
   </div>
 </div>

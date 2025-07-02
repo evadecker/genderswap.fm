@@ -2,26 +2,25 @@ import { preprocessMeltUI } from '@melt-ui/pp';
 import sequence from 'svelte-sequential-preprocessor';
 import adapter from '@sveltejs/adapter-netlify';
 import { mdsvex } from 'mdsvex';
-import preprocess from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config}*/
 const config = {
   extensions: ['.svelte', '.md'],
   preprocess: sequence([
-    preprocess({
+    sveltePreprocess({
       typescript: true,
       scss: true
     }),
-    // @ts-ignore - no idea why this is failing, compiles fine
     mdsvex({
       extensions: ['.md'],
-      layout: 'src/lib/components/ProseLayout.svelte'
+      layout: import.meta.dirname + '/src/lib/components/ProseLayout.svelte'
     }),
     preprocessMeltUI()
   ]),
   kit: {
     adapter: adapter({
-      runtime: 'nodejs20.x'
+      runtime: 'nodejs22.x'
     })
   }
 };

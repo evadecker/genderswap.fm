@@ -98,7 +98,7 @@
           name="description"
           class="input"
           placeholder="What’s different about this cover?"
-        />
+        ></textarea>
         <div
           class="helpText"
           class:warning={$form.description && $form.description.length > MAX_DESCRIPTION_CHARS}
