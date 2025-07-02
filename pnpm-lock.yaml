@@ -55,7 +55,7 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@sveltejs/kit@2.22.2(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.34.9)(vite@6.3.5(@types/node@24.0.10)(sass@1.89.2)))(svelte@5.34.9)(vite@6.3.5(@types/node@24.0.10)(sass@1.89.2)))
       '@sveltejs/kit':
-        specifier: ^2.21.5
+        specifier: ^2.22.2
         version: 2.22.2(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.34.9)(vite@6.3.5(@types/node@24.0.10)(sass@1.89.2)))(svelte@5.34.9)(vite@6.3.5(@types/node@24.0.10)(sass@1.89.2))
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.4

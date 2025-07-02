@@ -1,14 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import Icons from 'unplugin-icons/vite';
 
-export default defineConfig({
-  plugins: [
-    sveltekit(),
-    Icons({
-      compiler: 'svelte'
-    })
-  ],
+export default defineConfig(({ mode }) => ({
   test: {
     globals: true,
     environment: 'jsdom',
@@ -24,5 +18,14 @@ export default defineConfig({
       ],
       reporter: ['text', 'json-summary', 'json']
     }
-  }
-});
+  },
+  resolve: {
+    conditions: mode === 'test' ? ['browser'] : []
+  },
+  plugins: [
+    sveltekit(),
+    Icons({
+      compiler: 'svelte'
+    })
+  ]
+}));
