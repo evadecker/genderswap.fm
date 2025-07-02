@@ -21,7 +21,7 @@
       class:active={$theme === 'light'}
       data-theme-toggle-light
       aria-label="Enable light theme"
-      on:click={() => theme.set('light')}
+      onclick={() => theme.set('light')}
     >
       <SunIcon style="width: 20px" />
     </button>
@@ -30,7 +30,7 @@
       class:active={$theme === 'dark'}
       data-theme-toggle-dark
       aria-label="Enable dark theme"
-      on:click={() => theme.set('dark')}
+      onclick={() => theme.set('dark')}
     >
       <MoonIcon style="width: 20px" />
     </button>

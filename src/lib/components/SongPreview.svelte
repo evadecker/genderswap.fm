@@ -56,7 +56,7 @@
     {#if song.preview_url}
       <AudioPreview src={song.preview_url} title={smartquotes(removeSongExtraText(song.name))} />
     {/if}
-    <button class="clearSelection" on:click={onClearSelection} aria-label="Remove selection">
+    <button class="clearSelection" onclick={onClearSelection} aria-label="Remove selection">
       <CloseCircleIcon />
     </button>
   </div>
@@ -107,8 +107,8 @@
           </div>
         </div>
         <div class="bannerActions">
-          <button on:click={handleKeepThisRelease} class="secondary">Keep this release</button>
-          <button on:click={handleUseEarlierRelease} class="primary">Use earlier release</button>
+          <button onclick={handleKeepThisRelease} class="secondary">Keep this release</button>
+          <button onclick={handleUseEarlierRelease} class="primary">Use earlier release</button>
         </div>
       {/if}
     </div>

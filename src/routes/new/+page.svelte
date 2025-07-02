@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { superForm } from 'sveltekit-superforms/client';
-  import { zodClient } from 'sveltekit-superforms/adapters';
+  import { superForm } from 'sveltekit-superforms';
   import Steps from '$lib/components/Steps.svelte';
   import Step from '$lib/components/Step.svelte';
   import SongSelect from '$lib/components/SongSelect.svelte';
   import GenderSelect from '$lib/components/GenderSelect.svelte';
   import autosize from 'svelte-autosize';
   import { getMaxCharacterHelpText } from '$lib/helpers';
-  import type { PageData } from './$types';
   import { MAX_CONTRIBUTOR_CHARS, MAX_DESCRIPTION_CHARS } from '$lib/constants';
   import ErrorMessage from '$lib/components/ErrorMessage.svelte';
   import { browser } from '$app/environment';
@@ -16,17 +14,15 @@
   import AlertIcon from '~icons/ri/alert-line';
   import type { FormEventHandler } from 'svelte/elements';
   import NewCoverIcon from '$lib/components/NewCoverIcon.svelte';
-  import { newCoverSchema } from '$lib/schemas';
 
-  export let data: PageData;
+  let { data } = $props();
 
   const { form, errors, enhance, submitting, delayed } = superForm(data.form, {
     dataType: 'json',
-    validators: zodClient(newCoverSchema),
     scrollToError: 'smooth'
   });
 
-  $form.contributor = browser ? window.localStorage.getItem('contributor') ?? '' : '';
+  $form.contributor = browser ? (window.localStorage.getItem('contributor') ?? '') : '';
 
   const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     $form.description = e.currentTarget.value;
@@ -92,12 +88,12 @@
           Description <span class="optional">optional</span>
         </div>
         <textarea
-          on:input={handleDescriptionInput}
+          oninput={handleDescriptionInput}
           bind:value={$form.description}
           use:autosize
           name="description"
           class="input"
-          placeholder="What’s different about this cover?"
+          placeholder="What's different about this cover?"
         ></textarea>
         <div
           class="helpText"
@@ -111,7 +107,7 @@
           Your first name <span class="optional">optional</span>
         </div>
         <input
-          on:input={handleContributorInput}
+          oninput={handleContributorInput}
           bind:value={$form.contributor}
           name="contributor"
           type="text"
@@ -128,7 +124,7 @@
     </Step>
   </Steps>
 
-  <button disabled={$submitting} class="submitButton" type="submit" on:click={handleSubmit}>
+  <button disabled={$submitting} class="submitButton" type="submit" onclick={handleSubmit}>
     {#if $delayed}
       <div class="spinner">
         <LoaderIcon />

@@ -113,7 +113,7 @@
       <SearchIcon />
     </div>
     {#if currentTag}
-      <button class="tag active" on:click={() => handleTagClick(null)}
+      <button class="tag active" onclick={() => handleTagClick(null)}
         >{TAGS[currentTag].label}
         <span class="clear">
           <CloseCircleIcon />
@@ -126,15 +126,15 @@
       type="search"
       placeholder="Search covers…"
       value={currentQuery}
-      on:input={handleSearch}
-      on:keydown={handleKeydown}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
+      oninput={handleSearch}
+      onkeydown={handleKeydown}
+      onfocus={handleFocus}
+      onblur={handleBlur}
     />
     {#if currentQuery.length > 0}
       <button
         class="searchClear"
-        on:click={handleClearSearch}
+        onclick={handleClearSearch}
         transition:scale={{ duration: 200, start: 0.5 }}
       >
         <CloseCircleIcon />
@@ -148,7 +148,7 @@
           <button
             class="tag"
             class:selected={currentTag === tag}
-            on:click={() => handleTagClick(tag)}
+            onclick={() => handleTagClick(tag)}
             title={TAGS[tag].description}
           >
             {TAGS[tag].shortLabel ?? TAGS[tag].label}
@@ -190,10 +190,10 @@
       {/if}
       {#if !(data.isFirst && data.isLast)}
         <div class="buttons">
-          <button type="button" disabled={data.isFirst} on:click={handleBack}
+          <button type="button" disabled={data.isFirst} onclick={handleBack}
             ><ArrowLeftIcon />Back</button
           >
-          <button type="button" disabled={data.isLast} on:click={handleNext}
+          <button type="button" disabled={data.isLast} onclick={handleNext}
             >Next<ArrowRightIcon /></button
           >
         </div>
