@@ -50,7 +50,7 @@
   <button
     class="playPauseButton"
     class:playing={state === 'playing'}
-    on:click={handleButtonClick}
+    onclick={handleButtonClick}
     aria-label={state === 'paused' ? 'Play' : 'Pause'}
   >
     {#if state === 'paused'}
