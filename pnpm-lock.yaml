@@ -121,7 +121,7 @@ importers:
         specifier: ^22.1.0
         version: 22.1.0(svelte@5.34.9)
       vite:
-        specifier: ^5.4.11
+        specifier: ^5.4.19
         version: 5.4.19(@types/node@24.0.10)(sass@1.89.2)
       vitest:
         specifier: ^3.2.4
