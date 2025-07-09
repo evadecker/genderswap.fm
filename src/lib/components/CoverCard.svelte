@@ -53,11 +53,11 @@
     </h2>
     <div class="artist">
       {#if cover}
-        <span class="name">{formatArtists(cover.artists, 3)}</span>
+        <span class="name">{formatArtists(cover.artists)}</span>
       {/if}
       {#if original}
         <span class="covering"
-          >covering <span class="name">{formatArtists(original.artists, 3)}</span></span
+          >covering <span class="name">{formatArtists(original.artists)}</span></span
         >
       {/if}
     </div>
