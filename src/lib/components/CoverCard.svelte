@@ -15,6 +15,13 @@
   }: { original?: Album; cover?: Album; slug?: string; lazy?: boolean } = $props();
 
   const isSkeleton = $derived(!original && !cover && !slug);
+
+  function formatArtists(artists: string[]) {
+    const maxArtists = 2;
+    return artists.length > maxArtists
+      ? artists.slice(0, maxArtists).join(', ') + ` +${artists.length - maxArtists}`
+      : artists.join(', ');
+  }
 </script>
 
 <div class="coverCard" class:placeholder={isSkeleton} aria-hidden={isSkeleton || undefined}>
@@ -46,11 +53,11 @@
     </h2>
     <div class="artist">
       {#if cover}
-        <span class="name">{cover.artists.join(', ')}</span>
+        <span class="name">{formatArtists(cover.artists)}</span>
       {/if}
       {#if original}
         <span class="covering"
-          >covering <span class="name">{original.artists.join(', ')}</span></span
+          >covering <span class="name">{formatArtists(original.artists)}</span></span
         >
       {/if}
     </div>
