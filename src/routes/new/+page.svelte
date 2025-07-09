@@ -24,6 +24,8 @@
 
   $form.contributor = browser ? (window.localStorage.getItem('contributor') ?? '') : '';
 
+  const isHelen = $derived($form.contributor.toLowerCase().trim() === 'helen');
+
   const handleDescriptionInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     $form.description = e.currentTarget.value;
     // Replace any newlines with spaces and trim
@@ -116,6 +118,16 @@
           placeholder="Agnetha"
         />
       </label>
+      {#if isHelen}
+        <div class="banner success">
+          <p>
+            Hi, Helen! This is Eva, the person who made this site. You've made more contributions
+            than anyone else and I would love to say thanks. :) <a href="mailto:hey@evadecker.com"
+              >hey@evadecker.com</a
+            >
+          </p>
+        </div>
+      {/if}
       {#if $errors?._errors}
         {#each $errors._errors as error}
           <ErrorMessage {error} banner />
@@ -256,6 +268,15 @@
       height: 1.5em;
       display: flex;
       align-items: center;
+    }
+
+    &.success {
+      background: var(--green-3);
+      color: var(--green-12);
+    }
+
+    a {
+      text-decoration: underline;
     }
   }
 </style>
