@@ -17,16 +17,24 @@
   import relativeTime from 'dayjs/plugin/relativeTime';
   import AudioPreview from './AudioPreview.svelte';
 
-  export let song: Track;
-  export let existingCover: ExistingCover | null;
-  export let earlierRelease: Track | null;
-  export let onUseEarlierRelease: () => void;
-  export let onClearSelection: () => void;
+  let {
+    song,
+    existingCover,
+    earlierRelease,
+    onUseEarlierRelease,
+    onClearSelection
+  }: {
+    song: Track;
+    existingCover: ExistingCover | null;
+    earlierRelease: Track | null;
+    onUseEarlierRelease: () => void;
+    onClearSelection: () => void;
+  } = $props();
 
   dayjs.extend(relativeTime);
 
-  let wasKeepThisReleaseClicked = false;
-  let wasEarlierReleaseClicked = false;
+  let wasKeepThisReleaseClicked = $state(false);
+  let wasEarlierReleaseClicked = $state(false);
 
   const handleKeepThisRelease: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();

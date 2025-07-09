@@ -6,9 +6,11 @@
   import ErrorMessage from '$lib/components/ErrorMessage.svelte';
   import type { Enums } from '$lib/types/types';
 
-  export let name: string;
-  export let value: Enums<'gender'>[];
-  export let errors: string[] | undefined = undefined;
+  let {
+    name,
+    value = $bindable(),
+    errors
+  }: { name: string; value: Enums<'gender'>[]; errors: string[] | undefined } = $props();
 
   const {
     elements: { root, item },
@@ -21,7 +23,7 @@
     }
   });
 
-  $: innerValue.set(value);
+  innerValue.set(value);
 </script>
 
 <fieldset use:melt={$root} class="genderSelect" {name}>

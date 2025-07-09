@@ -8,13 +8,15 @@
   import { encodeSearchQuery } from '$lib/helpers';
   import type { ExistingCover } from '../../routes/api/getCover/+server';
 
-  export let name: string;
-  export let value: Track | undefined;
-  export let errors: string[] | undefined = undefined;
+  let {
+    name,
+    value = $bindable(),
+    errors
+  }: { name: string; value: Track | undefined; errors: string[] | undefined } = $props();
 
-  let discoveredEarlierRelease: Track | null;
-  let discoveredExistingCover: ExistingCover | null;
-  let searchResults: Track[] | undefined = undefined;
+  let discoveredEarlierRelease: Track | null = $state(null);
+  let discoveredExistingCover: ExistingCover | null = $state(null);
+  let searchResults: Track[] | undefined = $state(undefined);
 
   let debounceTimer: ReturnType<typeof setTimeout>;
   const debounce = (callback: () => void) => {
@@ -45,7 +47,7 @@
     }
   });
 
-  $: selected.set(value ? { value } : undefined);
+  selected.set(value ? { value } : undefined);
 
   const checkForExistingCover = async (track: Track) => {
     try {
@@ -125,13 +127,11 @@
     if (earlierRelease) value = earlierRelease;
   };
 
-  $: {
+  $effect(() => {
     if ($touchedInput) {
-      debounce(() => {
-        search($inputValue);
-      });
+      debounce(() => search($inputValue));
     }
-  }
+  });
 </script>
 
 <fieldset {name}>
@@ -250,7 +250,8 @@
     background-color: var(--mauve-3);
     border: 1px solid var(--mauve-6);
     border-radius: var(--radius-m);
-    box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    box-shadow:
+      0px 10px 38px -10px rgba(22, 23, 24, 0.35),
       0px 10px 20px -15px rgba(22, 23, 24, 0.2);
     width: var(--radix-select-trigger-width);
     padding: var(--space-2xs);

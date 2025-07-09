@@ -1,10 +1,12 @@
 <script lang="ts">
-  export let title: string;
+  let { title, children }: { title: string; children: any } = $props();
 </script>
 
 <li class="step">
   <h2 class="stepTitle">{title}</h2>
-  <div class="stepContent"><slot /></div>
+  <div class="stepContent">
+    {@render children?.()}
+  </div>
 </li>
 
 <style lang="scss">

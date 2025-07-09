@@ -1,8 +1,10 @@
 <script lang="ts">
-  export let text: string;
-  export let count: number | null = 0;
-  export let url: string;
-  export let isActive: boolean = false;
+  let {
+    text,
+    count,
+    url,
+    isActive
+  }: { text: string; count?: number | null; url: string; isActive?: boolean } = $props();
 </script>
 
 {#if url}
