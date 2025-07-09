@@ -5,7 +5,7 @@ import { describe, it } from 'vitest';
 describe('CoverCard', () => {
   it('should apply placeholder styles when data is undefined', async ({ expect }) => {
     const { container } = render(CoverCard, {
-      props: { original: null, cover: null, slug: null }
+      props: { original: undefined, cover: undefined, slug: undefined }
     });
 
     const coverCardDiv = container.querySelector('.coverCard');
@@ -15,7 +15,7 @@ describe('CoverCard', () => {
 
   it('should link to the slug', async ({ expect }) => {
     const { container } = render(CoverCard, {
-      props: { original: null, cover: null, slug: 'test-slug' }
+      props: { original: undefined, cover: undefined, slug: 'test-slug' }
     });
 
     const linkElement = container.querySelector('a');

@@ -9,7 +9,7 @@
   import { MAX_CONTRIBUTOR_CHARS, MAX_DESCRIPTION_CHARS } from '$lib/constants';
   import ErrorMessage from '$lib/components/ErrorMessage.svelte';
   import { browser } from '$app/environment';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import LoaderIcon from '~icons/ri/loader-4-line';
   import AlertIcon from '~icons/ri/alert-line';
   import type { FormEventHandler } from 'svelte/elements';
@@ -47,7 +47,7 @@
 <svelte:head>
   <title>Add a cover</title>
   <meta name="description" content="Upload a fresh gender-swapped cover to the catalogue." />
-  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
+  <link rel="canonical" href={`https://genderswap.fm${page.url.pathname}`} />
 </svelte:head>
 
 <form class="submitForm" method="POST" use:enhance>

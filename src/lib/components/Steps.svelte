@@ -1,4 +1,10 @@
-<ol class="steps"><slot /></ol>
+<script lang="ts">
+  let { children } = $props();
+</script>
+
+<ol class="steps">
+  {@render children?.()}
+</ol>
 
 <style>
   .steps {

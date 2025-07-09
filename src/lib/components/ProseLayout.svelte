@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import dayjs from 'dayjs';
 
-  export let title;
-  export let description;
-  export let datePublished;
-  export let dateModified;
+  let { title, description, datePublished, dateModified, children } = $props();
 
   const formattedPublishDate = dayjs(datePublished).format('MMMM D, YYYY');
   const formattedModifiedDate = dayjs(dateModified).format('MMMM D, YYYY');
@@ -14,7 +11,7 @@
 <svelte:head>
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
+  <link rel="canonical" href={`https://genderswap.fm${page.url.pathname}`} />
 </svelte:head>
 
 <article itemscope itemtype="https://schema.org/BlogPosting">
@@ -33,7 +30,7 @@
     </div>
   </header>
   <section itemprop="articleBody" class="prose">
-    <slot />
+    {@render children?.()}
   </section>
 </article>
 

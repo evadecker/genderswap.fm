@@ -5,15 +5,15 @@
   import TagCloud from '$lib/components/TagCloud.svelte';
   import Tag from '$lib/components/Tag.svelte';
   import { TAGS } from '$lib/constants';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { onMount } from 'svelte';
   import { confetti, type ConfettiOptions } from '@tsparticles/confetti';
   import { getArtistLink, getSortedTags } from '$lib/helpers.js';
   import Sparkle from '$lib/components/Sparkle.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  const isNew = $page.url.searchParams.get('new') === 'true' ? true : false;
+  const isNew = $derived(page.url.searchParams.get('new') === 'true');
 
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(data.created_at).fromNow();
@@ -87,8 +87,8 @@
     name="description"
     content={data.description ?? 'Some covers deliver the age-old simple pleasures of drag.'}
   />
-  <link rel="canonical" href={`https://genderswap.fm${$page.url.pathname}`} />
-  <meta property="og:image" content={`${$page.url.pathname}/og.png`} />
+  <link rel="canonical" href={`https://genderswap.fm${page.url.pathname}`} />
+  <meta property="og:image" content={`${page.url.pathname}/og.png`} />
   <meta property="og:image:alt" content={data.pageTitle} />
 </svelte:head>
 

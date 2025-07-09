@@ -1,37 +1,38 @@
 <script lang="ts">
   import type { MouseEventHandler } from 'svelte/elements';
 
-  export let src: string;
-  export let title: string;
+  let { src, title }: { src: string; title: string } = $props();
 
-  let state = 'paused';
+  let playState = $state('paused');
   let audio: HTMLAudioElement;
-  let time = 0;
-  let duration: number;
+  let time = $state(0);
+  let duration = $state(0);
+  const percent = $derived((time / duration) * 100);
 
   const play = () => {
     audio.play();
-    state = 'playing';
+    playState = 'playing';
   };
 
   const pauseAndReset = () => {
     audio.pause();
     audio.currentTime = 0;
-    state = 'paused';
+    playState = 'paused';
   };
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
 
-    if (state === 'paused') {
+    if (playState === 'paused') {
       play();
     } else {
       pauseAndReset();
     }
   };
 
-  $: percent = (time / duration) * 100;
-  $: if (percent > 99.5) pauseAndReset();
+  $effect(() => {
+    if (percent > 99.5) pauseAndReset();
+  });
 </script>
 
 <div
@@ -40,7 +41,7 @@
   aria-valuenow={parseFloat(percent.toFixed(2))}
   aria-valuemin="0"
   aria-valuemax="100"
-  style={state === 'playing'
+  style={playState === 'playing'
     ? `background: conic-gradient(var(--pink-9) ${percent.toFixed(2)}%, transparent 0)`
     : undefined}
 >
@@ -49,11 +50,11 @@
   </audio>
   <button
     class="playPauseButton"
-    class:playing={state === 'playing'}
+    class:playing={playState === 'playing'}
     onclick={handleButtonClick}
-    aria-label={state === 'paused' ? 'Play' : 'Pause'}
+    aria-label={playState === 'paused' ? 'Play' : 'Pause'}
   >
-    {#if state === 'paused'}
+    {#if playState === 'paused'}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"

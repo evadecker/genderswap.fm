@@ -3,11 +3,11 @@
   import type { Cover } from '../../routes/cover/[slug]/+page.server';
   import SpotifyIcon from '~icons/ri/spotify-fill';
 
-  export let cover: Cover;
+  let { cover }: { cover: Cover } = $props();
 
   const { original: originalSong, cover: coverSong } = cover;
 
-  let coveredAs: string;
+  let coveredAs: string = $state('');
   if (slugify(originalSong.name) !== slugify(coverSong.name)) {
     coveredAs = coverSong.name;
   }

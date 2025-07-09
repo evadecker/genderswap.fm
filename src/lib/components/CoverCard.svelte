@@ -1,6 +1,5 @@
 <script lang="ts">
   import { smartquotes } from '$lib/helpers';
-  import ArrowLeftRightLine from '~icons/ri/arrow-left-right-line';
 
   type Album = {
     name: string;
@@ -8,13 +7,14 @@
     album_img: string[];
   };
 
-  export let original: Album | null = null;
-  export let cover: Album | null = null;
-  export let slug: string | null = null;
-  export let lazy: boolean = false;
+  let {
+    original,
+    cover,
+    slug,
+    lazy
+  }: { original?: Album; cover?: Album; slug?: string; lazy?: boolean } = $props();
 
-  let isSkeleton = false;
-  if (!original && !cover && !slug) isSkeleton = true;
+  const isSkeleton = $derived(!original && !cover && !slug);
 </script>
 
 <div class="coverCard" class:placeholder={isSkeleton} aria-hidden={isSkeleton || undefined}>
@@ -55,7 +55,7 @@
       {/if}
     </div>
     {#if !isSkeleton}
-      <a class="link" href={`/cover/${slug}`} aria-label={`More about ${original?.name}`} ></a>
+      <a class="link" href={`/cover/${slug}`} aria-label={`More about ${original?.name}`}></a>
     {/if}
   </div>
 </div>

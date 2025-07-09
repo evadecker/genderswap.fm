@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import CoverCard from '$lib/components/CoverCard.svelte';
   import { goto } from '$app/navigation';
   import { TAGS, ORDERED_TAG_GROUPS } from '$lib/constants.js';
@@ -11,16 +11,18 @@
   import { scale } from 'svelte/transition';
   import type { FocusEventHandler, FormEventHandler, KeyboardEventHandler } from 'svelte/elements';
 
-  export let data;
+  let { data } = $props();
 
-  let isFocused = false;
-  let currentQuery = '';
+  let isFocused = $state(false);
+  let currentQuery = $state('');
+  let currentPage = $derived(Number(page.url.searchParams.get('page')) || 1);
+  let currentTag = $derived(page.url.searchParams.get('tag') as Enums<'tags'> | null);
 
-  $: if (!isFocused) {
-    currentQuery = $page.url.searchParams.get('q') || '';
-  }
-  $: currentPage = Number($page.url.searchParams.get('page')) || 1;
-  $: currentTag = $page.url.searchParams.get('tag') as Enums<'tags'> | null;
+  $effect(() => {
+    if (!isFocused) {
+      currentQuery = page.url.searchParams.get('q') || '';
+    }
+  });
 
   let debounceTimer: ReturnType<typeof setTimeout>;
   const debounce = (callback: () => void) => {
@@ -30,7 +32,7 @@
 
   const handleSearch: FormEventHandler<HTMLInputElement> = (e) => {
     currentQuery = e.currentTarget.value;
-    const newURL = new URL($page.url);
+    const newURL = new URL(page.url);
     newURL.searchParams.delete('page');
 
     if (currentQuery) {
@@ -43,7 +45,7 @@
   };
 
   const handleClearSearch = () => {
-    const newURL = new URL($page.url);
+    const newURL = new URL(page.url);
     newURL.searchParams.delete('tag');
     newURL.searchParams.delete('q');
     goto(newURL, { keepFocus: true, replaceState: true });
@@ -64,7 +66,7 @@
   };
 
   const handleTagClick = (tag: Enums<'tags'> | null) => {
-    const newURL = new URL($page.url);
+    const newURL = new URL(page.url);
     newURL.searchParams.delete('page');
 
     if (currentTag === tag || tag === null) {
@@ -78,7 +80,7 @@
 
   const handleBack = () => {
     if (currentPage > 1) {
-      const newURL = new URL($page.url);
+      const newURL = new URL(page.url);
       const newPage = currentPage - 1;
 
       newPage === 1
@@ -90,7 +92,7 @@
   };
 
   const handleNext = () => {
-    const newURL = new URL($page.url);
+    const newURL = new URL(page.url);
     newURL.searchParams.set('page', (currentPage + 1).toString());
     goto(newURL);
   };
@@ -103,7 +105,7 @@
     content="A catalogue of the best gender-swapped song covers. Search, listen, and add your own."
   />
   <link rel="canonical" href="https://genderswap.fm" />
-  <meta property="og:image" content={`${$page.url.origin}/og-image.png`} />
+  <meta property="og:image" content={`${page.url.origin}/og-image.png`} />
   <meta property="og:image:alt" content="Genderswap.fm" />
 </svelte:head>
 
