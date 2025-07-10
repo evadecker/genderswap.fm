@@ -25,8 +25,8 @@ test.describe('should display the correct theme', () => {
 
   test.use({ colorScheme: 'no-preference' });
   test('should default to light mode when no OS color scheme is set', async ({ page }) => {
-    const body = page.locator('body');
-    await expect(body).not.toHaveClass('dark');
+    const html = page.locator('html');
+    await expect(html).not.toHaveClass('dark');
   });
 
   test.use({ colorScheme: 'no-preference' });
@@ -34,8 +34,8 @@ test.describe('should display the correct theme', () => {
     const darkToggle = page.locator('[data-theme-toggle-dark]');
     await darkToggle.click();
 
-    const body = page.locator('body');
-    await expect(body).toHaveClass('dark');
+    const html = page.locator('html');
+    await expect(html).toHaveClass('dark');
   });
 
   test.use({ colorScheme: 'dark' });
@@ -45,8 +45,8 @@ test.describe('should display the correct theme', () => {
     const lightToggle = page.locator('[data-theme-toggle-light]');
     await lightToggle.click();
 
-    const body = page.locator('body');
-    await expect(body).not.toHaveClass('dark');
+    const html = page.locator('html');
+    await expect(html).not.toHaveClass('dark');
   });
 
   test.use({ colorScheme: 'no-preference' });
@@ -54,8 +54,8 @@ test.describe('should display the correct theme', () => {
     const darkToggle = page.locator('[data-theme-toggle-dark]');
     await darkToggle.click();
 
-    const body = page.locator('body');
-    await expect(body).toHaveClass('dark');
+    const html = page.locator('html');
+    await expect(html).toHaveClass('dark');
 
     const localStorageTheme = await page.evaluate(() => window.localStorage.getItem('theme'));
     expect(localStorageTheme).toBe('dark');
