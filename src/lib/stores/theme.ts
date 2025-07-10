@@ -47,7 +47,6 @@ theme.subscribe((value) => {
     localStorage.setItem('theme', value);
     document.body.classList.toggle('dark', value === 'dark');
     
-    // Update theme color and toggle UI
     updateThemeColor();
     updateThemeToggle(value);
   }
