@@ -3,15 +3,14 @@ import { writable } from 'svelte/store';
 
 type Theme = 'light' | 'dark';
 
-// Utility functions for theme updates
-export const updateThemeColor = () => {
+const updateThemeColor = () => {
   if (!browser) return;
   const bgColor = window.getComputedStyle(document.body).backgroundColor;
   const metaThemeColor = document.querySelector("meta[name=theme-color]");
   metaThemeColor?.setAttribute("content", bgColor);
 };
 
-export const updateThemeToggle = (theme: Theme) => {
+const updateThemeToggle = (theme: Theme) => {
   if (!browser) return;
   const lightToggle = document.querySelector('[data-theme-toggle-light]');
   const darkToggle = document.querySelector('[data-theme-toggle-dark]');
@@ -25,7 +24,7 @@ export const updateThemeToggle = (theme: Theme) => {
   }
 };
 
-export const getUserPreference = (): Theme => {
+const getUserPreference = (): Theme => {
   if (!browser) return 'light';
   
   if (window.localStorage.getItem('theme')) {
