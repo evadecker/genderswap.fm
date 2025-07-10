@@ -3,15 +3,17 @@ html {
   height: 100%;
 }
 
-body.dark {
+html, body {
+  color: var(--mauve-12);
+  background-color: var(--mauve-1);
+}
+
+html.dark {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color-scheme: dark;
 }
 
 body {
-  color: var(--mauve-12);
-  background-color: var(--mauve-1);
   display: flex;
   min-height: 100%;
   position: relative;
@@ -23,8 +25,9 @@ body {
   text-rendering: optimizelegibility;
   font-synthesis: none;
   font-feature-settings: var(--font-stable);
-  color-scheme: light;
 }
+
+
 
 ::selection {
   background: var(--pink-5);

@@ -1,91 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#FEFCFB" />
-    <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
-    <link
-      rel="icon"
-      href="%sveltekit.assets%/favicon-light.png"
-      type="image/png"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      href="%sveltekit.assets%/favicon-dark.png"
-      type="image/png"
-      media="(prefers-color-scheme: dark)"
-    />
-    <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
-    <link rel="manifest" href="%sveltekit.assets%/manifest.json" />
-    <link
-      rel="preload"
-      href="%sveltekit.assets%/fonts/LabilGrotesk-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="%sveltekit.assets%/fonts/LabilGrotesk-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="%sveltekit.assets%/fonts/LabilGrotesk-RegularItalic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <title>Genderswap.fm</title>
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Genderswap.fm" />
-    %sveltekit.head%
-    <script src="https://cdn.usefathom.com/script.js" data-site="HPMILITY" defer></script>
-  </head>
-  <body data-sveltekit-preload-data="hover">
-    <script>
-      const setTheme = (theme) => {
-        document.body.classList.toggle('dark', theme === 'dark');
 
-        const metaTheme = document.querySelector('meta[name="theme-color"]');
-        if (metaTheme !== null)
-          metaTheme.setAttribute('content', theme === 'dark' ? '#121113' : '#FDFCFD');
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="" />
+  <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="%sveltekit.assets%/favicon-light.png" type="image/png" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="%sveltekit.assets%/favicon-dark.png" type="image/png" media="(prefers-color-scheme: dark)" />
+  <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+  <link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+  <link rel="preload" href="%sveltekit.assets%/fonts/LabilGrotesk-Regular.woff2" as="font" type="font/woff2"
+    crossorigin />
+  <link rel="preload" href="%sveltekit.assets%/fonts/LabilGrotesk-Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="%sveltekit.assets%/fonts/LabilGrotesk-RegularItalic.woff2" as="font" type="font/woff2"
+    crossorigin />
+  <title>Genderswap.fm</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Genderswap.fm" />
+  %sveltekit.head%
+  <script src="https://cdn.usefathom.com/script.js" data-site="HPMILITY" defer></script>
+</head>
 
-        window.localStorage.setItem('theme', theme);
-
-        const lightToggle = document.querySelector('[data-theme-toggle-light]');
-        const darkToggle = document.querySelector('[data-theme-toggle-dark]');
-
-        if (theme === 'light') {
-          lightToggle?.classList.add('active');
-          darkToggle?.classList.remove('active');
-        } else {
-          lightToggle?.classList.remove('active');
-          darkToggle?.classList.add('active');
-        }
-      };
-
-      function getUserPreference() {
-        if (window.localStorage.getItem('theme')) {
-          return window.localStorage.getItem('theme');
-        }
-
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+<body data-sveltekit-preload-data="hover">
+  <script>
+    // Minimal render-blocking script to prevent FOUC
+    const getUserPreference = () => {
+      if (window.localStorage.getItem('theme')) {
+        return window.localStorage.getItem('theme');
       }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
 
-      const setInitialTheme = () => {
-        const userPreference = getUserPreference();
-        setTheme(userPreference);
-      };
+    const initialTheme = getUserPreference();
+    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
 
-      setInitialTheme();
-    </script>
-    <div style="display: contents">%sveltekit.body%</div>
-  </body>
+    // Set initial theme-color
+    const themeColor = initialTheme === 'dark' ? 'color(display-p3 0.07 0.067 0.074)' : 'color(display-p3 0.991 0.988 0.992)';
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", themeColor);
+    }
+  </script>
+  <div style="display: contents">%sveltekit.body%</div>
+</body>
+
 </html>
