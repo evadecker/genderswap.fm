@@ -8,6 +8,11 @@ html, body {
   background-color: var(--mauve-1);
 }
 
+html.dark {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   display: flex;
   min-height: 100%;
@@ -22,10 +27,7 @@ body {
   font-feature-settings: var(--font-stable);
 }
 
-body.dark {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 
 ::selection {
   background: var(--pink-5);
