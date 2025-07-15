@@ -1,21 +1,21 @@
 import type { Track } from '@spotify/web-api-ts-sdk';
 import type { Enums, Tables } from '$lib/types/types';
 import { setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 import { supabase } from '$lib/supabase';
 import { slugifyCover } from '$lib/helpers';
 import { newCoverSchema } from '$lib/schemas';
 
 export const load = async () => {
-  const form = await superValidate(zod(newCoverSchema));
+  const form = await superValidate(zod4(newCoverSchema));
 
   return { form };
 };
 
 export const actions = {
   default: async ({ request, fetch }) => {
-    const form = await superValidate(request, zod(newCoverSchema));
+    const form = await superValidate(request, zod4(newCoverSchema));
 
     if (!form.valid) {
       return fail(400, { form });
